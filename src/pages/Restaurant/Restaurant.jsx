@@ -1,3 +1,4 @@
+import Button from "@/widgets/Button/Button";
 import ReusableDataGrid from "@/widgets/Tableandexport/Table";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
 import MuiPagination from "@mui/material/Pagination";
 import { GridPagination } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 export function Restaurant() {
   const [showAlerts, setShowAlerts] = React.useState({
     blue: true,
@@ -37,10 +39,12 @@ export function Restaurant() {
       setIsLoading(true);
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/todos?_page=${paginationModel.page}&_limit=${paginationModel.pageSize}`
+        // `https://webadmin.requeue.com/WebAdmin/getallrestro?id=1&searchText=&page=${paginationModel.page}&pagelimit=${paginationModel.pageSize}`
       );
       const data = await response.json();
+      console.log(data.data);
       setRows(data);
-      const totalCount = Number(response.headers.get("X-Total-Count"));
+      const totalCount = data.totaldata;
       setRowCount(totalCount || 0);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -49,6 +53,12 @@ export function Restaurant() {
     }
   };
 
+  // const rows = [
+  //   { id: 1, name: 'John Doe', age: 30 },
+  //   { id: 2, name: 'Jane Doe', age: 25 },
+  //   // ... other rows with unique ids
+  // ];
+  // console.log(rows);
   useEffect(() => {
     fetchData();
   }, [paginationModel.page, paginationModel.pageSize]);
@@ -75,54 +85,64 @@ export function Restaurant() {
   }
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "RestID", headerName: "RestID" },
     {
-      field: "completed",
+      field: "Name",
       headerName: "Status",
-      
+
       renderCell: (params) => (
-        
         <Chip
           variant="gradient"
           color={params.value ? "green" : "blue-gray"}
-          value={ "online"}
+          value={"online"}
           className="py-0.5 px-2 text-[11px] font-medium"
+          Purple
         />
       ),
     },
-
   ];
-
-  
 
   return (
     // <div className="mx-auto my-20 flex max-w-screen-lg flex-col gap-8">x`
-
-    <div className="mt-12 mb-8 flex flex-col gap-12">
-      <Card>
-        <CardHeader
-          variant="gradient"
-          color="blue"
-          className="mb-8 p-6"
-          style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
-        >
-          <Typography variant="h6" color="white">
-            Authors Table
-          </Typography>
-        </CardHeader>
-        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
-          <ReusableDataGrid
-            rows={rows}
-            columns={columns}
-            rowCount={rowCount}
-            isLoading={isLoading}
-            paginationModel={paginationModel}
-            setPaginationModel={setPaginationModel}
-            slotsdata={CustomPagination}
-          />
-        </CardBody>
-      </Card>
-    </div>
+    <>
+      <hr className="mt-4"/>
+      <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
+        <div className="flex flex-wrap">
+          <Button name={"print"} />
+          <Button name={"print"} />
+          <Button name={"print"} />
+          <Button name={"print"} />
+        </div>
+        <Link to="/dashboard/add?restaurant">
+        <Button name={"Add Restaurant"} />
+        </Link>
+      </div>
+      <div className="mt-6mb-8 flex flex-col gap-12">
+        <Card>
+          <CardHeader
+            variant="gradient"
+            color="blue"
+            className="mb-8 p-6"
+            style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
+          >
+            <Typography variant="h6" color="white">
+              Restaurant Table
+            </Typography>
+          </CardHeader>
+          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+            <ReusableDataGrid
+              rows={rows}
+              columns={columns}
+              rowCount={rowCount}
+              isLoading={isLoading}
+              paginationModel={paginationModel}
+              setPaginationModel={setPaginationModel}
+              slotsdata={CustomPagination}
+            />
+          </CardBody>
+        </Card>
+      </div>
+    </>
   );
 }
 

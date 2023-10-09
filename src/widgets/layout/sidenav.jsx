@@ -29,7 +29,7 @@
 //           sidenavType === "dark" ? "border-white/20" : "border-blue-gray-50"
 //         }`}
 //       >
-//         <Link to="/" className="flex items-center gap-4 py-6 px-8">
+//         <Li  className="-mt-1"nk to="/" className="flex items-center gap-4 py-6 px-8">
 //           <Avatar src={brandImg} size="sm" />
 //           <Typography
 //             variant="h6"
@@ -53,7 +53,7 @@
 //         {routes.map(({ layout, title, pages }, key) => (
 //           <ul key={key} className="mb-4 flex flex-col gap-1">
 //             {title && (
-//               <li className="mx-3.5 mt-4 mb-2">
+//               <li  className="-mt-1" className="mx-3.5 mt-4 mb-2">
 //                 <Typography
 //                   variant="small"
 //                   color={sidenavType === "dark" ? "white" : "blue-gray"}
@@ -64,7 +64,7 @@
 //               </li>
 //             )}
 //             {pages.map(({ icon, name, path }) => (
-//               <li key={name}>
+//               <li  className="-mt-1" key={name}>
 //                 <NavLink to={`/${layout}${path}`}>
 //                   {({ isActive }) => (
 //                     <Button
@@ -147,7 +147,6 @@ export function Sidenav({ brandImg, brandName, routes }) {
         className={`${
           id === open ? "rotate-180" : ""
         } h-3 w-3   transition-transform`}
-        
       >
         <path
           strokeLinecap="round"
@@ -185,7 +184,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
       <hr />
       <div className="m-4">
         <ul className="mb-4 flex flex-col gap-1">
-          <li>
+          <li className="-mt-1">
             <NavLink to={`/dashboard/home`}>
               {({ isActive }) => (
                 <Button
@@ -207,18 +206,15 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
-                    restaurant
+                  <Typography color="inherit" className="font-sm capitalize">
+                    dashboard
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to={`/dashboard/rest`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/resturant`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -239,18 +235,15 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     restaurant
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to={`/dashboard/tables`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/supermarket`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -271,10 +264,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     supermarket
                   </Typography>
                 </Button>
@@ -282,24 +272,20 @@ export function Sidenav({ brandImg, brandName, routes }) {
             </NavLink>
           </li>
 
-          <Accordion
-            open={open === 1}
-            icon={<Icon id={1} open={open}  />}
-            
-          >
+          <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
             <AccordionHeader
-              className="font-normal mx-0 text-sm rounded  border-0 px-3 w-full " 
+              className="font-sm -my-2 text-sm rounded  border-0 px-3 w-full "
               onClick={() => handleOpen(1)}
             >
               <MdDashboard className="text-lg" /> Users Details
             </AccordionHeader>
-            <AccordionBody >
+            <AccordionBody>
               <ul
                 className="flex flex-col gap-1"
-                style={{ marginTop: "-15px " , marginBottom:"1px"}}
+                style={{ marginTop: "-15px ", marginBottom: "1px" }}
               >
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/user`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -322,7 +308,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           users
                         </Typography>
@@ -330,8 +316,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/group`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -354,7 +340,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           groups
                         </Typography>
@@ -362,8 +348,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/country`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -386,7 +372,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           countries
                         </Typography>
@@ -397,12 +383,9 @@ export function Sidenav({ brandImg, brandName, routes }) {
               </ul>
             </AccordionBody>
           </Accordion>
-          <Accordion
-            open={open === 2}
-            icon={<Icon id={2} open={open} />}
-          >
+          <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
             <AccordionHeader
-              className="font-normal  text-sm rounded  border-0 px-3 "
+              className="font-sm -my-1 text-sm rounded  border-0 px-3 "
               onClick={() => handleOpen(2)}
             >
               <MdDashboard className="text-lg" /> Customer Details
@@ -412,8 +395,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 className="flex flex-col gap-1"
                 style={{ marginTop: "-5px " }}
               >
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/all_customer`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -436,7 +419,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           All
                         </Typography>
@@ -444,8 +427,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/most_active`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -468,7 +451,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           most active
                         </Typography>
@@ -476,8 +459,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/block`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -500,7 +483,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           block
                         </Typography>
@@ -511,23 +494,21 @@ export function Sidenav({ brandImg, brandName, routes }) {
               </ul>
             </AccordionBody>
           </Accordion>
-          <Accordion
-            open={open === 3}
-            icon={<Icon id={3} open={open}  />}
-          >
+          <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
             <AccordionHeader
-              className="font-normal mx-0 text-sm rounded  border-0 px-3 "
+              className=" mx-0 text-sm rounded -my-1 border-0 px-3 "
               onClick={() => handleOpen(3)}
             >
-              <MdDashboard className="text-lg" /> Subscriptions
+              <MdDashboard className="text-lg" />
+              <div className="font-xs">Subscriptions</div>
             </AccordionHeader>
             <AccordionBody>
               <ul
                 className="flex flex-col gap-1"
                 style={{ marginTop: "-15px " }}
               >
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/purchase`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -550,7 +531,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           purchase
                         </Typography>
@@ -558,8 +539,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/not-confirmed`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -582,7 +563,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           not confirmed
                         </Typography>
@@ -590,8 +571,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to={`/dashboard/home`}>
+                <li className="-mt-1">
+                  <NavLink to={`/dashboard/vocher`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -614,7 +595,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           vocher
                         </Typography>
@@ -626,8 +607,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
             </AccordionBody>
           </Accordion>
 
-          <li>
-            <NavLink to={`/dashboard/tables`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/invoice`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -648,18 +629,15 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     invoice
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to={`/dashboard/tables`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/cuisine`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -680,18 +658,15 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     cuisines
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to={`/dashboard/tables`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/queue`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -712,18 +687,15 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     queue tags
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to={`/dashboard/tables`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/banner`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -744,18 +716,15 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     banners
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <li>
-            <NavLink to={`/dashboard/tables`}>
+          <li className="-mt-1">
+            <NavLink to={`/dashboard/offer`}>
               {({ isActive }) => (
                 <Button
                   style={{
@@ -776,33 +745,26 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography
-                    color="inherit"
-                    className="font-normal capitalize"
-                  >
+                  <Typography color="inherit" className="font-sm capitalize">
                     offers
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
-          <Accordion
-            open={open === 1}
-            icon={<Icon id={1} open={open}  />}
-            
-          >
+          <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
             <AccordionHeader
-              className="font-normal mx-0 text-sm rounded  border-0 px-3 w-full " 
+              className="font-sm mx-0 text-sm rounded  border-0 px-3 w-full "
               onClick={() => handleOpen(1)}
             >
               <MdDashboard className="text-lg" /> Users Details
             </AccordionHeader>
-            <AccordionBody >
+            <AccordionBody>
               <ul
                 className="flex flex-col gap-1"
-                style={{ marginTop: "-15px " , marginBottom:"1px"}}
+                style={{ marginTop: "-15px ", marginBottom: "1px" }}
               >
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -826,7 +788,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           users
                         </Typography>
@@ -834,7 +796,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -858,7 +820,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           groups
                         </Typography>
@@ -866,7 +828,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -890,7 +852,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           countries
                         </Typography>
@@ -901,12 +863,9 @@ export function Sidenav({ brandImg, brandName, routes }) {
               </ul>
             </AccordionBody>
           </Accordion>
-          <Accordion
-            open={open === 2}
-            icon={<Icon id={2} open={open} />}
-          >
+          <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
             <AccordionHeader
-              className="font-normal  text-sm rounded  border-0 px-3 "
+              className="font-sm  text-sm rounded  border-0 px-3 "
               onClick={() => handleOpen(2)}
             >
               <MdDashboard className="text-lg" /> Customer Details
@@ -916,7 +875,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 className="flex flex-col gap-1"
                 style={{ marginTop: "-5px " }}
               >
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -940,7 +899,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           All
                         </Typography>
@@ -948,7 +907,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -972,7 +931,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           most active
                         </Typography>
@@ -980,7 +939,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -1004,7 +963,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           block
                         </Typography>
@@ -1015,12 +974,9 @@ export function Sidenav({ brandImg, brandName, routes }) {
               </ul>
             </AccordionBody>
           </Accordion>
-          <Accordion
-            open={open === 3}
-            icon={<Icon id={3} open={open}  />}
-          >
+          <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
             <AccordionHeader
-              className="font-normal mx-0 text-sm rounded  border-0 px-3 "
+              className="font-sm mx-0 text-sm rounded  border-0 px-3 "
               onClick={() => handleOpen(3)}
             >
               <MdDashboard className="text-lg" /> Subscriptions
@@ -1030,7 +986,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 className="flex flex-col gap-1"
                 style={{ marginTop: "-15px " }}
               >
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -1054,7 +1010,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           purchase
                         </Typography>
@@ -1062,7 +1018,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -1086,7 +1042,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           not confirmed
                         </Typography>
@@ -1094,7 +1050,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     )}
                   </NavLink>
                 </li>
-                <li>
+                <li className="-mt-1">
                   <NavLink to={`/dashboard/home`}>
                     {({ isActive }) => (
                       <Button
@@ -1118,7 +1074,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-normal capitalize"
+                          className="font-sm capitalize"
                         >
                           vocher
                         </Typography>
