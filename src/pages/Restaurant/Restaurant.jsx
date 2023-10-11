@@ -113,7 +113,8 @@ export function Restaurant() {
           <Button name={"print"} />
           <Button name={"print"} />
         </div>
-        <Link to="/dashboard/add?restaurant">
+        <Link to={"/dashboard/add" + "?vendor=restaurant"}>
+   
         <Button name={"Add Restaurant"} />
         </Link>
       </div>

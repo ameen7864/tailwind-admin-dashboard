@@ -1,6 +1,7 @@
 import Button from '@/widgets/Button/Button'
 import { Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Supermarket = () => {
   return (
@@ -12,7 +13,10 @@ const Supermarket = () => {
         <Button name={"print"} />
         <Button name={"print"} />
       </div>
+      <Link to={"/dashboard/add" + "?vendor=Supermarket"}>
       <Button name={"Add Supermarket"} />
+        </Link>
+     
     </div>
     
     <div className="mt-6mb-8 flex flex-col gap-12">

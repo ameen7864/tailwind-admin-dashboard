@@ -572,7 +572,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   </NavLink>
                 </li>
                 <li className="-mt-1">
-                  <NavLink to={`/dashboard/vocher`}>
+                  <NavLink to={`/dashboard/voucher`}>
                     {({ isActive }) => (
                       <Button
                         style={{
@@ -597,7 +597,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          vocher
+                          voucher
                         </Typography>
                       </Button>
                     )}
@@ -1076,7 +1076,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          vocher
+                          voucher
                         </Typography>
                       </Button>
                     )}
