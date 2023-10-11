@@ -27,6 +27,7 @@ export const Select = ({ label, opto, data, ...props }) => {
       </label>
       <select
         id="selection"
+        required
         className="bg-grey-50 border border-purple-300 text-grey-900 text-sm rounded-md focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-purple-700 dark:border-purple-600 dark:placeholder-purple-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
         {...props}
       >
@@ -57,9 +58,10 @@ export const Input = ({ lbs, type, ...props }) => {
           {...props}
           type={type ? type : 'text'}
           id="small-input"
-          className={`block w-full p-2 text-gray-900 capitalize border border-purple-300 rounded-md bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-purple-500 dark:bg-gray-700 dark:border-purple-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 ${
-            type === 'date' ? 'cursor-not-allowed' : ''
-          }`}
+          className={`block w-full p-2 text-gray-900 capitalize border border-purple-300 rounded-md bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-purple-500 dark:bg-gray-700 dark:border-purple-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 
+            
+          `}
+          required
           placeholder={lbs}
           defaultValue={type === 'date' ? today : ''}
           min={type === 'date' ? today : undefined}
@@ -134,8 +136,8 @@ export const SubmitButton = ({}) => {
   return (
     <>
       <button
-        disabled
-        type="button"
+        
+        type="submit"
         // class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
         class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
       >
