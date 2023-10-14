@@ -53,3 +53,35 @@
       transform: rotate(90deg);
     }
   }
+
+
+  .ant-pagination >.ant-pagination-item-active{
+    border-radius: 50% !important;
+    border-color:#554cb5 !important;
+    
+    
+  }
+
+  .ant-pagination >li{
+    border-radius: 50% !important;
+    /* border-color:#554cb5 !important; */
+    
+    color:white !important
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0px; /* Adjust as needed */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Hide the thumb */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent; /* Hide the track */
+  }
+  
+  .custom-scrollbar {
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+  }

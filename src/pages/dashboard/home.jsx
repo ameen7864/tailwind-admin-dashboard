@@ -1,69 +1,51 @@
-import React from "react";
-import {
-  Typography,
-  Card,
-  CardHeader,
-  CardBody,
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Tooltip,
-  Progress,
-} from "@material-tailwind/react";
-import {
-  ClockIcon,
-  CheckIcon,
-  EllipsisVerticalIcon,
-  ArrowUpIcon,
-} from "@heroicons/react/24/outline";
 import { StatisticsCard, StatisticsCards } from "@/widgets/cards";
-import { StatisticsChart } from "@/widgets/charts";
-import {
-  statisticsCardsData,
-  statisticsChartsData,
-  projectsTableData,
-  ordersOverviewData,
-} from "@/data";
 import { BsFillPeopleFill, BsStar, BsTicketPerforated } from "react-icons/bs";
 import { MdCancelPresentation } from "react-icons/md";
+import { useGetDashboardByNameQuery } from "../Redux/ReduxApi";
 
 export function Home() {
+  const {data}=useGetDashboardByNameQuery()
+  const PaidPercentage = (data?.PaidCustomer[0].count / data?.CountofCustomes[0].count) * 100;
+  const freePercentage = (data?.FreeCustomes[0].count / data?.CountofCustomes[0].count) * 100;
+  const noticketPercentage = (data?.NoTickets[0].count / data?.CountofCustomes[0].count) * 100;
+
+
+    
+  
+
   return (
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
         <StatisticsCard
           key={"All Customers"}
-          value={1922216}
+          value={data?.CountofCustomes[0].count}
           title={"All Customers"}
           icon={<BsFillPeopleFill className="w-6 h-6 text-white" />}
-          completion={10}
+          completion={100}
         />
         <StatisticsCard
           key={"All Customers"}
-          value={1922216}
+          value={data?.PaidCustomer[0].count}
           color={"purple"}
           title={"Paid Tickts"}
           icon={<BsStar className="w-6 h-6 text-white" />}
-          completion={10}
+          completion={Math?.ceil(PaidPercentage)}
         />
         <StatisticsCard
           key={"All Customers"}
-          value={1922216}
+          value={data?.FreeCustomes[0].count}
           color={"green"}
           title={"Free Ticket"}
           icon={<BsTicketPerforated className="w-6 h-6 text-white" />}
-          completion={10}
+          completion={Math?.ceil(freePercentage)}
         />
         <StatisticsCard
           key={"No Tickets"}
-          value={1922216}
+          value={data?.NoTickets[0].count}
           color={"red"}
           title={"No Tickets"}
           icon={<MdCancelPresentation className="w-6 h-6 text-white" />}
-          completion={10}
+          completion={Math?.ceil(noticketPercentage)}
         />
       </div>
       <hr className="mb-8 " />
