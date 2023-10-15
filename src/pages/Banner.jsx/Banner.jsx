@@ -14,11 +14,10 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { MdOutlineModeEditOutline } from "react-icons/md";
+import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
-import {
-  useGetBannerByNameQuery
-} from "../Redux/ReduxApi";
+import { useGetBannerByNameQuery } from "../Redux/ReduxApi";
+import { IconButton } from "@mui/material";
 
 const Banner = () => {
   const [search, setsearch] = useState("");
@@ -32,7 +31,7 @@ const Banner = () => {
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
-  const { data: Banner, isFetching } = useGetBannerByNameQuery({
+  const { data: Banner, isLoading } = useGetBannerByNameQuery({
     pages,
     pageSize,
   });
@@ -113,13 +112,12 @@ const Banner = () => {
             </div>
             <Tables
               data={restdata}
-              loading={isFetching}
+              loading={isLoading}
               columns={[
                 {
                   title: "#",
                   sorter: (a, b) => a.index - b.index,
                   render: (text, record, index) => index + 1,
-           
                 },
                 {
                   title: "Image En",
@@ -226,27 +224,31 @@ const Banner = () => {
                   dataIndex: "b_id",
                   render: (b_id) => (
                     <>
-                      <Link to={"/ebanner/" + b_id}>
-                        <MdOutlineModeEditOutline
-                          size={20}
-                          className="text-purple-700 "
-                        />
-                      </Link>
-                      &nbsp;&nbsp;
-                      {/* <IconButton>
-                        <Icon
-                          fontSize="small"
-                          color="inherit"
+                      {" "}
+                      <IconButton>
+                        <Link to={"/ebanner/" + b_id}>
+                          <MdOutlineModeEditOutline
+                            size={20}
+                            className="text-purple-700 "
+                          />
+                        </Link>
+                        &nbsp;&nbsp;
+                      </IconButton>
+                      <IconButton>
+                        <MdDelete
                           style={{ cursor: "pointer", color: "#dd4b39" }}
                           onClick={() => {
-                            if (window.confirm("Are you sure to delete this record?")) {
+                            if (
+                              window.confirm(
+                                "Are you sure to delete this record?"
+                              )
+                            ) {
                               handledelete(b_id);
                             }
                           }}
-                        >
-                          delete
-                        </Icon>
-                      </IconButton> */}
+                        />
+                      </IconButton>
+                      
                     </>
                   ),
                 },

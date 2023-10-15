@@ -15,6 +15,7 @@ import "jspdf-autotable";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetGroupByNameQuery } from "../Redux/ReduxApi";
+import { MdMenu, MdOutlineModeEditOutline } from "react-icons/md";
 
 const Groups = () => {
   const [search, setsearch] = useState("");
@@ -98,9 +99,7 @@ const Groups = () => {
                   dataIndex: "id , gid",
                   render: (id, gid) => (
                     <Link to={"/rollsdata"}>
-                      {/* <Icon fontSize="small" style={{ cursor: "pointer", color: "blue" }}>
-                        menu
-                      </Icon> */}
+                      <MdMenu  size={20} style={{ cursor: "pointer", color: "blue" }} />
                     </Link>
                   ),
                 },
@@ -110,13 +109,10 @@ const Groups = () => {
                   dataIndex: "g_id",
                   render: (g_id) => (
                     <Link to={"/egroup/" + g_id}>
-                      {/* <Icon
-                        fontSize="small"
-                        color="inherit"
-                        style={{ cursor: "pointer", color: "skyblue" }}
-                      >
-                        edit
-                      </Icon> */}
+                      <MdOutlineModeEditOutline
+                        size={20}
+                        className="text-purple-700 "
+                      />
                     </Link>
                   ),
                 },

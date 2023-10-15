@@ -142,7 +142,7 @@ const Restaurant = () => {
                     <Image
                       width={100}
                       src={
-                        "https://new-requeue.s3.eu-west-2.amazonaws.com/media/media/" +
+                        "https://new-requeue.s3.eu-west-2.amazonaws.com/media/logos/" +
                         Logo.Logo
                       }
                       alt={Logo}

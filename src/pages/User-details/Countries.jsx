@@ -19,7 +19,7 @@ import {
   useGetCountryByNameQuery,
   useGetUsersByNameQuery,
 } from "../Redux/ReduxApi";
-import { MdOutlineModeEditOutline } from "react-icons/md";
+import { MdMenu, MdOutlineModeEditOutline } from "react-icons/md";
 
 const Countries = () => {
   const [search, setsearch] = useState("");
@@ -161,9 +161,7 @@ const Countries = () => {
                   dataIndex: "country_id",
                   render: (country_id) => (
                     <Link to={"/area/" + country_id}>
-                      {/* <Icon fontSize="small" style={{ cursor: "pointer", color: "blue" }}>
-                        menu
-                      </Icon> */}
+                       <MdMenu  size={20} style={{ cursor: "pointer", color: "blue" }} />
                     </Link>
                   ),
                 },
@@ -173,13 +171,10 @@ const Countries = () => {
                   dataIndex: "country_id",
                   render: (country_id) => (
                     <Link to={"/ecountry/" + country_id}>
-                      {/* <Icon
-                        fontSize="small"
-                        color="inherit"
-                        style={{ cursor: "pointer", color: "skyblue" }}
-                      >
-                        edit
-                      </Icon> */}
+                      <MdOutlineModeEditOutline
+                        size={20}
+                        className="text-purple-700 "
+                      />
                     </Link>
                   ),
                 },

@@ -13,10 +13,12 @@ import {
   invoiceApi,
   mostactiveApi,
   offerApi,
+  purchaseApi,
   queueApi,
   reasturantApi,
   todoApi,
   usersApi,
+  vocherApi,
 } from "./ReduxApi";
 
 export const store = configureStore({
@@ -38,6 +40,9 @@ export const store = configureStore({
     [allcustomerApi.reducerPath]: allcustomerApi.reducer,
     [mostactiveApi.reducerPath]: mostactiveApi.reducer,
     [blockApi.reducerPath]: blockApi.reducer,
+
+    [purchaseApi.reducerPath]: purchaseApi.reducer,
+    [vocherApi.reducerPath]: vocherApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -59,7 +64,10 @@ export const store = configureStore({
 
       allcustomerApi.middleware,
       mostactiveApi.middleware,
-      blockApi.middleware
+      blockApi.middleware,
+
+      purchaseApi.middleware,
+      vocherApi.middleware
     ),
 });
 

@@ -102,6 +102,7 @@ const Tables = ({ data, loading, columns, pagination , onChange}) => {
       {loading && <div style={{ minHeight: 200 }}></div>}
     </Spin>
   );
+  
   return (
     <div>
       <Table
@@ -114,7 +115,7 @@ const Tables = ({ data, loading, columns, pagination , onChange}) => {
           emptyText: customEmptyText,
           filterConfirm: customLoader,
           filterReset: customLoader,
-          emptyText: customLoader,
+        
         }}
       />
     </div>

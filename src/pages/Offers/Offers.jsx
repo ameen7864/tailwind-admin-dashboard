@@ -14,9 +14,10 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { MdOutlineModeEditOutline } from "react-icons/md";
+import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useGetOfferByNameQuery } from "../Redux/ReduxApi";
+import { IconButton } from "@mui/material";
 
 const Offers = () => {
   const [search, setsearch] = useState("");
@@ -218,24 +219,22 @@ const Offers = () => {
                   title: "Delete",
                   dataIndex: "id",
                   render: (id) => (
-                    // <IconButton>
-                    //   <Icon
-                    //     fontSize="small"
-                    //     color="inherit"
-                    //     style={{ cursor: "pointer", color: "#dd4b39" }}
-                    //     onClick={() => {
-                    //       if (window.confirm("Are you sure to delete this record?")) {
-                    //         handledelete(id);
-                    //       }
-                    //     }}
-                    //   >
-                    //     delete
-                    //   </Icon>
-                    // </IconButton>
-                    <MdOutlineModeEditOutline
-                      size={20}
-                      className="text-purple-700 "
-                    />
+                    <IconButton>
+                      <MdDelete
+                        fontSize="meduim"
+                        color="inherit"
+                        style={{ cursor: "pointer", color: "#dd4b39" }}
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              "Are you sure to delete this record?"
+                            )
+                          ) {
+                            handledelete(id);
+                          }
+                        }}
+                      />
+                    </IconButton>
                   ),
                 },
               ]}

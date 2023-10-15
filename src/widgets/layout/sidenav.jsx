@@ -125,7 +125,27 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import { MdDashboard } from "react-icons/md";
+import {
+  MdClose,
+  MdDashboard,
+  MdFastfood,
+  MdFlag,
+  MdGroups,
+  MdGroups2,
+  MdGroups3,
+  MdLocalOffer,
+  MdLock,
+  MdOutlineCheck,
+  MdPayments,
+  MdPercent,
+  MdPerson,
+  MdPhotoSizeSelectActual,
+  MdReceiptLong,
+  MdRecentActors,
+  MdRestaurant,
+  MdSell,
+  MdShoppingCart,
+} from "react-icons/md";
 
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
 import { useState } from "react";
@@ -234,7 +254,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdRestaurant className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     restaurant
                   </Typography>
@@ -263,7 +283,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdShoppingCart className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     supermarket
                   </Typography>
@@ -274,17 +294,17 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
           <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
             <AccordionHeader
-              className="font-sm -my-2 text-sm rounded  border-0 px-3 w-full "
+              className="font-sm -my-2 rounded  border-0 px-3 w-full  text-base font-light leading-relaxed text-inherit font-sm capitalize"
               onClick={() => handleOpen(1)}
             >
-              <MdDashboard className="text-lg" /> Users Details
+              <MdPerson className="text-lg" /> Users Details
             </AccordionHeader>
             <AccordionBody>
               <ul
                 className="flex flex-col gap-1"
                 style={{ marginTop: "-15px ", marginBottom: "1px" }}
               >
-                <li className="-mt-1">
+                <li className="">
                   <NavLink to={`/dashboard/user`}>
                     {({ isActive }) => (
                       <Button
@@ -305,7 +325,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdPerson className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -337,7 +357,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdGroups className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -369,7 +389,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items  supermarket-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdFlag className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -385,10 +405,10 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </Accordion>
           <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
             <AccordionHeader
-              className="font-sm -my-1 text-sm rounded  border-0 px-3 "
+              className="font-sm -my-1 text-sm rounded text-base font-light leading-relaxed text-inherit font-sm border-0 px-3 "
               onClick={() => handleOpen(2)}
             >
-              <MdDashboard className="text-lg" /> Customer Details
+              <MdRecentActors className="text-lg" /> Customer Details
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -416,7 +436,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdGroups3 className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -448,7 +468,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdGroups2 className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -480,7 +500,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items  supermarket-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdLock className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -496,10 +516,10 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </Accordion>
           <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
             <AccordionHeader
-              className=" mx-0 text-sm rounded -my-1 border-0 px-3 "
+              className=" mx-0 text-sm rounded -my-1 border-0 px-3 text-base font-light leading-relaxed text-inherit font-sm"
               onClick={() => handleOpen(3)}
             >
-              <MdDashboard className="text-lg" />
+              <MdPayments className="text-lg" />
               <div className="font-xs">Subscriptions</div>
             </AccordionHeader>
             <AccordionBody>
@@ -507,7 +527,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 className="flex flex-col gap-1"
                 style={{ marginTop: "-15px " }}
               >
-                <li className="-mt-1">
+                <li className="-mt-0">
                   <NavLink to={`/dashboard/purchase`}>
                     {({ isActive }) => (
                       <Button
@@ -528,7 +548,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdOutlineCheck className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -560,7 +580,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdClose className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -592,7 +612,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="flex items  supermarket-center gap-4 px-4 capitalize hover:bg-violet-600 "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdPercent className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -628,7 +648,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdReceiptLong className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     invoice
                   </Typography>
@@ -657,7 +677,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdFastfood className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     cuisines
                   </Typography>
@@ -686,7 +706,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdSell className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     queue tags
                   </Typography>
@@ -715,7 +735,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdPhotoSizeSelectActual className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     banners
                   </Typography>
@@ -744,7 +764,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   className="flex items-center gap-4 px-4 capitalize hover:bg-violet-600 "
                   fullWidth
                 >
-                  <MdDashboard className="text-lg" />
+                  <MdLocalOffer className="text-lg" />
                   <Typography color="inherit" className="font-sm capitalize">
                     offers
                   </Typography>
@@ -757,7 +777,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
               className="font-sm mx-0 text-sm rounded  border-0 px-3 w-full "
               onClick={() => handleOpen(1)}
             >
-              <MdDashboard className="text-lg" /> Users Details
+              <MdDashboard className="text-lg" /> Pages
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -790,7 +810,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          users
+                          terms and condition
                         </Typography>
                       </Button>
                     )}
@@ -822,7 +842,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          groups
+                          contact us
                         </Typography>
                       </Button>
                     )}
@@ -854,7 +874,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          countries
+                          about us
                         </Typography>
                       </Button>
                     )}
@@ -868,7 +888,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
               className="font-sm  text-sm rounded  border-0 px-3 "
               onClick={() => handleOpen(2)}
             >
-              <MdDashboard className="text-lg" /> Customer Details
+              <MdDashboard className="text-lg" /> Reports
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -979,7 +999,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
               className="font-sm mx-0 text-sm rounded  border-0 px-3 "
               onClick={() => handleOpen(3)}
             >
-              <MdDashboard className="text-lg" /> Subscriptions
+              <MdDashboard className="text-lg" /> Notification
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -1012,7 +1032,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          purchase
+                          Tasks
                         </Typography>
                       </Button>
                     )}
@@ -1044,39 +1064,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                           color="inherit"
                           className="font-sm capitalize"
                         >
-                          not confirmed
-                        </Typography>
-                      </Button>
-                    )}
-                  </NavLink>
-                </li>
-                <li className="-mt-1">
-                  <NavLink to={`/dashboard/home`}>
-                    {({ isActive }) => (
-                      <Button
-                        style={{
-                          background: isActive
-                            ? "linear-gradient(195deg, #7537be, #31206d)"
-                            : "white",
-                          boxShadow: "none",
-                        }}
-                        variant={isActive ? "gradient" : "white"}
-                        color={
-                          isActive
-                            ? sidenavColor
-                            : sidenavType === "dark"
-                            ? "white"
-                            : "blue-gray"
-                        }
-                        className="flex items  supermarket-center gap-4 px-4 capitalize hover:bg-violet-600 "
-                        fullWidth
-                      >
-                        <MdDashboard className="text-lg" />
-                        <Typography
-                          color="inherit"
-                          className="font-sm capitalize"
-                        >
-                          voucher
+                          filter
                         </Typography>
                       </Button>
                     )}

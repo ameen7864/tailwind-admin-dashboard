@@ -3,24 +3,23 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const BASE_URL = "https://webadminapi.requeue.com/WebAdmin";
 
 const AUTH_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjEsIkNoYW5uZWwiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTE3LjAuMC4wIFNhZmFyaS81MzcuMzYiLCJBY2Nlc3NUb2tlbiI6eyJOSUwiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifSwiVXNlciI6ImRpeWFhIiwiaWF0IjoxNjk2NzQ0NzM3LCJleHAiOjE2OTczNDk1Mzd9.FvCCJO6efZA-I_jmNrYDViqKiUN-OmIPMy0hWebDR_Q";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjEsIkNoYW5uZWwiOiJNb3ppbGxhLzUuMCAoWDExOyBMaW51eCB4ODZfNjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMTYuMC4wLjAgU2FmYXJpLzUzNy4zNiIsIkFjY2Vzc1Rva2VuIjp7Ik5JTCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9LCJVc2VyIjoiZGl5YWEiLCJpYXQiOjE2OTczMDI4OTEsImV4cCI6MTY5NzkwNzY5MX0.fU2TasDToQfbUos8WFR3cJZ6V30AzQL1_-e13NmNiZ0";
 
-  export const dashboardApi = createApi({
-    reducerPath: "dashboardApi",
-    baseQuery: fetchBaseQuery({
-      baseUrl: BASE_URL,
-      prepareHeaders(headers) {
-        headers.set("Authorization", AUTH_TOKEN);
-        return headers;
-      },
+export const dashboardApi = createApi({
+  reducerPath: "dashboardApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders(headers) {
+      headers.set("Authorization", AUTH_TOKEN);
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getDashboardByName: builder.query({
+      query: () => `Total`,
     }),
-    endpoints: (builder) => ({
-      getDashboardByName: builder.query({
-        query: () => `Total`,
-      }),
-    }),
-  });
-
+  }),
+});
 
 export const allrestaurantApi = createApi({
   reducerPath: "allrestaurantApi",
@@ -235,17 +234,15 @@ export const countriesareaapi = createApi({
   }),
   endpoints: (builder) => ({
     getCountryAreaByName: builder.query({
-      query: ({ countryid}) => {
+      query: ({ countryid }) => {
         const queryParams = new URLSearchParams();
         queryParams.append("countryid", countryid);
-      
+
         return `Areas?${queryParams.toString()}`;
       },
     }),
   }),
 });
-
-
 
 export const allcustomerApi = createApi({
   reducerPath: "allcustomerApi",
@@ -313,6 +310,67 @@ export const blockApi = createApi({
   }),
 });
 
+export const purchaseApi = createApi({
+  reducerPath: "purchaseApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders(headers) {
+      headers.set("Authorization", AUTH_TOKEN);
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getPurchaseByName: builder.query({
+      query: ({
+        st,
+        country,
+        startdate,
+        Enddate,
+        restaurant,
+        paymentMethod,
+        channel,
+        search,
+        discount,
+        branchID,
+        pages,
+        pageSize,
+      }) => {
+        const queryParams = new URLSearchParams();
+        queryParams.append("st", st);
+        queryParams.append("country", country);
+        queryParams.append("startdate", startdate);
+        queryParams.append("Enddate", Enddate);
+        queryParams.append("restaurant", restaurant);
+        queryParams.append("paymentMethod", paymentMethod);
+        queryParams.append("channel", channel);
+        queryParams.append("discount", discount);
+        queryParams.append("branchID", branchID);
+        queryParams.append("search", search);
+        queryParams.append("page", pages);
+        queryParams.append("pagelimit", pageSize);
+        return `Ordersss?${queryParams.toString()}`;
+      },
+    }),
+  }),
+});
+
+export const vocherApi = createApi({
+  reducerPath: "vocherApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders(headers) {
+      headers.set("Authorization", AUTH_TOKEN);
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getVocherByName: builder.query({
+      query: () => {
+        return `voucher`;
+      },
+    }),
+  }),
+});
 
 export const todoApi = createApi({
   reducerPath: "todoApi",
@@ -344,5 +402,7 @@ export const { useGetCustomersByNameQuery } = allcustomerApi;
 export const { useGetMostByNameQuery } = mostactiveApi;
 export const { useGetBlockByNameQuery } = blockApi;
 
+export const { useGetPurchaseByNameQuery } = purchaseApi;
+export const { useGetVocherByNameQuery } = vocherApi;
 
 export const { useGetTodoByNameQuery } = todoApi;
