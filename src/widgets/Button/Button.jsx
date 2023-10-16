@@ -68,7 +68,7 @@ export const Input = ({ lbs, type, ...props }) => {
   );
 };
 
-export const TextFeild = ({ tflbs }) => {
+export const TextFeild = ({ tflbs, ...props }) => {
   return (
     <>
       <div>
@@ -83,6 +83,7 @@ export const TextFeild = ({ tflbs }) => {
           rows="4"
           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-purple-700 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
           placeholder={tflbs}
+          {...props}
         ></textarea>
       </div>
     </>

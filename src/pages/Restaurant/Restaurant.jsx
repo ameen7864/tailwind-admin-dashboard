@@ -20,6 +20,8 @@ import { useGetRestaurantByNameQuery } from "../Redux/ReduxApi";
 
 const Restaurant = () => {
   const [search, setsearch] = useState("");
+  const [searched, setsearched] = useState("");
+  const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -31,8 +33,8 @@ const Restaurant = () => {
   const id = 1;
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
-  const searched = "";
-  const { data: restaurant, isFetching } = useGetRestaurantByNameQuery({
+
+  const { data: restaurant, isFetching, refetch } = useGetRestaurantByNameQuery({
     id,
     searched,
     pages,
@@ -55,6 +57,11 @@ const Restaurant = () => {
       }));
     }
   }, [restaurant]);
+
+  const handleSearch = () => {
+    refetch({ id, searched, pages, pageSize });
+    setsearched(search);
+  };
   const restdata = restaurant?.data;
 
   const headers = [
@@ -85,7 +92,21 @@ const Restaurant = () => {
 
   return (
     <div>
-      {" "}
+      <div className="mx-6 mt-5 flex">
+        <input
+          label="Restaurant Name"
+          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
+          placeholder=" restaurant name"
+          onChange={(e) => setsearch(e.target.value)}
+        />
+
+        <button
+          className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
@@ -110,14 +131,14 @@ const Restaurant = () => {
               Restaurant Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
+                  onChange={(e) => setsearcheding(e.target.value)}
                   onSearch={(value) => setsearch(value)}
                 />
               </div>{" "}
@@ -129,7 +150,8 @@ const Restaurant = () => {
                 {
                   title: "#",
                   dataIndex: "i",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Rest Id",
@@ -157,14 +179,14 @@ const Restaurant = () => {
                   render: (data, Name) => (
                     <>
                       {" "}
-                      <Link to={`/branch/${Name.RestID}`}>
+                      <Link to={`/dashboard/branches?restid=${Name.RestID}`}>
                         <div style={{ color: "#3c8dbc", cursor: "pointer" }}>
                           {Name.Name}
                         </div>
                       </Link>
                     </>
                   ),
-                  filteredValue: [search],
+                  filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
                       String(record.Name)

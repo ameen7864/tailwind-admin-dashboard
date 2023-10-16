@@ -113,7 +113,7 @@ const Cuisines = () => {
                 {
                   title: "#",
                   dataIndex: "i",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>  (pages - 1) * pageSize + index + 1,
                   sorter: (a, b) => a.i - b.i,
                 },
                 {

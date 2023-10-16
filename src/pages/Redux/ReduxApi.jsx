@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = "https://webadminapi.requeue.com/WebAdmin";
+const BASE_URL = "http://192.168.1.40:9091/WebAdmin";
 
 const AUTH_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjEsIkNoYW5uZWwiOiJNb3ppbGxhLzUuMCAoWDExOyBMaW51eCB4ODZfNjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMTYuMC4wLjAgU2FmYXJpLzUzNy4zNiIsIkFjY2Vzc1Rva2VuIjp7Ik5JTCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9LCJVc2VyIjoiZGl5YWEiLCJpYXQiOjE2OTczMDI4OTEsImV4cCI6MTY5NzkwNzY5MX0.fU2TasDToQfbUos8WFR3cJZ6V30AzQL1_-e13NmNiZ0";
@@ -57,6 +57,31 @@ export const reasturantApi = createApi({
         return `getallrestro?${queryParams.toString()}`;
       },
     }),
+    getRestaurantIdByName: builder.query({
+      query: (id) => {
+        return `getallrestro?restID=${id}`;
+      },
+    }),
+    getRestaurantBranchByName: builder.query({
+      query: (id) => {
+        return `getbranchesbyrestid?restID=${id}`;
+      },
+    }),
+    getRestaurantUsersByName: builder.query({
+      query: (id) => {
+        return `getusersbyrestid?restID=${id}`;
+      },
+    }),
+    getRestaurantTablesByName: builder.query({
+      query: (id) => {
+        return `getTablesbyrest?restID=${id}`;
+      },
+    }),
+    getRestaurantMenuByName: builder.query({
+      query: (id) => {
+        return `getmenubyrestid?restID=${id}`;
+      },
+    }),
   }),
 });
 
@@ -94,6 +119,7 @@ export const cuisineApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["cuisine"],
   endpoints: (builder) => ({
     getCuisineByName: builder.query({
       query: ({ pages, pageSize }) => {
@@ -102,10 +128,21 @@ export const cuisineApi = createApi({
         queryParams.append("pagelimit", pageSize);
         return `getCuisines?${queryParams.toString()}`;
       },
+      providesTags: ["cuisine"],
+    }),
+
+    addCuisine: builder.mutation({
+      query: (item) => ({
+        url: "insertcuines",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["cuisine"],
     }),
   }),
 });
 
+//addQueuetags
 export const queueApi = createApi({
   reducerPath: "queueApi",
   baseQuery: fetchBaseQuery({
@@ -115,13 +152,24 @@ export const queueApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["queue"],
   endpoints: (builder) => ({
     getQueueByName: builder.query({
       query: () => `QeueuTags`,
+      providesTags: ["queue"],
+    }),
+    addQueue: builder.mutation({
+      query: (item) => ({
+        url: "addQueuetags",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["queue"],
     }),
   }),
 });
 
+//banner
 export const bannerApi = createApi({
   reducerPath: "bannerApi",
   baseQuery: fetchBaseQuery({
@@ -131,6 +179,7 @@ export const bannerApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["banner"],
   endpoints: (builder) => ({
     getBannerByName: builder.query({
       query: ({ pages, pageSize }) => {
@@ -139,10 +188,27 @@ export const bannerApi = createApi({
         queryParams.append("pagelimit", pageSize);
         return `banner?${queryParams.toString()}`;
       },
+      providesTags: ["banner"],
+    }),
+    addBanner: builder.mutation({
+      query: (item) => ({
+        url: "addbanner",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["banner"],
+    }),
+    deleteBanner: builder.mutation({
+      query: (id) => ({
+        url: `deletebanner?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["banner"],
     }),
   }),
 });
 
+//offer
 export const offerApi = createApi({
   reducerPath: "offerApi",
   baseQuery: fetchBaseQuery({
@@ -152,6 +218,7 @@ export const offerApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["offer"],
   endpoints: (builder) => ({
     getOfferByName: builder.query({
       query: ({ pages, pageSize }) => {
@@ -160,6 +227,22 @@ export const offerApi = createApi({
         queryParams.append("pagelimit", pageSize);
         return `getoffer?${queryParams.toString()}`;
       },
+      providesTags: ["offer"],
+    }),
+    addOffer: builder.mutation({
+      query: (item) => ({
+        url: "addOffer",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["offer"],
+    }),
+    deleteOffer: builder.mutation({
+      query: (id) => ({
+        url: `deleteOffer?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["offer"],
     }),
   }),
 });
@@ -386,12 +469,27 @@ export const todoApi = createApi({
 
 export const { useGetDashboardByNameQuery } = dashboardApi;
 export const { useGetAllRestByNameQuery } = allrestaurantApi;
-export const { useGetRestaurantByNameQuery } = reasturantApi;
+export const {
+  useGetRestaurantByNameQuery,
+  useGetRestaurantIdByNameQuery,
+  useGetRestaurantBranchByNameQuery,
+  useGetRestaurantUsersByNameQuery,
+  useGetRestaurantTablesByNameQuery,
+  useGetRestaurantMenuByNameQuery,
+} = reasturantApi;
 export const { useGetInvoiceByNameQuery } = invoiceApi;
-export const { useGetCuisineByNameQuery } = cuisineApi;
-export const { useGetQueueByNameQuery } = queueApi;
-export const { useGetBannerByNameQuery } = bannerApi;
-export const { useGetOfferByNameQuery } = offerApi;
+export const { useGetCuisineByNameQuery, useAddCuisineMutation } = cuisineApi;
+export const { useGetQueueByNameQuery, useAddQueueMutation } = queueApi;
+export const {
+  useGetBannerByNameQuery,
+  useDeleteBannerMutation,
+  useAddBannerMutation,
+} = bannerApi;
+export const {
+  useGetOfferByNameQuery,
+  useDeleteOfferMutation,
+  useAddOfferMutation,
+} = offerApi;
 
 export const { useGetUsersByNameQuery } = usersApi;
 export const { useGetGroupByNameQuery } = groupsapi;

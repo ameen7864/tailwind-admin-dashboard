@@ -35,6 +35,11 @@ import AddBanner from "./pages/Add-Data/Banner";
 import AddOffers from "./pages/Add-Data/Offers";
 import Voucher from "./pages/Subscriptions/Vocher";
 import Addvoucher from "./pages/Add-Data/vocher";
+import RestaurantBranch from "./pages/Restaurant/RestaurantBranch/RestaurantBranch";
+import BranchDetails from "./pages/Restaurant/RestaurantBranch/BranchDetails";
+import AddBranchtable from "./pages/Add-Data/restaurantbranch/AddBranchtable";
+import AddBranch from "./pages/Add-Data/restaurantbranch/AddBranch";
+import AddBranchMenu from "./pages/Add-Data/restaurantbranch/branchmenu/AddBranchMenu";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -72,6 +77,11 @@ export const routes = [
         path: "/resturant",
         element: <Restaurant />,
       },
+      { path: "/branches", element: <RestaurantBranch />  },
+      { path: "/branchesdetails", element: <BranchDetails />  },
+      { path: "/branchestables", element: <AddBranchtable />  },
+      { path: "/branchesmenu", element: <AddBranchMenu />  },
+      { path: "/addbranch", element: <AddBranch />  },
       {
         path: "/supermarket",
         element: <Supermarket />,

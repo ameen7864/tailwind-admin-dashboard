@@ -32,7 +32,7 @@ const AddUser = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white" className="capitalize">
-              Add {vendor}
+              Add Users
             </Typography>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 ">

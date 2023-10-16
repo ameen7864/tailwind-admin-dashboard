@@ -10,12 +10,33 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAddCuisineMutation } from "../Redux/ReduxApi";
 
 const AddCuisines = () => {
-  const searched = useLocation().search;
-  const vendor = new URLSearchParams(searched).get("vendor");
-
+  const [Name_English, setName_English] = useState("");
+  const [Name_Arabic, setName_Arabic] = useState("");
+  const [OrderId, setOrderId] = useState(0);
+  const [IsActive, setIsActive] = useState(false);
+  let data = { Name_English, Name_Arabic, OrderId, IsActive };
+  const navigate = useNavigate();
+  const [addOffer, { data: isSuccess, error }] = useAddCuisineMutation();
+  const handleAddItem = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await addOffer(data);
+      if (result.data) {
+        toast(result.data.message);
+        navigate(-1);
+      } else {
+        toast("Failed to add cuisines. Please try again");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <Typography>
       {" "}
@@ -28,29 +49,50 @@ const AddCuisines = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white" className="capitalize">
-              Add {vendor}
+              Add Cuisines
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 ">
+          <CardBody className="mx-4 overflow-x-scroll px-0 pt-0 pb-2 ">
             <Typography className="m-3">
-              <form className="m-2">
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form className="m-2" onSubmit={handleAddItem}>
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1">
-                    <Input lbs={"Name English"} />
+                    <Input
+                      lbs={"Name English"}
+                      onChange={(e) => {
+                        setName_English(e.target.value);
+                      }}
+                    />
                   </Typography>
                   <Typography>
-                    <Input lbs={"Name English"} />
+                    <Input
+                      lbs={"Name English"}
+                      onChange={(e) => {
+                        setName_Arabic(e.target.value);
+                      }}
+                    />
                   </Typography>
                 </Typography>
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Input lbs={"Order Id"} type={"number"} />
+                    <Input
+                      lbs={"Order Id"}
+                      type={"number"}
+                      onChange={(e) => {
+                        setOrderId(e.target.value);
+                      }}
+                    />
                   </Typography>
                 </Typography>
 
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Checkbox cbox={"active"} />
+                    <Checkbox
+                      cbox={"active"}
+                      onChange={(e) => {
+                        setIsActive(e.target.checked);
+                      }}
+                    />
                   </Typography>
                 </Typography>
 

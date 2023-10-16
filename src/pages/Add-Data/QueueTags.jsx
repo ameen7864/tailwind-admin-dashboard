@@ -2,10 +2,7 @@ import {
   CancelButton,
   Checkbox,
   Input,
-  InputImage,
-  Select,
-  SubmitButton,
-  TextFeild,
+  SubmitButton
 } from "@/widgets/Button/Button";
 import {
   Card,
@@ -13,12 +10,34 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
-import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAddQueueMutation } from "../Redux/ReduxApi";
 
 const AddQueueTags = () => {
   const searched = useLocation().search;
   const vendor = new URLSearchParams(searched).get("vendor");
+  const [NameEnglish, setNameEnglish] = useState("");
+  const [NameArbic, setNameArbic] = useState("");
+  const [Active, setActive] = useState(false);
+  let data = { NameEnglish, NameArbic, Active };
+  const navigate = useNavigate();
+  const [addOffer, { data: isSuccess, error }] = useAddQueueMutation();
+  const handleAddItem = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await addOffer(data);
+      if (result.data) {
+        toast(result.data.message);
+        navigate(-1);
+      } else {
+        toast("Failed to add queue. Please try again");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <Typography>
@@ -32,24 +51,33 @@ const AddQueueTags = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white" className="capitalize">
-              Add {vendor}
+              Add Queue Tags
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 ">
+          <CardBody className="mx-4 overflow-x-scroll px-0 pt-0 pb-2 ">
             <Typography className="m-3">
-              <form className="m-2">
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form className="m-2" onSubmit={handleAddItem}>
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Input lbs={"Name English"} />
+                    <Input
+                      lbs={"Name English"}
+                      onChange={(e) => setNameEnglish(e.target.value)}
+                    />
                   </Typography>
                   <Typography className="col-span-1 my-3">
-                    <Input lbs={"Name  Arabic"} />
+                    <Input
+                      lbs={"Name  Arabic"}
+                      onChange={(e) => setNameArbic(e.target.value)}
+                    />
                   </Typography>
                 </Typography>
 
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Checkbox cbox={"active"} />
+                    <Checkbox
+                      cbox={"active"}
+                      onChange={(e) => setActive(e.target.checked)}
+                    />
                   </Typography>
                 </Typography>
 

@@ -72,8 +72,20 @@ const Allcustomer = () => {
 
   return (
     <div>
-      {" "}
-      <hr className="mt-4" />
+<div className="mx-6 mt-5 flex">
+        <input
+          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
+          placeholder="customer name"
+          onChange={(e) => setsearch(e.target.value)}
+        />
+
+        <button
+          className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
+          // onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>      <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
           <Copy headers={headers} tableData={tableData} />

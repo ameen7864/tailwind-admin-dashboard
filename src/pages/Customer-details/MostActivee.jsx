@@ -16,7 +16,10 @@ import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetCustomersByNameQuery, useGetMostByNameQuery } from "../Redux/ReduxApi";
+import {
+  useGetCustomersByNameQuery,
+  useGetMostByNameQuery,
+} from "../Redux/ReduxApi";
 
 const MostActive = () => {
   const [search, setsearch] = useState("");
@@ -72,7 +75,20 @@ const MostActive = () => {
 
   return (
     <div>
-      {" "}
+      <div className="mx-6 mt-5 flex">
+        <input
+          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black  placeholder:mx-4"
+          placeholder="customer name"
+          onChange={(e) => setsearch(e.target.value)}
+        />
+
+        <button
+          className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
+          // onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
@@ -81,7 +97,6 @@ const MostActive = () => {
           <Button name={"Pdf"} onClick={handleExportToPDF} />
           <Print tableRef={tableRef} />
         </div>
-       
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
         <Card>
@@ -92,12 +107,12 @@ const MostActive = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white">
-            Most Active Table
+              Most Active Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -128,7 +143,12 @@ const MostActive = () => {
                           gap: "10px",
                         }}
                       >
-                        <Avatar src={"https://new-requeue.s3.eu-west-2.amazonaws.com/media/avatars/" + avatar} />
+                        <Avatar
+                          src={
+                            "https://new-requeue.s3.eu-west-2.amazonaws.com/media/avatars/" +
+                            avatar
+                          }
+                        />
                       </div>
                     </>
                   ),
@@ -139,9 +159,15 @@ const MostActive = () => {
                   filteredValue: [search],
                   onFilter: (value, record) => {
                     return (
-                      String(record.Name).toLowerCase().includes(value.toLowerCase()) ||
-                      String(record.Phone).toLowerCase().includes(value.toLowerCase()) ||
-                      String(record.client_gender).toLowerCase().includes(value.toLowerCase())
+                      String(record.Name)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.Phone)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.client_gender)
+                        .toLowerCase()
+                        .includes(value.toLowerCase())
                     );
                   },
                 },
@@ -166,7 +192,8 @@ const MostActive = () => {
                 {
                   title: "Creadte Date",
                   dataIndex: "created_date",
-                  render: (created_date) => moment(created_date).format("dddd LL"),
+                  render: (created_date) =>
+                    moment(created_date).format("dddd LL"),
                 },
 
                 {
@@ -187,7 +214,9 @@ const MostActive = () => {
                   title: "Last Seen",
                   dataIndex: "lastSeen",
                   render: (lastSeen) =>
-                    lastSeen === null ? "--" : moment(lastSeen).format("dddd LL"),
+                    lastSeen === null
+                      ? "--"
+                      : moment(lastSeen).format("dddd LL"),
                 },
 
                 {

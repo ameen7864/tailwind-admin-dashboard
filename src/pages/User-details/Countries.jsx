@@ -76,7 +76,20 @@ const Countries = () => {
 
   return (
     <div>
-      {" "}
+      <div className="mx-6 mt-5 flex">
+        <input
+          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
+          placeholder=" countries name"
+          onChange={(e) => setsearch(e.target.value)}
+        />
+
+        <button
+          className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
+          // onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
@@ -101,9 +114,9 @@ const Countries = () => {
               Country Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -161,7 +174,10 @@ const Countries = () => {
                   dataIndex: "country_id",
                   render: (country_id) => (
                     <Link to={"/area/" + country_id}>
-                       <MdMenu  size={20} style={{ cursor: "pointer", color: "blue" }} />
+                      <MdMenu
+                        size={20}
+                        style={{ cursor: "pointer", color: "blue" }}
+                      />
                     </Link>
                   ),
                 },

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="891" height="223.374" viewBox="0 0 891 223.374">
+  <g id="Group_195" data-name="Group 195" transform="translate(-1292 -671.626)">
+    <g id="box_2_" data-name="box (2)" transform="translate(1654.563 671.626)">
+      <path id="Path_23" data-name="Path 23" d="M89.656,34.007l10.638-10.638a1.97,1.97,0,0,0-.445-3.12L87.061,13.227a1.97,1.97,0,0,0-1.9,3.454l10.488,5.759-9.13,9.129L53.687,13.537l9.129-9.129,9.228,5.068a1.97,1.97,0,0,0,1.9-3.454L63.416.243a1.969,1.969,0,0,0-2.341.334L50.436,11.216,39.8.577A1.971,1.971,0,0,0,37.456.243L1.023,20.249a1.97,1.97,0,0,0-.445,3.12L11.216,34.007.578,44.644a1.97,1.97,0,0,0,.445,3.12l11.01,6.046V74.018a1.971,1.971,0,0,0,1.022,1.728L49.488,95.751a1.97,1.97,0,0,0,1.9,0L87.818,75.745a1.971,1.971,0,0,0,1.022-1.728V53.81l11.01-6.045a1.97,1.97,0,0,0,.445-3.12ZM50.436,51.764,18.1,34.006l32.34-17.759,32.34,17.759ZM38.057,4.409l9.128,9.129L14.35,31.568,5.221,22.439ZM14.351,36.445,47.187,54.475l-9.13,9.13L5.221,45.574ZM84.9,72.852,52.406,90.694V70.555a1.97,1.97,0,0,0-3.94,0V90.694L15.973,72.852V55.974l21.484,11.8a1.97,1.97,0,0,0,2.341-.334L50.436,56.8,61.075,67.437a1.97,1.97,0,0,0,2.341.334L84.9,55.974ZM62.816,63.605l-9.13-9.13,32.836-18.03,9.13,9.129Zm0,0" transform="translate(0 0)" fill="#737376"/>
+      <path id="Path_24" data-name="Path 24" d="M396.771,52.116a1.972,1.972,0,1,0-1.393-.578A1.987,1.987,0,0,0,396.771,52.116Zm0,0" transform="translate(-317.019 -38.685)" fill="#737376"/>
+      <path id="Path_25" data-name="Path 25" d="M247.97,314.926a1.971,1.971,0,1,0,1.393.577A1.983,1.983,0,0,0,247.97,314.926Zm0,0" transform="translate(-197.534 -252.881)" fill="#737376"/>
+    </g>
+    <text id="We_don_t_have_any_orders_for_you" data-name="We don’t have any orders for you" transform="translate(1436 840)" fill="#171719" font-size="37" font-family="SegoeUI, Segoe UI" letter-spacing="0.03em"><tspan x="0" y="0">We don’t have any orders for you</tspan></text>
+    <text id="We_will_inform_you_once_we_receive_new_order_for_your_restaurant" data-name="We will inform you once we receive new order for your restaurant" transform="translate(1292 888)" fill="#737376" font-size="29" font-family="SegoeUI, Segoe UI" letter-spacing="0.03em"><tspan x="0" y="0">We will inform you once we receive new order for your restaurant</tspan></text>
+  </g>
+</svg>

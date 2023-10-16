@@ -16,8 +16,12 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useGetBannerByNameQuery } from "../Redux/ReduxApi";
+import {
+  useDeleteBannerMutation,
+  useGetBannerByNameQuery,
+} from "../Redux/ReduxApi";
 import { IconButton } from "@mui/material";
+import { toast } from "react-toastify";
 
 const Banner = () => {
   const [search, setsearch] = useState("");
@@ -31,6 +35,7 @@ const Banner = () => {
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
+  // get banner
   const { data: Banner, isLoading } = useGetBannerByNameQuery({
     pages,
     pageSize,
@@ -41,6 +46,22 @@ const Banner = () => {
       pagination,
     });
   };
+  //delete banner
+  const [deleteItem] = useDeleteBannerMutation();
+  const handleDeleteItem = async (id) => {
+    try {
+      const result = await deleteItem(id);
+      if (result.data) {
+        toast(result.data.message);
+      } else {
+        toast("Unknown success message");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast("Failed to delete item. Please try again.");
+    }
+  };
+
   useEffect(() => {
     if (Banner?.Data1) {
       setTableParams((prev) => ({
@@ -98,9 +119,9 @@ const Banner = () => {
               Queue Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -117,7 +138,8 @@ const Banner = () => {
                 {
                   title: "#",
                   sorter: (a, b) => a.index - b.index,
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Image En",
@@ -243,12 +265,11 @@ const Banner = () => {
                                 "Are you sure to delete this record?"
                               )
                             ) {
-                              handledelete(b_id);
+                              handleDeleteItem(b_id);
                             }
                           }}
                         />
                       </IconButton>
-                      
                     </>
                   ),
                 },

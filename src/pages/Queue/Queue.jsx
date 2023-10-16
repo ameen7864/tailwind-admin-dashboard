@@ -111,7 +111,7 @@ const Queue = () => {
                   title: "#",
                   dataIndex: "index",
                   sorter: (a, b) => a.index - b.index,
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>  (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Name English",

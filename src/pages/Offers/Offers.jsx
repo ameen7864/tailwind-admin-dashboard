@@ -16,7 +16,10 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useGetOfferByNameQuery } from "../Redux/ReduxApi";
+import {
+  useDeleteOfferMutation,
+  useGetOfferByNameQuery,
+} from "../Redux/ReduxApi";
 import { IconButton } from "@mui/material";
 
 const Offers = () => {
@@ -41,6 +44,21 @@ const Offers = () => {
       pagination,
     });
   };
+  const [deleteItem] = useDeleteOfferMutation();
+  const handleDeleteItem = async (id) => {
+    try {
+      const result = await deleteItem(id);
+      if (result.data) {
+        alert(result.data.Message);
+      } else {
+        alert("Unknown success message");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      alert("Failed to delete item. Please try again.");
+    }
+  };
+
   useEffect(() => {
     if (offer?.totalcount) {
       setTableParams((prev) => ({
@@ -97,9 +115,9 @@ const Offers = () => {
               Offers Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -115,7 +133,7 @@ const Offers = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>  (pages - 1) * pageSize + index + 1,
                   sorter: (a, b) => a.i - b.i,
                 },
                 {
@@ -230,7 +248,7 @@ const Offers = () => {
                               "Are you sure to delete this record?"
                             )
                           ) {
-                            handledelete(id);
+                            handleDeleteItem(id);
                           }
                         }}
                       />

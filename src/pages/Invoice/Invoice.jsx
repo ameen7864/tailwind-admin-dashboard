@@ -9,18 +9,15 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
-import { Image, Input } from "antd";
+import { Input } from "antd";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { MdDelete, MdOutlineModeEditOutline, MdPrint } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { MdPrint } from "react-icons/md";
 import {
-  useGetInvoiceByNameQuery,
-  useGetOfferByNameQuery,
+  useGetInvoiceByNameQuery
 } from "../Redux/ReduxApi";
-import { IconButton } from "@mui/material";
 
 const Invoice = () => {
   const [search, setsearch] = useState("");
@@ -36,7 +33,11 @@ const Invoice = () => {
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
 
-  const { data: invoice, isFetching } = useGetInvoiceByNameQuery({
+  const {
+    data: invoice,
+    isFetching,
+    isLoading,
+  } = useGetInvoiceByNameQuery({
     parentId: -1,
     restId: -1,
     sdate: "01-01-2023",
@@ -65,7 +66,6 @@ const Invoice = () => {
   const amounts = restdata?.map((item) => item.subtotal);
   const sum = amounts?.reduce((total, amount) => total + amount, 0);
 
-
   const headers = ["#", "name", "Status", "Created Date", "Duration"];
 
   const tableData = restdata?.map((item, index) => [
@@ -93,7 +93,6 @@ const Invoice = () => {
           <Button name={"Pdf"} onClick={handleExportToPDF} />
           <Print tableRef={tableRef} />
         </div>
-      
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
         <Card>
@@ -112,9 +111,9 @@ const Invoice = () => {
               </Typography>
             </div>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -126,13 +125,14 @@ const Invoice = () => {
             </div>
             <Tables
               data={restdata}
-              loading={isFetching}
+              loading={isLoading}
               columns={[
                 {
                   title: "#",
                   dataIndex: "i",
                   sorter: (a, b) => a.i - b.i,
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Restaurant",
