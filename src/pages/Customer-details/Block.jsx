@@ -20,6 +20,8 @@ import { useGetBlockByNameQuery } from "../Redux/ReduxApi";
 
 const Block = () => {
   const [search, setsearch] = useState("");
+  const [searched, setsearched] = useState("");
+  const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -114,8 +116,8 @@ const Block = () => {
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
-                  onSearch={(value) => setsearch(value)}
+                  onChange={(e) => setsearcheding(e.target.value)}
+         
                 />
               </div>{" "}
             </div>
@@ -166,7 +168,7 @@ const Block = () => {
                       <div>{client_name.client_name}</div>
                     </Link>
                   ),
-                  filteredValue: [search],
+                  filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
                       String(record.Name)

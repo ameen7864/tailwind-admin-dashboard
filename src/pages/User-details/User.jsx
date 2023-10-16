@@ -15,13 +15,13 @@ import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  useGetUsersByNameQuery
-} from "../Redux/ReduxApi";
+import { useGetUsersByNameQuery } from "../Redux/ReduxApi";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 
 const User = () => {
   const [search, setsearch] = useState("");
+  const [searchText, setsearched] = useState("");
+  const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -30,15 +30,21 @@ const User = () => {
     },
   });
 
-  const searchText = "";
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
-  const { data: user, isFetching } = useGetUsersByNameQuery({
+  const {
+    data: user,
+    isFetching,
+
+    refetch,
+  } = useGetUsersByNameQuery({
     searchText,
     pages,
     pageSize,
   });
+
+
 
   const handleTableChange = (pagination) => {
     setTableParams({
@@ -56,6 +62,10 @@ const User = () => {
       }));
     }
   }, [user]);
+  const handleSearch = () => {
+    refetch({ searchText, pages, pageSize });
+    setsearched(search);
+  };
   const restdata = user?.data;
 
   const headers = ["#", "Title", "Access Name", "Status", "Created Date"];
@@ -75,9 +85,8 @@ const User = () => {
 
   return (
     <div>
-  <div className="mx-6 mt-5 flex">
+      <div className="mx-6 mt-5 flex">
         <input
-
           className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
           placeholder=" users"
           onChange={(e) => setsearch(e.target.value)}
@@ -85,7 +94,7 @@ const User = () => {
 
         <button
           className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
-          // onClick={handleSearch}
+          onClick={handleSearch}
         >
           Search
         </button>
@@ -114,15 +123,14 @@ const User = () => {
               Users Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
-                  onSearch={(value) => setsearch(value)}
+                  onChange={(e) => setsearcheding(e.target.value)}
                 />
               </div>{" "}
             </div>
@@ -132,7 +140,8 @@ const User = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Title",
@@ -141,7 +150,7 @@ const User = () => {
                 {
                   title: "Access Name",
                   dataIndex: "userName",
-                  filteredValue: [search],
+                  filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
                       String(record.user_title)
@@ -201,7 +210,7 @@ const User = () => {
                   dataIndex: "user_id",
                   render: (user_id) => (
                     <Link to={"/euser/" + user_id}>
-                     <MdOutlineModeEditOutline
+                      <MdOutlineModeEditOutline
                         size={20}
                         className="text-purple-700 "
                       />

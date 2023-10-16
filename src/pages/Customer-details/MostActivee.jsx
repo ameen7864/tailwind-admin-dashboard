@@ -23,6 +23,8 @@ import {
 
 const MostActive = () => {
   const [search, setsearch] = useState("");
+  const [searched, setsearched] = useState("");
+  const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -31,7 +33,6 @@ const MostActive = () => {
     },
   });
 
-  const searchText = "";
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
@@ -117,8 +118,8 @@ const MostActive = () => {
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
-                  onSearch={(value) => setsearch(value)}
+                  onChange={(e) => setsearcheding(e.target.value)}
+                 
                 />
               </div>{" "}
             </div>
@@ -156,7 +157,7 @@ const MostActive = () => {
                 {
                   title: "Name",
                   dataIndex: "client_name",
-                  filteredValue: [search],
+                  filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
                       String(record.Name)

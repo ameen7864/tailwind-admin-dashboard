@@ -23,6 +23,8 @@ import { MdMenu, MdOutlineModeEditOutline } from "react-icons/md";
 
 const Countries = () => {
   const [search, setsearch] = useState("");
+  const [searchText, setsearched] = useState("");
+  const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -31,11 +33,14 @@ const Countries = () => {
     },
   });
 
-  const searchText = "";
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
-  const { data: Countries, isFetching } = useGetCountryByNameQuery({
+  const {
+    data: Countries,
+    isFetching,
+    refetch,
+  } = useGetCountryByNameQuery({
     searchText,
     pages,
     pageSize,
@@ -57,6 +62,10 @@ const Countries = () => {
       }));
     }
   }, [Countries]);
+  const handleSearch = () => {
+    refetch({ searchText, pages, pageSize });
+    setsearched(search);
+  };
   const restdata = Countries?.data;
 
   const headers = ["#", "Title", "Access Name", "Status", "Created Date"];
@@ -85,7 +94,7 @@ const Countries = () => {
 
         <button
           className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
-          // onClick={handleSearch}
+          onClick={handleSearch}
         >
           Search
         </button>
@@ -121,8 +130,7 @@ const Countries = () => {
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
-                  onSearch={(value) => setsearch(value)}
+                  onChange={(e) => setsearcheding(e.target.value)}
                 />
               </div>{" "}
             </div>
@@ -132,12 +140,13 @@ const Countries = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Name",
                   dataIndex: "country_name",
-                  filteredValue: [search],
+                  filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
                       String(record.country_name)

@@ -20,6 +20,8 @@ import { useGetCustomersByNameQuery } from "../Redux/ReduxApi";
 
 const Allcustomer = () => {
   const [search, setsearch] = useState("");
+  const [searched, setsearched] = useState("");
+  const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -28,7 +30,6 @@ const Allcustomer = () => {
     },
   });
 
-  const searchText = "";
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
@@ -72,7 +73,7 @@ const Allcustomer = () => {
 
   return (
     <div>
-<div className="mx-6 mt-5 flex">
+      <div className="mx-6 mt-5 flex">
         <input
           className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
           placeholder="customer name"
@@ -85,7 +86,8 @@ const Allcustomer = () => {
         >
           Search
         </button>
-      </div>      <hr className="mt-4" />
+      </div>{" "}
+      <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
           <Copy headers={headers} tableData={tableData} />
@@ -93,7 +95,6 @@ const Allcustomer = () => {
           <Button name={"Pdf"} onClick={handleExportToPDF} />
           <Print tableRef={tableRef} />
         </div>
-       
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
         <Card>
@@ -104,18 +105,18 @@ const Allcustomer = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white">
-            Customer Table
+              Customer Table
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
-                  onSearch={(value) => setsearch(value)}
+                  onChange={(e) => setsearcheding(e.target.value)}
+              
                 />
               </div>{" "}
             </div>
@@ -165,7 +166,7 @@ const Allcustomer = () => {
                       <div>{name.name}</div>
                     </Link>
                   ),
-                  filteredValue: [search],
+                  filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
                       String(record.name)
