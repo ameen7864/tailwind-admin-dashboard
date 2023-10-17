@@ -17,11 +17,13 @@ import { useEffect, useRef, useState } from "react";
 import { MdDelete, MdOutlineModeEditOutline, MdPrint } from "react-icons/md";
 import { Link } from "react-router-dom";
 import {
+  useGetAllRestByNameQuery,
+  useGetCountryByNameQuery,
   useGetInvoiceByNameQuery,
   useGetOfferByNameQuery,
   useGetPurchaseByNameQuery,
 } from "../Redux/ReduxApi";
-import { IconButton } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 
 const Purchase = () => {
   const [search, setsearch] = useState("");
@@ -52,7 +54,14 @@ const Purchase = () => {
     pageSize,
   });
 
-  console.log(isFetching);
+  const { data: Countries } = useGetCountryByNameQuery({
+    searchText: "",
+    pages: 1,
+    pageSize: 10000,
+  });
+  const Countriesdata = Countries?.data;
+  const { data: resturant } = useGetAllRestByNameQuery({});
+  const Resturantdata = resturant?.data;
 
   const handleTableChange = (pagination) => {
     setTableParams({
@@ -90,7 +99,168 @@ const Purchase = () => {
 
   return (
     <div>
-      {" "}
+      <Card className="mt-10">
+        <CardHeader
+          variant="gradient"
+          color="blue"
+          className="mb-8 p-6"
+          style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
+        >
+          <Typography variant="h6" color="white">
+            Filter
+          </Typography>
+        </CardHeader>
+        <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-5">
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Payment Method
+            </label>
+            <select
+              id="countries"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            >
+              <option selected>Choose a Payment</option>
+              <option value=" ">All</option>
+              <option value="1">Knet</option>
+              <option value="4">Credit Card</option>
+              <option value="5">Vocher</option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Discount
+            </label>
+            <select
+              id="countries"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            >
+              <option selected>Choose a Discount</option>
+              <option value=" ">Any</option>
+              <option value="0">Without Discount</option>
+              <option value="1">With Discount</option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Channel
+            </label>
+            <select
+              id="countries"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            >
+              <option selected>Choose a Channel</option>
+              <option value=" ">Any</option>
+              <option value="2">iOS</option>
+              <option value="3">Android</option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Country
+            </label>
+            <select
+              id="countries"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            >
+              <option selected>Choose a country</option>
+              {Countriesdata?.map((item) => (
+                <option key={item.id} value={item.country_id}>
+                  {item.country_name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Restaurant
+            </label>
+            <select
+              id="countries"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            >
+              <option selected>Choose a country</option>
+              {Resturantdata?.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.ResturantName}
+                </option>
+              ))}
+            </select>
+          </div>
+        </Typography>
+        <Typography className="mx-5 my-4 mb-10 grid grid-cols-1 gap-4 md:grid-cols-5">
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Branch
+            </label>
+            <select
+              id="countries"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            >
+              <option selected>Choose a country</option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Date From:
+            </label>
+            <input
+              type="date"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              To
+            </label>
+            <input
+              type="date"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              for="first_name"
+              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Search
+            </label>
+            <input
+              type="text"
+              placeholder="Order #,phone,first name,last name"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            />
+          </div>
+          <div className="mt-6 flex w-full mx-1 justify-center gap-3">
+            <Button name="search" />
+            <Button name="export" />
+          </div>
+        </Typography>
+      </Card>
+
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
@@ -112,9 +282,9 @@ const Purchase = () => {
               Purchase Tickets
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -132,7 +302,8 @@ const Purchase = () => {
                   title: "#",
                   dataIndex: "i",
                   sorter: (a, b) => a.i - b.i,
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Order#",
@@ -149,23 +320,29 @@ const Purchase = () => {
                           `?client=${client_name.client_id}&sdate=${client_name.createdDate}&edate=${edate}`
                         } 
                       >*/}
-                        <div>{client_name.client_name}</div>
-                        <div>{client_name.client_phone}</div>
+                      <div>{client_name.client_name}</div>
+                      <div>{client_name.client_phone}</div>
                       {/* </Link> */}
                     </>
                   ),
                   // filteredValue: [searched],
                   onFilter: (value, record) => {
                     return (
-                      String(record.client_id).toLowerCase().includes(value.toLowerCase()) ||
+                      String(record.client_id)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
                       String(record.client_name)
                         .toLowerCase()
                         .includes(value.toLowerCase()) ||
                       String(record.client_phone)
                         .toLowerCase()
                         .includes(value.toLowerCase()) ||
-                      String(record.totalQueue).toLowerCase().includes(value.toLowerCase()) ||
-                      String(record.Amount).toLowerCase().includes(value.toLowerCase())
+                      String(record.totalQueue)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.Amount)
+                        .toLowerCase()
+                        .includes(value.toLowerCase())
                     );
                   },
                 },
@@ -175,11 +352,16 @@ const Purchase = () => {
                   render: (data, country_name) => (
                     <>
                       <img
-                        src={"https://cdn.requeue.net/media/flags/" + country_name.flag}
+                        src={
+                          "https://cdn.requeue.net/media/flags/" +
+                          country_name.flag
+                        }
                         alt="flag"
                         style={{ maxWidth: "40px", marginLeft: "40px" }}
                       />
-                      <div style={{ marginLeft: "23px" }}>{country_name.country_name}</div>
+                      <div style={{ marginLeft: "23px" }}>
+                        {country_name.country_name}
+                      </div>
                     </>
                   ),
                 },
@@ -196,7 +378,8 @@ const Purchase = () => {
                   title: "Date ",
 
                   dataIndex: "createdDate",
-                  render: (createdDate) => moment(createdDate).format("dddd LL"),
+                  render: (createdDate) =>
+                    moment(createdDate).format("dddd LL"),
                 },
                 {
                   title: "Logo",
@@ -214,7 +397,9 @@ const Purchase = () => {
                         style={{ width: "30px" }}
                       />
                       <img
-                        src={paymentStatus.paymentMethod === 1 ? "Knet" : "card"}
+                        src={
+                          paymentStatus.paymentMethod === 1 ? "Knet" : "card"
+                        }
                         alt="paymentMethod"
                         style={{ width: "30px" }}
                       />

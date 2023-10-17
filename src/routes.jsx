@@ -40,6 +40,16 @@ import BranchDetails from "./pages/Restaurant/RestaurantBranch/BranchDetails";
 import AddBranchtable from "./pages/Add-Data/restaurantbranch/AddBranchtable";
 import AddBranch from "./pages/Add-Data/restaurantbranch/AddBranch";
 import AddBranchMenu from "./pages/Add-Data/restaurantbranch/branchmenu/AddBranchMenu";
+import Termsandcondition from "./pages/RestaurantPages/Termsandcondition";
+import Contact from "./pages/RestaurantPages/Contact";
+import About from "./pages/RestaurantPages/About";
+import Overview from "./pages/RestaurantReports/overview/Overview";
+import Cancellation from "./pages/RestaurantReports/cancellation/Cancellation";
+import RegisteredData from "./pages/RestaurantReports/registered/Registered";
+import Analytic from "./pages/RestaurantReports/analytic/Analytic";
+import CallTime from "./pages/RestaurantReports/calltimes/CallTime";
+import NotifyTime from "./pages/RestaurantReports/notifytime/NotifyTime";
+import TurnOver from "./pages/RestaurantReports/turnover/TurnOver";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -77,41 +87,50 @@ export const routes = [
         path: "/resturant",
         element: <Restaurant />,
       },
-      { path: "/branches", element: <RestaurantBranch />  },
-      { path: "/branchesdetails", element: <BranchDetails />  },
-      { path: "/branchestables", element: <AddBranchtable />  },
-      { path: "/branchesmenu", element: <AddBranchMenu />  },
-      { path: "/addbranch", element: <AddBranch />  },
+      { path: "/branches", element: <RestaurantBranch /> },
+      { path: "/branchesdetails", element: <BranchDetails /> },
+      { path: "/branchestables", element: <AddBranchtable /> },
+      { path: "/branchesmenu", element: <AddBranchMenu /> },
+      { path: "/addbranch", element: <AddBranch /> },
       {
         path: "/supermarket",
         element: <Supermarket />,
       },
-      { path: "/user", element: <User />  },
-      { path: "/group", element: <Groups />  },
-      { path: "/country", element: <Countries />  },
-      { path: "/all_customer", element: <Allcustomer />  },
-      { path: "/most_active", element: <MostActivee />  },
-      { path: "/block", element: <Block />  },
-      { path: "/purchase", element: <Purchase />  },
-      { path: "/not-confirmed", element: <NotConfirmed />  },
-      { path: "/voucher", element: <Voucher />  },
-      { path: "/invoice", element: <Invoice />  },
-      { path: "/queue", element: <Queue />  },
-      { path: "/banner", element: <Banner />  },
-      { path: "/offer", element: <Offers />  },
-      { path: "/cuisine", element: <Cuisines />  },
+      { path: "/user", element: <User /> },
+      { path: "/group", element: <Groups /> },
+      { path: "/country", element: <Countries /> },
+      { path: "/all_customer", element: <Allcustomer /> },
+      { path: "/most_active", element: <MostActivee /> },
+      { path: "/block", element: <Block /> },
+      { path: "/purchase", element: <Purchase /> },
+      { path: "/not-confirmed", element: <NotConfirmed /> },
+      { path: "/voucher", element: <Voucher /> },
+      { path: "/invoice", element: <Invoice /> },
+      { path: "/queue", element: <Queue /> },
+      { path: "/banner", element: <Banner /> },
+      { path: "/offer", element: <Offers /> },
+      { path: "/cuisine", element: <Cuisines /> },
+      //pages
+      { path: "/termsandcondition", element: <Termsandcondition /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/about", element: <About /> },
 
+      //reports
+
+      { path: "/termsandcondition", element: <Termsandcondition /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/about", element: <About /> },
       //add data
 
-  { path: "/add", element: <AddRestaurant />  },
-  { path: "/adduser", element: <AddUser />  },
-  { path: "/addgroup", element: <AddGroups />  },
-  { path: "/addcountry", element: <AddCountries />  },
-  { path: "/addvoucher", element: <Addvoucher />  },
-  { path: "/addcuisines", element: <AddCuisines />  },
-  { path: "/addqueue", element: <AddQueueTags />  },
-  { path: "/addbanner", element: <AddBanner />  },
-  { path: "/addoffer", element: <AddOffers />  },
+      { path: "/overview", element: <Overview /> },
+      { path: "/cancellation", element: <Cancellation /> },
+      { path: "/registered", element: <RegisteredData /> },
+      { path: "/analytic", element: <Analytic /> },
+      { path: "/callTime", element: <CallTime /> },
+      { path: "/notifyTime", element: <NotifyTime /> },
+      { path: "/turnOver", element: <TurnOver /> },
     ],
   },
   {

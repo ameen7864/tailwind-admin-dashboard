@@ -32,9 +32,11 @@ import Button, {
   Input,
   TextFeild,
 } from "@/widgets/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
+  useDeleteTableMutation,
   useGetCuisineByNameQuery,
+  useGetQueueByNameQuery,
   useGetRestaurantBranchByNameQuery,
   useGetRestaurantIdByNameQuery,
   useGetRestaurantMenuByNameQuery,
@@ -45,25 +47,45 @@ import moment from "moment";
 import { Image, QRCode } from "antd";
 import Tables from "@/widgets/Tableandexport/Table";
 import { IconButton } from "@mui/material";
+import { toast } from "react-toastify";
 
 const BranchDetails = () => {
+  const searched = useLocation().search;
+  const restid = new URLSearchParams(searched).get("restid");
   const { data: cuisines } = useGetCuisineByNameQuery({
     pages: 1,
     pageSize: 10000,
   });
   const cuisinedata = cuisines?.data;
 
-  const { data: restaurantdata, isFetching } = useGetRestaurantIdByNameQuery(2);
-  const { data: restaurantusers } = useGetRestaurantUsersByNameQuery(2);
-  const { data: restauranttables } = useGetRestaurantTablesByNameQuery(2);
-  const { data: restaurantmenu } = useGetRestaurantMenuByNameQuery(2);
+  const { data: restaurantdata, isFetching } =
+    useGetRestaurantIdByNameQuery(restid);
+  const { data: restaurantusers } = useGetRestaurantUsersByNameQuery(restid);
+  const { data: restauranttables } = useGetRestaurantTablesByNameQuery(restid);
+  const { data: restaurantmenu } = useGetRestaurantMenuByNameQuery(restid);
+  const { data: Queue } = useGetQueueByNameQuery({});
   const restdata = restaurantdata?.data[0];
-
+  const queuedata = Queue?.data;
   const restusersdata = restaurantusers?.data;
   const resttablesdata = restauranttables?.data;
   const restmenudata = restaurantmenu?.data;
 
-  console.log(restdata);
+  const [deleteTable] = useDeleteTableMutation();
+  const handleDeleteItem = async (id) => {
+    try {
+      const result = await deleteTable(id);
+      if (result.data) {
+        toast(result.data.message);
+      } else {
+        toast("Unknown success message");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast("Failed to delete item. Please try again.");
+    }
+  };
+
+  // handleDeleteItem
 
   return (
     <div>
@@ -320,7 +342,7 @@ const BranchDetails = () => {
                           <Button name={"Pdf"} />
                           <Button name={"Pdf"} />
                         </div>
-                        <Link to={"/dashboard/adduser?restid=1"}>
+                        <Link to={`/dashboard/adduser?restid=${restid}`}>
                           <Button name={"Add user"} />
                         </Link>
                       </div>
@@ -509,7 +531,7 @@ const BranchDetails = () => {
                                             "Are you sure to delete this record?"
                                           )
                                         ) {
-                                          handleDeleteItem(b_id);
+                                          handleDeleteItem(id);
                                         }
                                       }}
                                     />
@@ -554,40 +576,34 @@ const BranchDetails = () => {
                       <Typography variant="h6" color="white">
                         Queue List
                       </Typography>
-
-                      <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
-                        <div className="flex flex-wrap">
-                          <Button name={"Pdf"} />
-                          <Button name={"Pdf"} />
-                          <Button name={"Pdf"} />
-                          <Button name={"Pdf"} />
-                        </div>
-                        <Link to={"/dashboard/adduser?restid=1"}>
-                          <Button name={"Add Queue"} />
-                        </Link>
-                      </div>
                       <Tables
-                        data={restusersdata}
+                        data={queuedata}
                         loading={isFetching}
                         columns={[
                           {
                             title: "#",
+                            dataIndex: "index",
+                            sorter: (a, b) => a.index - b.index,
                             render: (text, record, index) => index + 1,
                           },
                           {
-                            title: "Title",
-                            dataIndex: "user_title",
+                            title: "Name English",
+                            dataIndex: "NameEnglish",
+                            sorter: (a, b) =>
+                              a.NameEnglish.localeCompare(b.NameEnglish),
                           },
                           {
-                            title: "Access Name",
-                            dataIndex: "userName",
+                            title: "Name Arbic",
+                            dataIndex: "NameArbic",
+                            sorter: (a, b) =>
+                              a.NameArbic.localeCompare(b.NameArbic),
                           },
-
                           {
                             title: "Status",
-                            dataIndex: "is_active",
-                            render: (is_active) =>
-                              is_active === true ? (
+                            dataIndex: "Active",
+                            sorter: (a, b) => a.Active - b.Active,
+                            render: (Active) =>
+                              Active === true ? (
                                 <div
                                   style={{
                                     backgroundColor: "rgb(36 110 49)",
@@ -617,27 +633,11 @@ const BranchDetails = () => {
                                 </div>
                               ),
                           },
-                          {
-                            title: "Created Date",
-                            dataIndex: "created_date",
-                            render: (created_date) =>
-                              moment(created_date).format("dddd LL"),
-                          },
 
                           {
-                            title: "Action",
-                            dataIndex: "user_id",
-                            render: (user_id) => (
-                              <Link to={"/edituser/" + user_id}>
-                                {/* <Icon
-                                                fontSize="small"
-                                                color="inherit"
-                                                style={{ cursor: "pointer", color: "skyblue" }}
-                                              >
-                                                edit
-                                              </Icon> */}
-                              </Link>
-                            ),
+                            title: "Select",
+                            dataIndex: "id",
+                            render: (id) => <input type="checkbox" />,
                           },
                         ]}
                       />
@@ -657,7 +657,7 @@ const BranchDetails = () => {
                           <Button name={"Pdf"} />
                           <Button name={"Pdf"} />
                         </div>
-                        <Link to={"/dashboard/branchesmenu?restid=1"}>
+                        <Link to={`/dashboard/branchesmenu?restid=${restid}`}>
                           <Button name={"Add Menu"} />
                         </Link>
                       </div>
@@ -722,18 +722,12 @@ const BranchDetails = () => {
                             render: (da, data) => (
                               <>
                                 <Link
-                                  to={"/emenu" + `?id=${data.id}&rest=${id}`}
+                                  to={`/dashboard/branchesmenu?restid=${restid}&id=${data.id}`}
                                 >
-                                  <Icon
-                                    fontSize="small"
-                                    color="inherit"
-                                    style={{
-                                      cursor: "pointer",
-                                      color: "skyblue",
-                                    }}
-                                  >
-                                    edit
-                                  </Icon>
+                                  <MdOutlineModeEditOutline
+                                    size={20}
+                                    className="text-purple-700 "
+                                  />
                                 </Link>
                               </>
                             ),

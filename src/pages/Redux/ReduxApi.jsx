@@ -34,6 +34,9 @@ export const allrestaurantApi = createApi({
     getAllRestByName: builder.query({
       query: () => `rest`,
     }),
+    getAllRestBranchByName: builder.query({
+      query: ({id}) => `Branchbyrest?id=${id}`,
+    }),
   }),
 });
 
@@ -46,6 +49,7 @@ export const reasturantApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["restaurant"],
   endpoints: (builder) => ({
     getRestaurantByName: builder.query({
       query: ({ id, searched, pages, pageSize }) => {
@@ -71,16 +75,36 @@ export const reasturantApi = createApi({
       query: (id) => {
         return `getusersbyrestid?restID=${id}`;
       },
+      providesTags: ["restaurant"],
     }),
+    //branch tables
     getRestaurantTablesByName: builder.query({
       query: (id) => {
         return `getTablesbyrest?restID=${id}`;
       },
+      providesTags: ["tables"],
     }),
+    deleteTable: builder.mutation({
+      query: (id) => ({
+        url: `deleteTablesbyId?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["tables"],
+    }),
+    //branchmenu
     getRestaurantMenuByName: builder.query({
       query: (id) => {
         return `getmenubyrestid?restID=${id}`;
       },
+      providesTags: ["menu"],
+    }),
+    addBranchMenu: builder.mutation({
+      query: (item) => ({
+        url: "addMenubyrestid",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["menu"],
     }),
   }),
 });
@@ -246,7 +270,7 @@ export const offerApi = createApi({
     }),
   }),
 });
-
+//users
 export const usersApi = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
@@ -256,6 +280,7 @@ export const usersApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["user"],
   endpoints: (builder) => ({
     getUsersByName: builder.query({
       query: ({ searchText, pages, pageSize }) => {
@@ -265,10 +290,19 @@ export const usersApi = createApi({
         queryParams.append("pagelimit", pageSize);
         return `Users?${queryParams.toString()}`;
       },
+      providesTags: ["user"],
+    }),
+    addUser: builder.mutation({
+      query: (item) => ({
+        url: "AddUserbrach",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["user", "restaurant"],
     }),
   }),
 });
-
+//groups
 export const groupsapi = createApi({
   reducerPath: "groupsapi",
   baseQuery: fetchBaseQuery({
@@ -278,12 +312,24 @@ export const groupsapi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["group"],
   endpoints: (builder) => ({
     getGroupByName: builder.query({
       query: () => `Allgroups`,
+      providesTags: ["group"],
+    }),
+    addGroup: builder.mutation({
+      query: (item) => ({
+        url: "group",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["group"],
     }),
   }),
 });
+
+//countries
 
 export const countriesapi = createApi({
   reducerPath: "countriesapi",
@@ -294,6 +340,7 @@ export const countriesapi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["country"],
   endpoints: (builder) => ({
     getCountryByName: builder.query({
       query: ({ searchText, pages, pageSize }) => {
@@ -303,9 +350,21 @@ export const countriesapi = createApi({
         queryParams.append("pagelimit", pageSize);
         return `Countries?${queryParams.toString()}`;
       },
+      providesTags: ["country"],
+    }),
+    addCountry: builder.mutation({
+      query: (item) => ({
+        url: "Addcountries",
+        method: "POST",
+        body: item,
+      }),
+      invalidatesTags: ["country"],
     }),
   }),
 });
+
+// country area
+
 export const countriesareaapi = createApi({
   reducerPath: "countriesareaapi",
   baseQuery: fetchBaseQuery({
@@ -468,7 +527,8 @@ export const todoApi = createApi({
 });
 
 export const { useGetDashboardByNameQuery } = dashboardApi;
-export const { useGetAllRestByNameQuery } = allrestaurantApi;
+export const { useGetAllRestByNameQuery, useGetAllRestBranchByNameQuery } =
+  allrestaurantApi;
 export const {
   useGetRestaurantByNameQuery,
   useGetRestaurantIdByNameQuery,
@@ -476,6 +536,8 @@ export const {
   useGetRestaurantUsersByNameQuery,
   useGetRestaurantTablesByNameQuery,
   useGetRestaurantMenuByNameQuery,
+  useDeleteTableMutation,
+  useAddBranchMenuMutation,
 } = reasturantApi;
 export const { useGetInvoiceByNameQuery } = invoiceApi;
 export const { useGetCuisineByNameQuery, useAddCuisineMutation } = cuisineApi;
@@ -491,9 +553,9 @@ export const {
   useAddOfferMutation,
 } = offerApi;
 
-export const { useGetUsersByNameQuery } = usersApi;
-export const { useGetGroupByNameQuery } = groupsapi;
-export const { useGetCountryByNameQuery } = countriesapi;
+export const { useGetUsersByNameQuery, useAddUserMutation } = usersApi;
+export const { useGetGroupByNameQuery, useAddGroupMutation } = groupsapi;
+export const { useGetCountryByNameQuery, useAddCountryMutation } = countriesapi;
 export const { useGetCountryAreaByNameQuery } = countriesareaapi;
 
 export const { useGetCustomersByNameQuery } = allcustomerApi;

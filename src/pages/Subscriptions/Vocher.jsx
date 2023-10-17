@@ -84,8 +84,8 @@ const Voucher = () => {
           <Button name={"Pdf"} onClick={handleExportToPDF} />
           <Print tableRef={tableRef} />
         </div>
-        <Link to={"/dashboard/addoffer"}>
-          <Button name={"Add offer"} />
+        <Link to={"/dashboard/addvoucher"}>
+          <Button name={"Add Vocher"} />
         </Link>
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
@@ -100,12 +100,11 @@ const Voucher = () => {
               <Typography variant="h6" color="white">
                 Sales
               </Typography>
-          
             </div>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 h-[calc(100vh_-_120px)]">
+          <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
-              <div className="ml-auto mx-4 mb-3">
+              <div className="mx-4 ml-auto mb-3">
                 <Input.Search
                   className="w-48"
                   type="text"
@@ -123,7 +122,8 @@ const Voucher = () => {
                   title: "#",
                   dataIndex: "i",
                   sorter: (a, b) => a.i - b.i,
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Code",
@@ -150,8 +150,7 @@ const Voucher = () => {
                   dataIndex: "startDate",
                   sorter: (a, b) =>
                     new Date(a.startDate) - new Date(b.startDate),
-                  render: (startDate) =>
-                    moment(startDate).format("dddd LL"),
+                  render: (startDate) => moment(startDate).format("dddd LL"),
                 },
                 {
                   title: "Expired Date",
@@ -160,7 +159,8 @@ const Voucher = () => {
                     new Date(a.expiredDate) - new Date(b.expiredDate),
                   render: (expiredDate) =>
                     moment(expiredDate).format("dddd LL"),
-                },  {
+                },
+                {
                   title: "Total Used",
                   dataIndex: "totalUsed",
                   sorter: (a, b) => a.totalUsed - b.totalUsed,
@@ -170,7 +170,6 @@ const Voucher = () => {
                   dataIndex: "comment",
                   sorter: (a, b) => a.comment - b.comment,
                 },
-           
               ]}
               pagination={tableParams.pagination}
               onChange={handleTableChange}

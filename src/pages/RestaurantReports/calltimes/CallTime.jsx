@@ -1,3 +1,4 @@
+import { useGetInvoiceByNameQuery } from "@/pages/Redux/ReduxApi";
 import Button from "@/widgets/Button/Button";
 import Copy from "@/widgets/Tableandexport/Copy";
 import Excel from "@/widgets/Tableandexport/Excel";
@@ -15,9 +16,8 @@ import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { MdPrint } from "react-icons/md";
-import { useGetInvoiceByNameQuery } from "../Redux/ReduxApi";
 
-const Invoice = () => {
+const CallTime = () => {
   const [search, setsearch] = useState("");
   const today = new Date().toISOString().split("T")[0];
   const [tableParams, setTableParams] = useState({
@@ -82,7 +82,7 @@ const Invoice = () => {
 
   return (
     <div>
-      <Typography className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-5">
+      <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-6">
         <div>
           <label
             for="first_name"
@@ -138,6 +138,18 @@ const Invoice = () => {
             <option selected>Choose a country</option>
           </select>
         </div>
+        <div>
+          <label
+            for="first_name"
+            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Search
+          </label>
+          <input
+            placeholder="phone number"
+            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+          />
+        </div>
         <div className="mt-7">
           <Button name={"search"} />
         </div>
@@ -160,14 +172,9 @@ const Invoice = () => {
             className="mb-8 p-6"
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
-            <div className="flex justify-between">
-              <Typography variant="h6" color="white">
-                Sales
-              </Typography>
-              <Typography variant="h6" color="white">
-                Total Amount:{sum?.toFixed(2)}Kwd
-              </Typography>
-            </div>
+            <Typography variant="h6" color="white">
+              Call Time Data
+            </Typography>
           </CardHeader>
           <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
             <div className="flex">
@@ -325,4 +332,4 @@ const Invoice = () => {
   );
 };
 
-export default Invoice;
+export default CallTime;

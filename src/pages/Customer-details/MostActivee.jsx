@@ -78,7 +78,7 @@ const MostActive = () => {
     <div>
       <div className="mx-6 mt-5 flex">
         <input
-          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black  placeholder:mx-4"
+          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:mx-4  placeholder:text-black"
           placeholder="customer name"
           onChange={(e) => setsearch(e.target.value)}
         />
@@ -119,7 +119,6 @@ const MostActive = () => {
                   type="text"
                   placeholder="Search"
                   onChange={(e) => setsearcheding(e.target.value)}
-                 
                 />
               </div>{" "}
             </div>
@@ -129,7 +128,7 @@ const MostActive = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>                   (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "#",

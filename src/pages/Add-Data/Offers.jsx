@@ -120,8 +120,8 @@ const AddOffers = () => {
     End_date: formData.End_date
       ? formData.End_date
       : new Date()?.toLocaleDateString(),
-    mediaAr: uploadedImages,
-    mediaEn: uploadedImages1,
+    mediaAr: uploadedImages1,
+    mediaEn: uploadedImages,
     type: formData.type ? formData.type : 0,
   };
   const navigate = useNavigate();

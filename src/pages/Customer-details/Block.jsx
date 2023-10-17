@@ -127,7 +127,7 @@ const Block = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) => index + 1,
+                  render: (text, record, index) =>                   (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Avatar",

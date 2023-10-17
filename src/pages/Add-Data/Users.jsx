@@ -13,13 +13,56 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAddUserMutation, useGetGroupByNameQuery } from "../Redux/ReduxApi";
+import { toast } from "react-toastify";
 
 const AddUser = () => {
   const searched = useLocation().search;
-  const vendor = new URLSearchParams(searched).get("vendor");
+  const restid = new URLSearchParams(searched).get("restid");
+  const { data: groups } = useGetGroupByNameQuery();
+  const groupsdata = groups?.data;
+  const groupsdataselect = groupsdata?.map((item) => (
+    <option key={item.id} value={item.g_id}>
+      {item.g_name}
+    </option>
+  ));
+  const [UserTitle, setUserTitle] = useState("");
+  const [AccessName, setAccess] = useState("");
+  const [Password, setPassword] = useState("");
+  const [UserGroup, setUserGroup] = useState("1");
+  const [isActive, setisActive] = useState(false);
+  const navigate = useNavigate();
 
+  const usersdata = {
+    UserTitle,
+    AccessName,
+    Password,
+    UserGroup,
+    isActive,
+    rest_id: restid ? restid : "",
+    branch_id: restid ? restid : "",
+  };
+
+
+  const [addUser, { data: isSuccess, error }] = useAddUserMutation();
+  const handleAddItem = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await addUser(usersdata);
+      if (result.data) {
+        toast("User Succesfully Added");
+        navigate(-1);
+      } else {
+        toast("Failed to add offer. Please try again");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  //
   return (
     <Typography>
       {" "}
@@ -35,41 +78,62 @@ const AddUser = () => {
               Add Users
             </Typography>
           </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 mx-4 ">
+          <CardBody className="mx-4 overflow-x-scroll px-0 pt-0 pb-2 ">
             <Typography className="m-3">
-              <form className="m-2">
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form className="m-2" onSubmit={handleAddItem}>
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Input lbs={"User Title"} />
+                    <Input
+                      lbs={"User Title"}
+                      onChange={(e) => {
+                        setUserTitle(e.target.value);
+                      }}
+                    />
                   </Typography>
                   <Typography className="col-span-1 my-3">
-                    <Input lbs={"Access Name"} />
+                    <Input
+                      lbs={"Access Name"}
+                      onChange={(e) => {
+                        setAccess(e.target.value);
+                      }}
+                    />
                   </Typography>
                 </Typography>
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1">
                     <Select
                       label="User Group"
-                      opto="country"
-                      data={["ameen", "ahmed"]}
-                      //   onChange={handleSelectChange}
-                      //   value={selectedValue}
+                      opto="Group"
+                      data={groupsdataselect}
+                      onChange={(e) => {
+                        setUserGroup(e.target.value);
+                      }}
                     />
                   </Typography>
                   <Typography className="col-span-1 my-0">
-                    <Input lbs={"Password"} />
+                    <Input
+                      lbs={"Password"}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
                   </Typography>
                 </Typography>
 
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Checkbox cbox={"active"} />
+                    <Checkbox
+                      cbox={"Is Active?"}
+                      onChange={(e) => {
+                        setisActive(e.target.checked);
+                      }}
+                    />
                   </Typography>
                 </Typography>
 
-                <Typography className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Typography className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <Typography className="col-span-1 my-3">
-                    <Input lbs={"Created Date"} type="date"/>
+                    <Input lbs={"Created Date"} type="date" disabled/>
                   </Typography>
                 </Typography>
 

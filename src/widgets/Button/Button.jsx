@@ -55,7 +55,7 @@ export const Input = ({ lbs, type, ...props }) => {
           {...props}
           type={type ? type : "text"}
           id="small-input"
-          className={`block w-full p-2 text-gray-900 capitalize border border-purple-700 rounded-md bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-purple-500 dark:bg-gray-700 dark:border-purple-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 
+          className={`block w-full p-2 font-normal text-xl text-gray-900 capitalize border border-purple-700 rounded-md bg-gray-50 sm:text-sm focus:ring-blue-500 focus:border-purple-500 dark:bg-gray-700 dark:border-purple-600 dark:placeholder-gray-600 placeholder:text-black dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 
             
           `}
           required
@@ -189,7 +189,7 @@ export const Loader = ({}) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          height: "50vh",
         }}
       >
         <div class="loader"></div>

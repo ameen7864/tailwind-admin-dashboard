@@ -20,6 +20,7 @@ import {
   usersApi,
   vocherApi,
 } from "./ReduxApi";
+import { reportsApi } from "./ReportsApi";
 
 export const store = configureStore({
   reducer: {
@@ -43,6 +44,9 @@ export const store = configureStore({
 
     [purchaseApi.reducerPath]: purchaseApi.reducer,
     [vocherApi.reducerPath]: vocherApi.reducer,
+
+
+    [reportsApi.reducerPath]: reportsApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -67,7 +71,11 @@ export const store = configureStore({
       blockApi.middleware,
 
       purchaseApi.middleware,
-      vocherApi.middleware
+      vocherApi.middleware,
+
+
+
+      reportsApi.middleware
     ),
 });
 

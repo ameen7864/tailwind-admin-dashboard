@@ -23,7 +23,7 @@ import {
   MdOutlineSupervisedUserCircle,
 } from "react-icons/md";
 import Button, { CancelButton, Input } from "@/widgets/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   useGetCuisineByNameQuery,
   useGetRestaurantBranchByNameQuery,
@@ -35,20 +35,22 @@ import { Image } from "antd";
 import Tables from "@/widgets/Tableandexport/Table";
 
 const RestaurantBranch = () => {
+  const searched = useLocation().search;
+  const restid = new URLSearchParams(searched).get("restid");
   const { data: cuisines } = useGetCuisineByNameQuery({
     pages: 1,
     pageSize: 10000,
   });
   const cuisinedata = cuisines?.data;
 
-  const { data: restaurantdata } = useGetRestaurantIdByNameQuery(1);
-  const { data: restaurantusers } = useGetRestaurantUsersByNameQuery(1);
+  const { data: restaurantdata } = useGetRestaurantIdByNameQuery(restid);
+  const { data: restaurantusers } = useGetRestaurantUsersByNameQuery(restid);
   const { data: restaurantbranch, isFetching } =
-    useGetRestaurantBranchByNameQuery(1);
+    useGetRestaurantBranchByNameQuery(restid);
   const restdata = restaurantdata?.data[0];
   const restbranchdata = restaurantbranch?.data;
   const restusersdata = restaurantusers?.data;
-  console.log(restusersdata);
+  // console.log(vendor);
 
   return (
     <div>
@@ -138,7 +140,7 @@ const RestaurantBranch = () => {
                                 className="mx-2 "
                                 type="checkbox"
                                 value={value.id}
-                                // onChange={handleCheckboxChange}
+                                disabled
                               />
                               {value.name_en}
                             </label>
@@ -210,7 +212,12 @@ const RestaurantBranch = () => {
                             title: "Name",
                             dataIndex: "data, name_en",
                             render: (data, name_en) => (
-                              <Link to={"/dashboard/branchesdetails?restid=" + name_en.id}>
+                              <Link
+                                to={
+                                  "/dashboard/branchesdetails?restid=" +
+                                  name_en.id
+                                }
+                              >
                                 <div
                                   style={{
                                     color: "#3c8dbc",
@@ -330,7 +337,7 @@ const RestaurantBranch = () => {
                           <Button name={"Pdf"} />
                           <Button name={"Pdf"} />
                         </div>
-                        <Link to={"/dashboard/adduser?restid=1"}>
+                        <Link to={`/dashboard/adduser?restid=${restid}`}>
                           <Button name={"Add user"} />
                         </Link>
                       </div>
