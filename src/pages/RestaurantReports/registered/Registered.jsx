@@ -88,10 +88,7 @@ const RegisteredData = () => {
     <div>
       <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-6">
         <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
+          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Date From:
           </label>
           <input
@@ -103,10 +100,7 @@ const RegisteredData = () => {
           />
         </div>
         <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
+          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             To:
           </label>
           <input

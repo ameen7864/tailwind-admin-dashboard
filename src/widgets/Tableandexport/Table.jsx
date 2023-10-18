@@ -71,7 +71,7 @@
 // export default ReusableDataGrid;
 import { Empty, Spin, Table } from "antd";
 import { Loader } from "../Button/Button";
-import  nodata  from "./nodata.gif";
+import  nodata  from "./nodata.jpg";
 
 const Tables = ({ data, loading, columns, pagination, onChange }) => {
   const customEmptyText = (
@@ -84,8 +84,11 @@ const Tables = ({ data, loading, columns, pagination, onChange }) => {
         flexDirection:"column"
       }}
 
-      image={<img src={nodata} alt="Custom Loader"   style={{height:"300px"}}    className="h-[300px] object-cover w-fit;" />}
-     
+      image={<img src={nodata} alt="Custom Loader"   style={{height:"500px"}}    className="h-[300px] object-cover w-fit;" />}
+      description={
+        <div>
+          <div>{""}</div>
+        </div>}
     />
   );
 

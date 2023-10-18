@@ -126,6 +126,10 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import {
+  MdAccessibility,
+  MdAnalytics,
+  MdArticle,
+  MdCall,
   MdClose,
   MdDashboard,
   MdFastfood,
@@ -133,15 +137,22 @@ import {
   MdGroups,
   MdGroups2,
   MdGroups3,
+  MdInfo,
   MdLocalOffer,
   MdLock,
+  MdNotificationsPaused,
+  MdOutlineArchive,
+  MdOutlineCancel,
   MdOutlineCheck,
+  MdOutlineReportGmailerrorred,
+  MdOutlineSpeakerNotes,
   MdPayments,
   MdPercent,
   MdPerson,
   MdPhotoSizeSelectActual,
   MdReceiptLong,
   MdRecentActors,
+  MdReport,
   MdRestaurant,
   MdSell,
   MdShoppingCart,
@@ -777,7 +788,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
               className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-light leading-relaxed text-inherit"
               onClick={() => handleOpen(4)}
             >
-              <MdDashboard className="text-lg" /> Pages
+              <MdPayments className="text-lg" /> Pages
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -805,7 +816,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="hover:bg-violet-600 flex items-center gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdArticle className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -837,7 +848,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="hover:bg-violet-600 flex items-center gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdCall className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -869,7 +880,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="items supermarket-center  hover:bg-violet-600 flex gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdInfo className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -888,7 +899,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
               className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-light leading-relaxed text-inherit"
               onClick={() => handleOpen(5)}
             >
-              <MdDashboard className="text-lg" /> Reports
+              <MdReport className="text-lg" /> Reports
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -916,7 +927,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="hover:bg-violet-600 flex items-center gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdOutlineReportGmailerrorred className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -948,7 +959,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="hover:bg-violet-600 flex items-center gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdOutlineCancel className="text-lg" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -980,7 +991,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="items supermarket-center  hover:bg-violet-600 flex gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdOutlineArchive className="text-lg mt-1" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -1012,7 +1023,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="hover:bg-violet-600 flex items-center gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdAnalytics className="text-lg mt-1" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -1044,7 +1055,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="items supermarket-center  hover:bg-violet-600 flex gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdAccessibility className="text-lg mt-1" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -1076,7 +1087,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="items supermarket-center  hover:bg-violet-600 flex gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdNotificationsPaused  className="text-lg mt-1" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"
@@ -1108,7 +1119,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         className="items supermarket-center  hover:bg-violet-600 flex gap-4 px-4 capitalize "
                         fullWidth
                       >
-                        <MdDashboard className="text-lg" />
+                        <MdOutlineSpeakerNotes  className="text-lg mt-1.5" />
                         <Typography
                           color="inherit"
                           className="font-sm capitalize"

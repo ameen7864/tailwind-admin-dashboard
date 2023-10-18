@@ -1,8 +1,11 @@
 import {
   useGetAllRestBranchByNameQuery,
-  useGetAllRestByNameQuery,
-  useGetInvoiceByNameQuery,
+  useGetAllRestByNameQuery
 } from "@/pages/Redux/ReduxApi";
+import {
+  useGetTurnoverInsideByNameQuery,
+  useGetTurnoverOutsideByNameQuery,
+} from "@/pages/Redux/ReportsApi";
 import Button from "@/widgets/Button/Button";
 import Copy from "@/widgets/Tableandexport/Copy";
 import Excel from "@/widgets/Tableandexport/Excel";
@@ -19,68 +22,83 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { MdPrint } from "react-icons/md";
 
 const TurnOver = () => {
   const today = new Date().toISOString().split("T")[0];
   const [search, setsearch] = useState("");
-  const [restId, setrestId] = useState(-1);
+  const [resto, setresto] = useState(-1);
+  const [restId, setrestID] = useState(-1);
   const [branchid, setbranchid] = useState(-1);
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-      total: 0,
-    },
-  });
+  const [parentId, setparentId] = useState(-1);
+  const [sdate, setSdate] = useState(today);
+  const [Edate, setEdate] = useState(today);
+  const [startDate, setstartdate] = useState(today);
+  const [EndDate, setEndDate] = useState(today);
+
   const tableRef = useRef(null);
-  const pages = tableParams.pagination.current;
-  const pageSize = tableParams.pagination.pageSize;
+  const tableRef1 = useRef(null);
 
   const {
-    data: invoice,
+    data: inside,
     isFetching,
-    isLoading,
-  } = useGetInvoiceByNameQuery({
-    parentId: -1,
-    restId: -1,
-    sdate: "01-01-2023",
-    Edate: "01-07-2023",
-    pages,
-    pageSize,
+    refetch: insdefetch,
+  } = useGetTurnoverInsideByNameQuery({
+    position: 1,
+    restId,
+    parentId,
+    startDate,
+    EndDate,
   });
+  const { data: outside, refetch: outsidefetch } =
+    useGetTurnoverOutsideByNameQuery({
+      position: 0,
+      restId,
+      parentId,
+      startDate,
+      EndDate,
+    });
 
   const { data: restaurant } = useGetAllRestByNameQuery();
-  const { data: branch } = useGetAllRestBranchByNameQuery({id:branchid});
+  const { data: branch, refetch } = useGetAllRestBranchByNameQuery({
+    id: resto,
+  });
 
-  const handleTableChange = (pagination) => {
-    setTableParams({
-      pagination,
-    });
-  };
-  useEffect(() => {
-    if (invoice?.count) {
-      setTableParams((prev) => ({
-        ...prev,
-        pagination: {
-          ...prev.pagination,
-          total: invoice.count,
-        },
-      }));
-    }
-  }, [invoice]);
-  const restdata = invoice?.data;
+  const insidedata = inside?.data;
+  const outsidedata = outside?.data;
   const restaurantdata = restaurant?.data;
-  console.log(branch);
+  const restaurantbranchdata = branch?.data;
 
-  const headers = ["#", "name", "Status", "Created Date", "Duration"];
+  useEffect(() => {
+    refetch({ id: resto });
+  }, [resto]);
 
-  const tableData = restdata?.map((item, index) => [
+  const handlesearch = () => {
+    setrestID(resto);
+    setparentId(branchid);
+    setstartdate(sdate);
+    setEndDate(Edate);
+    insdefetch({ position: 1, restId, parentId, startDate, EndDate });
+    outsidefetch({ position: 0, restId, parentId, startDate, EndDate });
+  };
+
+  const headers = ["#", "Date", "Breakfast", "Lunch", "Dinner"];
+
+  const tableData = insidedata?.map((item, index) => [
     index + 1,
-    item.name,
-    item.isActive ? "active" : "unactive",
-    moment(item.creadteDate).format("L"),
-    moment(item.creadteDate).format("L") - moment(item.expiredDate).format("L"),
+    moment(item.crDate).format("L"),
+    `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
+    `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
+    `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
+  ]);
+
+  const headers1 = ["#", "Date", "Breakfast", "Lunch", "Dinner"];
+
+  const tableData1 = outsidedata?.map((item, index) => [
+    index + 1,
+    moment(item.crDate).format("L"),
+    `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
+    `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
+    `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
   ]);
 
   const handleExportToPDF = () => {
@@ -89,49 +107,47 @@ const TurnOver = () => {
     doc.save("Requeue-portal.pdf");
   };
 
+  const handleExportToPDF1 = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: "#myTable1" });
+    doc.save("Requeue-portal.pdf");
+  };
+
   return (
     <div>
-      <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-6">
+      <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-5">
         <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
+          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Date From:
           </label>
           <input
             type="date"
-            id="first_name"
             defaultValue={today}
+            onChange={(e) => setSdate(e.target.value)}
             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
+          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             To:
           </label>
           <input
             type="date"
             defaultValue={today}
+            onChange={(e) => setEdate(e.target.value)}
             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
+          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Restaurant:
           </label>
           <select
             id="countries"
-            onChange={(e) => setrestId(e.target.value)}
+            onChange={(e) => setresto(e.target.value)}
             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
-            <option selected>Choose a country</option>
+            <option value={"-1"}>Choose a Restaurant</option>
             {restaurantdata?.map((item, i) => (
               <option key={i} value={item.id}>
                 {item.ResturantName}
@@ -140,40 +156,33 @@ const TurnOver = () => {
           </select>
         </div>
         <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
+          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Branch
           </label>
+
           <select
             id="countries"
+            onChange={(e) => setbranchid(e.target.value)}
             class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
-            <option selected>Choose a country</option>
+            <option value={"-1"}>Choose a Branch</option>
+            {restaurantbranchdata?.map((item, i) => (
+              <option key={i} value={item.id}>
+                {item.name_en}
+              </option>
+            ))}
           </select>
         </div>
-        <div>
-          <label
-            for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Search
-          </label>
-          <input
-            placeholder="phone number"
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
-          />
-        </div>
+
         <div className="mt-7">
-          <Button name={"search"} />
+          <Button name={"search"} onClick={handlesearch} />
         </div>
       </Typography>
 
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
-          <Copy headers={headers} tableData={tableData} />
+          <Copy headers={headers} tableData={tableData} Loading={isFetching} />
           <Excel tableRef={tableRef} />
           <Button name={"Pdf"} onClick={handleExportToPDF} />
           <Print tableRef={tableRef} />
@@ -204,121 +213,65 @@ const TurnOver = () => {
               </div>{" "}
             </div>
             <Tables
-              data={restdata}
-              loading={isLoading}
+              data={insidedata}
+              loading={isFetching}
               columns={[
                 {
-                  title: "#",
-                  dataIndex: "i",
-                  sorter: (a, b) => a.i - b.i,
-                  render: (text, record, index) =>
-                    (pages - 1) * pageSize + index + 1,
-                },
-                {
-                  title: "Restaurant",
-                  dataIndex: "name_en",
-                  sorter: (a, b) => a.name_en.localeCompare(b.name_en),
-                },
-                {
-                  title: "OrderId",
-                  dataIndex: "id",
-                  sorter: (a, b) => a.id - b.id,
-                },
-
-                {
-                  title: "Type",
-                  dataIndex: "OrderType",
-                  sorter: (a, b) => a.OrderType - b.OrderType,
-                  render: (OrderType) => (
-                    <div>{OrderType === 0 ? "Dine In" : "Pick Up"}</div>
-                  ),
-                },
-                {
-                  title: "Customer",
-                  dataIndex: "data, User",
-                  render: (data, User) => (
-                    <>
-                      <div>
-                        <div>{User?.User[0]?.client_name}</div>
-                        <div>{User?.User[0]?.client_phone}</div>
-                      </div>
-                      {/* <Link
-                        to={
-                          "/editclient" +
-                          `?client=${User?.User[0]?.client_id}&sdate=${
-                            User?.User[0]?.created_date
-                          }&edate=${""}`
-                        }
-                      >
-                       
-                       
-                       
-                      </Link> */}
-                    </>
-                  ),
-                  filteredValue: [search],
-                  onFilter: (value, record) => {
-                    return (
-                      String(record.id)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.name_en)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.User[0]?.client_name)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.User[0]?.client_phone)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.subtotal)
-                        .toLowerCase()
-                        .includes(value.toLowerCase())
-                    );
-                  },
-                },
-                {
                   title: "Date",
-                  dataIndex: "createdDate",
-                  sorter: (a, b) =>
-                    new Date(a.createdDate) - new Date(b.createdDate),
-                  render: (CreadteDate) =>
-                    moment(CreadteDate).format("dddd LL"),
+                  dataIndex: "crDate",
+                  render: (crDate) => moment(crDate).format("L"),
+                },
+                {
+                  title: "Breakfast",
+                  dataIndex: "data, roundTime1",
+                  render: (data, roundTime1) => (
+                    // <Link
+                    //   to={
+                    //     "/turndata" +
+                    //     `?&sdate=${roundTime1.crDate}&edate=${roundTime1.crDate}&restid=${restId}&t=1&E=2&position=0`
+                    //   }
+                    // >
+                    <div>
+                      {roundTime1.roundTime1.hours}:
+                      {roundTime1.roundTime1.minutes}
+                    </div>
+                    // </Link>
+                  ),
                 },
 
                 {
-                  title: "Items",
-                  dataIndex: "data, User",
-                  render: (data, User) => <div>{User?.item?.length}</div>,
+                  title: "Lunch",
+                  render: (data, roundTime2) => (
+                    // <Link
+                    //   to={
+                    //     "/turndata" +
+                    //     `?&sdate=${roundTime2.crDate}&edate=${roundTime2.crDate}&restid=${restId}&t=3&E=4&position=0`
+                    //   }
+                    // >
+                    <div>
+                      {roundTime2.roundTime2.hours}:
+                      {roundTime2.roundTime2.minutes}
+                    </div>
+                    // </Link>
+                  ),
                 },
                 {
-                  title: "Amount",
-                  dataIndex: "subtotal",
-                  sorter: (a, b) => a.subtotal - b.subtotal,
-                  render: (subtotal) => <div>{Math.round(subtotal)}Kwd</div>,
-                },
-
-                {
-                  title: "Print",
-                  dataIndex: "data, User",
-                  render: (data, User) => (
-                    <>
-                      <div
-                      // onClick={() => {
-                      //   setPrint([true, User]);
-                      // }}
-                      >
-                        <MdPrint
-                          size={20}
-                          style={{ cursor: "pointer", color: "#7537be" }}
-                        />
-                      </div>
-                    </>
+                  title: "Dinner",
+                  render: (data, roundTime3) => (
+                    // <Link
+                    //   to={
+                    //     "/turndata" +
+                    //     `?&sdate=${roundTime3.crDate}&edate=${roundTime3.crDate}&restid=${restId}&t=5&E=6&position=0`
+                    //   }
+                    // >
+                    <div>
+                      {roundTime3.roundTime3.hours}:
+                      {roundTime3.roundTime3.minutes}
+                    </div>
+                    // </Link>
                   ),
                 },
               ]}
-              pagination={tableParams.pagination}
-              onChange={handleTableChange}
             />
           </CardBody>
         </Card>
@@ -347,10 +300,14 @@ const TurnOver = () => {
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
-          <Copy headers={headers} tableData={tableData} />
-          <Excel tableRef={tableRef} />
-          <Button name={"Pdf"} onClick={handleExportToPDF} />
-          <Print tableRef={tableRef} />
+          <Copy
+            headers={headers1}
+            tableData={tableData1}
+            Loading={isFetching}
+          />
+          <Excel tableRef={tableRef1} />
+          <Button name={"Pdf"} onClick={handleExportToPDF1} />
+          <Print tableRef={tableRef1} />
         </div>
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
@@ -378,135 +335,79 @@ const TurnOver = () => {
               </div>{" "}
             </div>
             <Tables
-              data={restdata}
-              loading={isLoading}
+              data={outsidedata}
+              loading={isFetching}
               columns={[
                 {
-                  title: "#",
-                  dataIndex: "i",
-                  sorter: (a, b) => a.i - b.i,
-                  render: (text, record, index) =>
-                    (pages - 1) * pageSize + index + 1,
-                },
-                {
-                  title: "Restaurant",
-                  dataIndex: "name_en",
-                  sorter: (a, b) => a.name_en.localeCompare(b.name_en),
-                },
-                {
-                  title: "OrderId",
-                  dataIndex: "id",
-                  sorter: (a, b) => a.id - b.id,
-                },
-
-                {
-                  title: "Type",
-                  dataIndex: "OrderType",
-                  sorter: (a, b) => a.OrderType - b.OrderType,
-                  render: (OrderType) => (
-                    <div>{OrderType === 0 ? "Dine In" : "Pick Up"}</div>
-                  ),
-                },
-                {
-                  title: "Customer",
-                  dataIndex: "data, User",
-                  render: (data, User) => (
-                    <>
-                      <div>
-                        <div>{User?.User[0]?.client_name}</div>
-                        <div>{User?.User[0]?.client_phone}</div>
-                      </div>
-                      {/* <Link
-                        to={
-                          "/editclient" +
-                          `?client=${User?.User[0]?.client_id}&sdate=${
-                            User?.User[0]?.created_date
-                          }&edate=${""}`
-                        }
-                      >
-                       
-                       
-                       
-                      </Link> */}
-                    </>
-                  ),
-                  filteredValue: [search],
-                  onFilter: (value, record) => {
-                    return (
-                      String(record.id)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.name_en)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.User[0]?.client_name)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.User[0]?.client_phone)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.subtotal)
-                        .toLowerCase()
-                        .includes(value.toLowerCase())
-                    );
-                  },
-                },
-                {
                   title: "Date",
-                  dataIndex: "createdDate",
-                  sorter: (a, b) =>
-                    new Date(a.createdDate) - new Date(b.createdDate),
-                  render: (CreadteDate) =>
-                    moment(CreadteDate).format("dddd LL"),
+                  dataIndex: "crDate",
+                  render: (crDate) => moment(crDate).format("L"),
+                },
+                {
+                  title: "Breakfast",
+                  dataIndex: "data, roundTime1",
+                  render: (data, roundTime1) => (
+                    // <Link
+                    //   to={
+                    //     "/turndata" +
+                    //     `?&sdate=${roundTime1.crDate}&edate=${roundTime1.crDate}&restid=${restId}&t=1&E=2&position=1`
+                    //   }
+                    // >
+                    <div>
+                      {roundTime1.roundTime1.hours}:
+                      {roundTime1.roundTime1.minutes}
+                    </div>
+                    // </Link>
+                  ),
                 },
 
                 {
-                  title: "Items",
-                  dataIndex: "data, User",
-                  render: (data, User) => <div>{User?.item?.length}</div>,
+                  title: "Lunch",
+                  render: (data, roundTime2) => (
+                    // <Link
+                    //   to={
+                    //     "/turndata" +
+                    //     `?&sdate=${roundTime2.crDate}&edate=${roundTime2.crDate}&restid=${restId}&t=3&E=4&position=1`
+                    //   }
+                    // >
+                    <div>
+                      {roundTime2.roundTime2.hours}:
+                      {roundTime2.roundTime2.minutes}
+                    </div>
+                    // </Link>
+                  ),
                 },
                 {
-                  title: "Amount",
-                  dataIndex: "subtotal",
-                  sorter: (a, b) => a.subtotal - b.subtotal,
-                  render: (subtotal) => <div>{Math.round(subtotal)}Kwd</div>,
-                },
-
-                {
-                  title: "Print",
-                  dataIndex: "data, User",
-                  render: (data, User) => (
-                    <>
-                      <div
-                      // onClick={() => {
-                      //   setPrint([true, User]);
-                      // }}
-                      >
-                        <MdPrint
-                          size={20}
-                          style={{ cursor: "pointer", color: "#7537be" }}
-                        />
-                      </div>
-                    </>
+                  title: "Dinner",
+                  render: (data, roundTime3) => (
+                    // <Link
+                    //   to={
+                    //     "/turndata" +
+                    //     `?&sdate=${roundTime3.crDate}&edate=${roundTime3.crDate}&restid=${restId}&t=5&E=6&position=1`
+                    //   }
+                    // >
+                    <div>
+                      {roundTime3.roundTime3.hours}:
+                      {roundTime3.roundTime3.minutes}
+                    </div>
+                    // </Link>
                   ),
                 },
               ]}
-              pagination={tableParams.pagination}
-              onChange={handleTableChange}
             />
           </CardBody>
         </Card>
         <div style={{ display: "none" }}>
-          <table ref={tableRef} id="myTable">
+          <table ref={tableRef1} id="myTable1">
             <thead>
               <tr>
-                {headers?.map((header, index) => (
+                {headers1?.map((header, index) => (
                   <th key={index}>{header}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {tableData?.map((row, index) => (
+              {tableData1?.map((row, index) => (
                 <tr key={index}>
                   {row.map((cell, index) => (
                     <td key={index}>{cell}</td>

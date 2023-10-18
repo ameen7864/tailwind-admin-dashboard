@@ -20,7 +20,7 @@ const Copy = ({headers, tableData, Loading}) => {
 
   return (
     <div> <button
-    // disabled={Loading}
+    disabled={Loading}
     type="button"
     onClick={copyTableData}
     className="text-white capitalize bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"

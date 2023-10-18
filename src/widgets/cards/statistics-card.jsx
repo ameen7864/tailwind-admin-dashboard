@@ -21,7 +21,7 @@ export function StatisticsCard({
       <CardHeader
         variant="gradient"
         color={color}
-        className="absolute -mt-4 grid h-16 rounded-xl w-16 place-items-center"
+        className="absolute -mt-4 grid h-16 w-16 place-items-center rounded-xl"
       >
         {icon}
       </CardHeader>
@@ -33,24 +33,23 @@ export function StatisticsCard({
           {value}
         </Typography>
       </CardBody>
-      
-        <CardFooter className="border-t border-blue-gray-50 p-4">
-          <div className="w-10/12">
-            <Typography
-              variant="small"
-              className="mb-1 block text-xs font-medium text-blue-gray-600"
-            >
-              {completion ? completion : 0}%
-            </Typography>
-            <Progress
-              value={completion ? completion : 0}
-              variant="gradient"
-              color={completion === 100 ? "green" : "blue"}
-              className="h-1"
-            />
-          </div>
-        </CardFooter>
-    
+
+      <CardFooter className="border-t border-blue-gray-50 p-4">
+        <div className="w-10/12">
+          <Typography
+            variant="small"
+            className="mb-1 block text-xs font-medium text-blue-gray-600"
+          >
+            {completion ? completion : 0}%
+          </Typography>
+          <Progress
+            value={completion ? completion : 0}
+            variant="gradient"
+            color={completion === 100 ? "green" : "blue"}
+            className="h-1"
+          />
+        </div>
+      </CardFooter>
     </Card>
   );
 }
@@ -77,12 +76,58 @@ export function StatisticsCards({
           {title}
         </Typography>
         <Typography variant="h4" color="blue-gray">
-          {value}
+          {value ? value : 0}
         </Typography>
       </CardBody>
-      
+
+      <CardFooter className="border-t border-blue-gray-50 p-4">
+        <div className="w-10/12">
+          <Typography
+            variant="small"
+            className="mb-1 block text-xs font-medium text-blue-gray-600"
+          >
+            {completion ? completion : 0}%
+          </Typography>
+          <Progress
+            value={completion ? completion : 0}
+            variant="gradient"
+            color={completion === 100 ? "green" : "blue"}
+            className="h-1"
+          />
+        </div>
+      </CardFooter>
+    </Card>
+  );
+}
+
+export function StatisticsCards1({
+  color,
+  icon,
+  title,
+  value,
+  footer,
+  completion,
+}) {
+  return (
+    <Card>
+      <CardHeader
+        variant="gradient"
+        color={color}
+        className="absolute mt-3 grid h-14 w-14 place-items-center"
+      >
+        {icon}
+      </CardHeader>
+      <CardBody className="p-4 text-right">
+        <Typography variant="small" className="font-sm text-blue-gray-600">
+          {title}
+        </Typography>
+        <Typography color="blue-gray" className="text-xl font-bold">
+          {value ? value : 0}
+        </Typography>
+      </CardBody>
+      {completion ? (
         <CardFooter className="border-t border-blue-gray-50 p-4">
-          <div className="w-10/12">
+          <div className="">
             <Typography
               variant="small"
               className="mb-1 block text-xs font-medium text-blue-gray-600"
@@ -97,7 +142,9 @@ export function StatisticsCards({
             />
           </div>
         </CardFooter>
-    
+      ) : (
+        ""
+      )}
     </Card>
   );
 }

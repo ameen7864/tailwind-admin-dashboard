@@ -35,7 +35,7 @@ export const allrestaurantApi = createApi({
       query: () => `rest`,
     }),
     getAllRestBranchByName: builder.query({
-      query: ({id}) => `Branchbyrest?id=${id}`,
+      query: ({ id }) => `Branchbyrest?id=${id}`,
     }),
   }),
 });
@@ -270,6 +270,7 @@ export const offerApi = createApi({
     }),
   }),
 });
+
 //users
 export const usersApi = createApi({
   reducerPath: "usersApi",
@@ -302,6 +303,7 @@ export const usersApi = createApi({
     }),
   }),
 });
+
 //groups
 export const groupsapi = createApi({
   reducerPath: "groupsapi",
@@ -514,6 +516,22 @@ export const vocherApi = createApi({
   }),
 });
 
+export const pagesApi = createApi({
+  reducerPath: "pagesApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders(headers) {
+      headers.set("Authorization", AUTH_TOKEN);
+      return headers;
+    },
+  }),
+  endpoints: (builder) => ({
+    getPagesByName: builder.query({
+      query: ({id}) => `getPages?id=${id}`,
+    }),
+  }),
+});
+
 export const todoApi = createApi({
   reducerPath: "todoApi",
   baseQuery: fetchBaseQuery({
@@ -564,5 +582,6 @@ export const { useGetBlockByNameQuery } = blockApi;
 
 export const { useGetPurchaseByNameQuery } = purchaseApi;
 export const { useGetVocherByNameQuery } = vocherApi;
+export const { useGetPagesByNameQuery } = pagesApi;
 
 export const { useGetTodoByNameQuery } = todoApi;

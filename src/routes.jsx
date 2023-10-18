@@ -117,13 +117,6 @@ export const routes = [
 
       //reports
 
-      { path: "/termsandcondition", element: <Termsandcondition /> },
-      { path: "/contact", element: <Contact /> },
-      { path: "/about", element: <About /> },
-      { path: "/contact", element: <Contact /> },
-      { path: "/about", element: <About /> },
-      //add data
-
       { path: "/overview", element: <Overview /> },
       { path: "/cancellation", element: <Cancellation /> },
       { path: "/registered", element: <RegisteredData /> },
@@ -131,6 +124,20 @@ export const routes = [
       { path: "/callTime", element: <CallTime /> },
       { path: "/notifyTime", element: <NotifyTime /> },
       { path: "/turnOver", element: <TurnOver /> },
+      //add data
+
+
+      { path: "/add", element: <AddRestaurant />  },
+      { path: "/adduser", element: <AddUser />  },
+      { path: "/addgroup", element: <AddGroups />  },
+      { path: "/addcountry", element: <AddCountries />  },
+      { path: "/addvoucher", element: <Addvoucher />  },
+      { path: "/addcuisines", element: <AddCuisines />  },
+      { path: "/addqueue", element: <AddQueueTags />  },
+      { path: "/addbanner", element: <AddBanner />  },
+      { path: "/addoffer", element: <AddOffers />  },
+
+
     ],
   },
   {

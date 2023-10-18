@@ -19,6 +19,7 @@ import {
   todoApi,
   usersApi,
   vocherApi,
+  pagesApi,
 } from "./ReduxApi";
 import { reportsApi } from "./ReportsApi";
 
@@ -45,6 +46,7 @@ export const store = configureStore({
     [purchaseApi.reducerPath]: purchaseApi.reducer,
     [vocherApi.reducerPath]: vocherApi.reducer,
 
+    [pagesApi.reducerPath]: pagesApi.reducer,
 
     [reportsApi.reducerPath]: reportsApi.reducer,
   },
@@ -73,7 +75,7 @@ export const store = configureStore({
       purchaseApi.middleware,
       vocherApi.middleware,
 
-
+      pagesApi.middleware,
 
       reportsApi.middleware
     ),
