@@ -30,14 +30,14 @@ export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
-  const [layout, page] = pathname.split("/").filter((el) => el !== "");
+  const [layout, page] = pathname.split(/[/_]/).filter((el) => el !== "");
+
 
   return (
     <Navbar
-      color={"white" }
-      className={`rounded-xl transition-all ${"sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"}`}
+      color={"white"}
+      className={`rounded-xl transition-all ${"sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"} glass-background`}
       fullWidth
-      blurred={fixedNavbar}
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize">
@@ -58,7 +58,7 @@ export function DashboardNavbar() {
             <Typography
               variant="small"
               color="blue-gray"
-              className="font-normal"
+              className="font-medium"
             >
               {page}
             </Typography>
@@ -68,7 +68,6 @@ export function DashboardNavbar() {
           </Typography>
         </div>
         <div className="flex items-center">
-      
           <Link to="/auth/sign-in">
             <Button
               variant="text"
@@ -86,7 +85,6 @@ export function DashboardNavbar() {
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
             </IconButton>
           </Link>
-      
         </div>
       </div>
     </Navbar>

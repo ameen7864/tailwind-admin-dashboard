@@ -20,6 +20,7 @@ import {
   useGetUsersByNameQuery,
 } from "../Redux/ReduxApi";
 import { MdMenu, MdOutlineModeEditOutline } from "react-icons/md";
+import ReactCountryFlag from "react-country-flag";
 
 const Countries = () => {
   const [search, setsearch] = useState("");
@@ -164,6 +165,7 @@ const Countries = () => {
                     );
                   },
                 },
+             ,
                 {
                   title: "Phone Code",
                   dataIndex: "country_code",

@@ -116,7 +116,6 @@ const Allcustomer = () => {
                   type="text"
                   placeholder="Search"
                   onChange={(e) => setsearcheding(e.target.value)}
-              
                 />
               </div>{" "}
             </div>
@@ -126,7 +125,8 @@ const Allcustomer = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) =>                   (pages - 1) * pageSize + index + 1,
+                  render: (text, record, index) =>
+                    (pages - 1) * pageSize + index + 1,
                 },
                 {
                   title: "Avatar",
@@ -157,13 +157,13 @@ const Allcustomer = () => {
                   render: (data, name) => (
                     <Link
                       to={
-                        "/editclient" +
+                        "/dashboard/customerdetails" +
                         `?client=${name.id}&sdate=${
                           name.createdDate
                         }&edate=${""}`
                       }
                     >
-                      <div>{name.name}</div>
+                      <div className="text-blue-700">{name.name}</div>
                     </Link>
                   ),
                   filteredValue: [searching],
@@ -192,7 +192,7 @@ const Allcustomer = () => {
                         }&edate=${""}`
                       }
                     >
-                      <div>{phone.phone}</div>
+                      <div className="text-blue-700">{phone.phone}</div>
                     </Link>
                   ),
                 },

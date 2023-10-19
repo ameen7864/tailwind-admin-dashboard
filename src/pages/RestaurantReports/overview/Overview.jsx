@@ -685,6 +685,7 @@ export function Home() {
           />
         </Link>
       </div>
+   
     </div>
   );
 }

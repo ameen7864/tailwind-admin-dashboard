@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 export function Dashboard() {
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
-      <Sidenav routes={routes} brandImg={"/img/logo-ct-dark.png"} />
+      <Sidenav routes={routes} brandImg={"/img/logo-ct.png"} />
       <div className="p-4 xl:ml-80">
         <DashboardNavbar />
         <Routes>

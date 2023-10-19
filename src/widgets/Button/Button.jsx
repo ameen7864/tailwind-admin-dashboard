@@ -60,7 +60,7 @@ export const Input = ({ lbs, type, ...props }) => {
           `}
           required
           placeholder={lbs}
-          // defaultValue={type === "date" ? today : ""}
+          defaultValue={type === "date" ? today : ""}
           min={type === "date" ? today : undefined}
         />
       </div>

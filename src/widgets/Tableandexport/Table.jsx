@@ -78,13 +78,16 @@ const Tables = ({ data, loading, columns, pagination, onChange }) => {
     <Empty
       style={{
         display: "flex",
-        height: "70vh",
+        height: "100vh",
         justifyContent: "center",
         alignItems: "center",
         flexDirection:"column"
       }}
 
-      image={<img src={nodata} alt="Custom Loader"   style={{height:"500px"}}    className="h-[300px] object-cover w-fit;" />}
+      image={<img src={nodata} alt="Custom Loader"   style={{height:"500px", display: "flex",
+
+        justifyContent: "center",
+        alignItems: "center",}}   />}
       description={
         <div>
           <div>{""}</div>

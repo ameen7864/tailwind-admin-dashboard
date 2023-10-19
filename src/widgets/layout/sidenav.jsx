@@ -237,7 +237,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdDashboard className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     dashboard
                   </Typography>
                 </Button>
@@ -266,7 +266,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdRestaurant className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     restaurant
                   </Typography>
                 </Button>
@@ -295,7 +295,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdShoppingCart className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     supermarket
                   </Typography>
                 </Button>
@@ -305,10 +305,13 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
           <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
             <AccordionHeader
-              className="font-sm font-sm -my-2  w-full rounded border-0  px-3 text-base font-light capitalize leading-relaxed text-inherit"
+              className="font-medium font-sm -my-2  w-full rounded border-0  px-3 text-base  capitalize leading-relaxed text-inherit"
               onClick={() => handleOpen(1)}
             >
-              <MdPerson className="text-lg" /> Users Details
+              <MdPerson className="text-lg ml-1" /> 
+              <div className="-ml-3">
+              Users Details
+              </div>
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -339,7 +342,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdPerson className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           users
                         </Typography>
@@ -371,7 +374,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdGroups className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           groups
                         </Typography>
@@ -403,7 +406,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdFlag className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           countries
                         </Typography>
@@ -416,10 +419,13 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </Accordion>
           <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
             <AccordionHeader
-              className="font-sm font-sm -my-1 rounded border-0 px-3 text-sm text-base font-light leading-relaxed text-inherit "
+              className="font-medium font-sm -my-1 rounded border-0 px-3 text-base  leading-relaxed text-inherit "
               onClick={() => handleOpen(2)}
             >
-              <MdRecentActors className="text-lg" /> Customer Details
+              <MdRecentActors className="text-lg ml-1" />   <div className="ml-3">
+               Customer Details
+
+              </div> 
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -450,7 +456,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdGroups3 className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           All
                         </Typography>
@@ -482,7 +488,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdGroups2 className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           most active
                         </Typography>
@@ -514,7 +520,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdLock className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           block
                         </Typography>
@@ -527,11 +533,11 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </Accordion>
           <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
             <AccordionHeader
-              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-light leading-relaxed text-inherit"
+              className=" font-medium  mx-0 -my-1 rounded border-0 px-3 text-base  leading-relaxed text-inherit"
               onClick={() => handleOpen(3)}
             >
-              <MdPayments className="text-lg" />
-              <div className="font-xs">Subscriptions</div>
+              <MdPayments className="text-lg ml-1" />
+              <div className="font-xs  -ml-3">Subscriptions</div>
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -562,7 +568,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdOutlineCheck className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           purchase
                         </Typography>
@@ -594,7 +600,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdClose className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           not confirmed
                         </Typography>
@@ -626,7 +632,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdPercent className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           voucher
                         </Typography>
@@ -660,7 +666,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdReceiptLong className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     invoice
                   </Typography>
                 </Button>
@@ -689,7 +695,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdFastfood className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     cuisines
                   </Typography>
                 </Button>
@@ -718,7 +724,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdSell className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     queue tags
                   </Typography>
                 </Button>
@@ -747,7 +753,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdPhotoSizeSelectActual className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     banners
                   </Typography>
                 </Button>
@@ -776,7 +782,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   fullWidth
                 >
                   <MdLocalOffer className="text-lg" />
-                  <Typography color="inherit" className="font-sm capitalize">
+                  <Typography color="inherit" className="font-medium capitalize">
                     offers
                   </Typography>
                 </Button>
@@ -785,10 +791,14 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </li>
           <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>
             <AccordionHeader
-              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-light leading-relaxed text-inherit"
+              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-medium leading-relaxed text-inherit"
               onClick={() => handleOpen(4)}
             >
-              <MdPayments className="text-lg" /> Pages
+              <MdPayments className="text-lg ml-1" />
+              <div className="-ml-16">
+
+               Pages
+              </div>
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -819,7 +829,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdArticle className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           terms and condition
                         </Typography>
@@ -851,7 +861,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdCall className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           contact us
                         </Typography>
@@ -883,7 +893,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdInfo className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           about us
                         </Typography>
@@ -896,10 +906,14 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </Accordion>
           <Accordion open={open === 5} icon={<Icon id={5} open={open} />}>
             <AccordionHeader
-              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-light leading-relaxed text-inherit"
+              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-medium leading-relaxed text-inherit"
               onClick={() => handleOpen(5)}
             >
-              <MdReport className="text-lg" /> Reports
+              <MdReport className="text-lg ml-1" />
+               <div className="-ml-16">
+               
+              Reports
+               </div>
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -930,7 +944,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdOutlineReportGmailerrorred className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           Overview
                         </Typography>
@@ -962,7 +976,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdOutlineCancel className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           cancellation
                         </Typography>
@@ -994,7 +1008,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdOutlineArchive className="text-lg mt-1" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           registered
                         </Typography>
@@ -1026,7 +1040,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdAnalytics className="text-lg mt-1" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           analytic
                         </Typography>
@@ -1058,7 +1072,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdAccessibility className="text-lg mt-1" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           callTime
                         </Typography>
@@ -1090,7 +1104,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdNotificationsPaused  className="text-lg mt-1" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           notifyTime
                         </Typography>
@@ -1122,7 +1136,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdOutlineSpeakerNotes  className="text-lg mt-1.5" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           turnOver
                         </Typography>
@@ -1135,10 +1149,16 @@ export function Sidenav({ brandImg, brandName, routes }) {
           </Accordion>
           <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
             <AccordionHeader
-              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-light leading-relaxed text-inherit"
+              className=" font-sm  mx-0 -my-1 rounded border-0 px-3 text-base font-medium leading-relaxed text-inherit"
               onClick={() => handleOpen(3)}
             >
-              <MdDashboard className="text-lg" /> Notification
+              <MdDashboard className="text-lg ml-1" /> 
+              
+              <div className="-ml-9">
+               
+               
+              Notification
+                </div>
             </AccordionHeader>
             <AccordionBody>
               <ul
@@ -1169,7 +1189,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           Tasks
                         </Typography>
@@ -1201,7 +1221,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         <MdDashboard className="text-lg" />
                         <Typography
                           color="inherit"
-                          className="font-sm capitalize"
+                          className="font-medium capitalize"
                         >
                           filter
                         </Typography>

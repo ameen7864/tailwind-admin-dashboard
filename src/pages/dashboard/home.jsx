@@ -2,8 +2,7 @@ import { StatisticsCard, StatisticsCards } from "@/widgets/cards";
 import { BsFillPeopleFill, BsStar, BsTicketPerforated } from "react-icons/bs";
 import { MdCancelPresentation } from "react-icons/md";
 import { useGetDashboardByNameQuery } from "../Redux/ReduxApi";
-import { StatisticsChart } from "@/widgets/charts";
-import { statisticsChartsData } from "@/data";
+
 import { Typography } from "@material-tailwind/react";
 import { ClockIcon } from "@heroicons/react/24/solid";
 
