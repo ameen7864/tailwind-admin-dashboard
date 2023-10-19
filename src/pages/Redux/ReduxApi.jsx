@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createContext } from "react";
+
 
 const BASE_URL = "http://192.168.1.40:9091/WebAdmin";
 
@@ -34,9 +36,17 @@ export const allrestaurantApi = createApi({
     getAllRestByName: builder.query({
       query: () => `rest`,
     }),
+
+    getAllRestCountryByName: builder.query({
+      query: ({ id }) => `restbyCounty?id=${id}`,
+    }),
     getAllRestBranchByName: builder.query({
       query: ({ id }) => `Branchbyrest?id=${id}`,
     }),
+
+
+
+
   }),
 });
 
@@ -527,7 +537,7 @@ export const pagesApi = createApi({
   }),
   endpoints: (builder) => ({
     getPagesByName: builder.query({
-      query: ({id}) => `getPages?id=${id}`,
+      query: ({ id }) => `getPages?id=${id}`,
     }),
   }),
 });
@@ -545,8 +555,11 @@ export const todoApi = createApi({
 });
 
 export const { useGetDashboardByNameQuery } = dashboardApi;
-export const { useGetAllRestByNameQuery, useGetAllRestBranchByNameQuery } =
-  allrestaurantApi;
+export const {
+  useGetAllRestByNameQuery,
+  useGetAllRestCountryByNameQuery,
+  useGetAllRestBranchByNameQuery,
+} = allrestaurantApi;
 export const {
   useGetRestaurantByNameQuery,
   useGetRestaurantIdByNameQuery,

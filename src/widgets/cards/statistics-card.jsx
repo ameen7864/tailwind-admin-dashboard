@@ -30,7 +30,7 @@ export function StatisticsCard({
           {title}
         </Typography>
         <Typography variant="h4" color="blue-gray">
-          {value}
+          {value ? value : 0}
         </Typography>
       </CardBody>
 
@@ -125,7 +125,7 @@ export function StatisticsCards1({
           {value ? value : 0}
         </Typography>
       </CardBody>
-      {completion ? (
+      {completion>=0 ? (
         <CardFooter className="border-t border-blue-gray-50 p-4">
           <div className="">
             <Typography
@@ -143,7 +143,9 @@ export function StatisticsCards1({
           </div>
         </CardFooter>
       ) : (
-        ""
+        <CardFooter className="border-t border-blue-gray-50 p-7">
+        
+        </CardFooter>
       )}
     </Card>
   );

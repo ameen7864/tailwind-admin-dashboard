@@ -9,24 +9,66 @@ import {
   CardHeader,
   Typography,
 } from "@material-tailwind/react";
-import { Image, Input } from "antd";
+import { Input } from "antd";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { MdDelete, MdOutlineModeEditOutline, MdPrint } from "react-icons/md";
-import { Link } from "react-router-dom";
 import {
+  useGetAllRestBranchByNameQuery,
   useGetAllRestByNameQuery,
+  useGetAllRestCountryByNameQuery,
   useGetCountryByNameQuery,
-  useGetInvoiceByNameQuery,
-  useGetOfferByNameQuery,
   useGetPurchaseByNameQuery,
 } from "../Redux/ReduxApi";
-import { Divider, IconButton } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const Purchase = () => {
+  const today = new Date().toISOString().split("T")[0];
+  const searchedddd = useLocation().search;
+  const name = new URLSearchParams(searchedddd).get("country");
+  const [payment, setpayment] = useState("");
+  const [discounton, setdiscounton] = useState("");
+  const [channelon, setchannelon] = useState("");
+  const [countryid, setcountryid] = useState("");
+  const [restid, setrestid] = useState(-1);
+  const [branchid, setbranchid] = useState(`""`);
+  const [sdate, setsdate] = useState(today);
+  const [edate, setedate] = useState(today);
+  const [searcheson, setsearchedon] = useState("");
   const [search, setsearch] = useState("");
+
+  const [startdate, setstartdate] = useState(today);
+  const [Enddate, setEnddate] = useState(today);
+  const [paymentMethod, setpaymentMethod] = useState("");
+  const [discount, setdiscount] = useState("");
+  const [channel, setchannel] = useState("");
+  const [country, setcountry] = useState(name ? name : "");
+  const [restaurant, setrestaurant] = useState("");
+  const [branchID, setbranchID] = useState(`""`);
+
+  const { data: Countries } = useGetCountryByNameQuery({
+    searchText: "",
+    pages: 1,
+    pageSize: 10000,
+  });
+
+  const { data: countriessssRest, refetch: countryfetch } =
+    useGetAllRestCountryByNameQuery({ id: countryid });
+  const { data: branchrest, refetch: branchfetch } =
+    useGetAllRestBranchByNameQuery({ id: restid });
+
+  useEffect(() => {
+    countryfetch({ id: countryid });
+  }, [countryid]);
+
+  useEffect(() => {
+    branchfetch({ id: restid });
+  }, [restid]);
+
+  const Countriesdata = Countries?.data;
+  const Resturantdata = countriessssRest?.data;
+  const Resturantbranchdata = branchrest?.data;
 
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -39,29 +81,52 @@ const Purchase = () => {
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
 
-  const { data: purchase, isFetching } = useGetPurchaseByNameQuery({
+  const {
+    data: purchase,
+    isFetching,
+    refetch,
+  } = useGetPurchaseByNameQuery({
     st: 2,
-    country: "",
-    startdate: "01-01-2023",
-    Enddate: "01-10-2023",
-    restaurant: -1,
-    paymentMethod: "",
-    channel: "",
-    search: "",
-    discount: "",
-    branchID: "",
     pages,
     pageSize,
+    startdate,
+    Enddate,
+    paymentMethod,
+    discount,
+    channel,
+    country,
+    restaurant,
+    branchID,
+    search,
   });
 
-  const { data: Countries } = useGetCountryByNameQuery({
-    searchText: "",
-    pages: 1,
-    pageSize: 10000,
-  });
-  const Countriesdata = Countries?.data;
-  const { data: resturant } = useGetAllRestByNameQuery({});
-  const Resturantdata = resturant?.data;
+  const handleSearch = async () => {
+    await setstartdate(sdate);
+    await setEnddate(edate);
+    await setpaymentMethod(payment);
+    await setdiscount(discounton);
+    await setchannel(channelon);
+    await setcountry(countryid);
+    await setrestaurant(restid);
+    await setbranchID(branchid);
+    await setsearch(searcheson);
+    await refetch({
+      st: 2,
+      startdate,
+      Enddate,
+      paymentMethod,
+      discount,
+      channel,
+      country,
+      restaurant,
+      branchID,
+      search,
+      pages,
+      pageSize,
+    });
+  };
+
+  useEffect(() => {}, []);
 
   const handleTableChange = (pagination) => {
     setTableParams({
@@ -79,16 +144,26 @@ const Purchase = () => {
       }));
     }
   }, [purchase]);
-  const restdata = purchase?.Data;
 
-  const headers = ["#", "name", "Status", "Created Date", "Duration"];
+  const restdata = purchase?.Data;
+  const headers = [
+    "#",
+    "Client ID",
+    "Client Name",
+    "Country Name",
+    "Amount",
+    "Total Queue",
+    "Created Date",
+  ];
 
   const tableData = restdata?.map((item, index) => [
     index + 1,
-    item.name,
-    item.isActive ? "active" : "unactive",
-    moment(item.creadteDate).format("L"),
-    moment(item.creadteDate).format("L") - moment(item.expiredDate).format("L"),
+    item.client_id,
+    item.client_name,
+    item.country_name,
+    item.grandTotal,
+    item.totalQueue,
+    moment(item.created_date).format("dddd LL"),
   ]);
 
   const handleExportToPDF = () => {
@@ -120,9 +195,10 @@ const Purchase = () => {
             </label>
             <select
               id="countries"
+              onChange={(e) => setpayment(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
-              <option selected>Choose a Payment</option>
+              <option value={""}>Choose a Payment</option>
               <option value=" ">All</option>
               <option value="1">Knet</option>
               <option value="4">Credit Card</option>
@@ -137,27 +213,24 @@ const Purchase = () => {
               Discount
             </label>
             <select
-              id="countries"
+              onChange={(e) => setdiscounton(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
-              <option selected>Choose a Discount</option>
+              <option value=" ">Choose a Discount</option>
               <option value=" ">Any</option>
               <option value="0">Without Discount</option>
               <option value="1">With Discount</option>
             </select>
           </div>
           <div>
-            <label
-              for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Channel
             </label>
             <select
-              id="countries"
+              onChange={(e) => setchannelon(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
-              <option selected>Choose a Channel</option>
+              <option value=" ">Choose a Channel</option>
               <option value=" ">Any</option>
               <option value="2">iOS</option>
               <option value="3">Android</option>
@@ -172,11 +245,16 @@ const Purchase = () => {
             </label>
             <select
               id="countries"
+              onChange={(e) => setcountryid(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
-              <option selected>Choose a country</option>
+              <option value={-1}>Choose a country</option>
               {Countriesdata?.map((item) => (
-                <option key={item.id} value={item.country_id}>
+                <option
+                  key={item.id}
+                  value={item.country_id}
+                  selected={item.country_id == name}
+                >
                   {item.country_name}
                 </option>
               ))}
@@ -190,13 +268,13 @@ const Purchase = () => {
               Restaurant
             </label>
             <select
-              id="countries"
+              onChange={(e) => setrestid(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
-              <option selected>Choose a country</option>
+              <option value="">Choose a Restaurant</option>
               {Resturantdata?.map((item) => (
                 <option key={item.id} value={item.id}>
-                  {item.ResturantName}
+                  {item.name_en}
                 </option>
               ))}
             </select>
@@ -204,58 +282,55 @@ const Purchase = () => {
         </Typography>
         <Typography className="mx-5 my-4 mb-10 grid grid-cols-1 gap-4 md:grid-cols-5">
           <div>
-            <label
-              for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Branch
             </label>
             <select
               id="countries"
+              onChange={(e) => setbranchid(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
-              <option selected>Choose a country</option>
+              <option value={-1}>Choose a branch</option>
+              {Resturantbranchdata?.map((rest) => (
+                <option key={rest.id} value={rest.id}>
+                  {rest.name_en}
+                </option>
+              ))}
             </select>
           </div>
           <div>
-            <label
-              for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Date From:
             </label>
             <input
               type="date"
+              onChange={(e) => setsdate(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             />
           </div>
           <div>
-            <label
-              for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               To
             </label>
             <input
               type="date"
+              onChange={(e) => setedate(e.target.value)}
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             />
           </div>
           <div>
-            <label
-              for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Search
             </label>
             <input
               type="text"
+              onChange={(e) => setsearchedon(e.target.value)}
               placeholder="Order #,phone,first name,last name"
               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             />
           </div>
-          <div className="mt-6 flex w-full mx-1 justify-center gap-3">
-            <Button name="search" />
+          <div className="mx-1 mt-6 flex w-full justify-center gap-3">
+            <Button name="search" onClick={handleSearch} />
             <Button name="export" />
           </div>
         </Typography>
@@ -289,8 +364,8 @@ const Purchase = () => {
                   className="w-48"
                   type="text"
                   placeholder="Search"
-                  onChange={(e) => setsearch(e.target.value)}
-                  onSearch={(value) => setsearch(value)}
+                  // onChange={(e) => setsearch(e.target.value)}
+                  // onSearch={(value) => setsearch(value)}
                 />
               </div>{" "}
             </div>
@@ -340,7 +415,7 @@ const Purchase = () => {
                       String(record.totalQueue)
                         .toLowerCase()
                         .includes(value.toLowerCase()) ||
-                      String(record.Amount)
+                      String(record.grandTotal)
                         .toLowerCase()
                         .includes(value.toLowerCase())
                     );
@@ -367,8 +442,10 @@ const Purchase = () => {
                 },
                 {
                   title: "Amount",
-                  dataIndex: "Amount",
-                  render: (Amount) => <div>{Amount ? Amount : 0}kwd</div>,
+                  dataIndex: "grandTotal",
+                  render: (grandTotal) => (
+                    <div>{grandTotal ? grandTotal : 0}kwd</div>
+                  ),
                 },
                 {
                   title: "Total Queue",

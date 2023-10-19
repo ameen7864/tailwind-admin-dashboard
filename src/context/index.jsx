@@ -83,3 +83,4 @@ export const setFixedNavbar = (dispatch, value) =>
   dispatch({ type: "FIXED_NAVBAR", value });
 export const setOpenConfigurator = (dispatch, value) =>
   dispatch({ type: "OPEN_CONFIGURATOR", value });
+
