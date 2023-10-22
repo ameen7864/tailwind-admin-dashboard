@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { createContext } from "react";
 
-
 const BASE_URL = "http://192.168.1.40:9091/WebAdmin";
 
 const AUTH_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjEsIkNoYW5uZWwiOiJNb3ppbGxhLzUuMCAoWDExOyBMaW51eCB4ODZfNjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMTYuMC4wLjAgU2FmYXJpLzUzNy4zNiIsIkFjY2Vzc1Rva2VuIjp7Ik5JTCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCJ9LCJVc2VyIjoiZGl5YWEiLCJpYXQiOjE2OTczMDI4OTEsImV4cCI6MTY5NzkwNzY5MX0.fU2TasDToQfbUos8WFR3cJZ6V30AzQL1_-e13NmNiZ0";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOjEsIkNoYW5uZWwiOiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTE4LjAuMC4wIFNhZmFyaS81MzcuMzYiLCJBY2Nlc3NUb2tlbiI6eyJOSUwiOiIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAifSwiVXNlciI6ImRpeWFhIiwiaWF0IjoxNjk3OTUxMTMyLCJleHAiOjE2OTg1NTU5MzJ9.mOgOoX6dU2FlJNOVh10r4B1y0sfhJ0cFNxL2MFBsonY";
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({
@@ -43,10 +41,6 @@ export const allrestaurantApi = createApi({
     getAllRestBranchByName: builder.query({
       query: ({ id }) => `Branchbyrest?id=${id}`,
     }),
-
-
-
-
   }),
 });
 

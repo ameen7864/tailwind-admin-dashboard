@@ -14,15 +14,18 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
+  useGetCountryAreaByNameQuery,
   useGetCountryByNameQuery,
   useGetUsersByNameQuery,
 } from "../Redux/ReduxApi";
 import { MdMenu, MdOutlineModeEditOutline } from "react-icons/md";
 import ReactCountryFlag from "react-country-flag";
 
-const Countries = () => {
+const Areas = () => {
+  const searched = useLocation().search;
+  const countryid = new URLSearchParams(searched).get("countryId");
   const [search, setsearch] = useState("");
   const [searchText, setsearched] = useState("");
   const [searching, setsearcheding] = useState("");
@@ -38,13 +41,11 @@ const Countries = () => {
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
   const {
-    data: Countries,
+    data: Areas,
     isFetching,
     refetch,
-  } = useGetCountryByNameQuery({
-    searchText,
-    pages,
-    pageSize,
+  } = useGetCountryAreaByNameQuery({
+    countryid,
   });
 
   const handleTableChange = (pagination) => {
@@ -53,21 +54,21 @@ const Countries = () => {
     });
   };
   useEffect(() => {
-    if (Countries?.count) {
+    if (Areas?.count) {
       setTableParams((prev) => ({
         ...prev,
         pagination: {
           ...prev.pagination,
-          total: Countries.count,
+          total: Areas.count,
         },
       }));
     }
-  }, [Countries]);
+  }, [Areas]);
   const handleSearch = () => {
     refetch({ searchText, pages, pageSize });
     setsearched(search);
   };
-  const restdata = Countries?.data;
+  const restdata = Areas?.data;
 
   const headers = ["#", "Title", "Access Name", "Status", "Created Date"];
   const tableData = restdata?.map((item, index) => [
@@ -86,20 +87,7 @@ const Countries = () => {
 
   return (
     <div>
-      <div className="mx-6 mt-5 flex">
-        <input
-          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
-          placeholder=" countries name"
-          onChange={(e) => setsearch(e.target.value)}
-        />
-
-        <button
-          className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-      </div>
+  
       <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
@@ -109,7 +97,7 @@ const Countries = () => {
           <Print tableRef={tableRef} />
         </div>
         <Link to={"/dashboard/addcountry"}>
-          <Button name={"Add country"} />
+          <Button name={"Add Areas"} />
         </Link>
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
@@ -121,7 +109,7 @@ const Countries = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white">
-              Country Table
+              Areas Table
             </Typography>
           </CardHeader>
           <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
@@ -141,64 +129,57 @@ const Countries = () => {
               columns={[
                 {
                   title: "#",
-                  render: (text, record, index) =>
-                    (pages - 1) * pageSize + index + 1,
+                  render: (text, record, index) => index + 1,
                 },
                 {
-                  title: "Name",
-                  dataIndex: "country_name",
-                  filteredValue: [searching],
-                  onFilter: (value, record) => {
-                    return (
-                      String(record.country_name)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.country_code)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.shortCode)
-                        .toLowerCase()
-                        .includes(value.toLowerCase()) ||
-                      String(record.country_curancy)
-                        .toLowerCase()
-                        .includes(value.toLowerCase())
-                    );
-                  },
+                  title: "Name EN",
+                  dataIndex: "NameEnglish",
                 },
-             ,
                 {
-                  title: "Phone Code",
-                  dataIndex: "country_code",
+                  title: "Name AR",
+                  dataIndex: "NameArabic",
                 },
 
                 {
-                  title: "Currency",
-                  dataIndex: "country_curancy",
+                  title: "Status",
+                  dataIndex: "Status",
+                  render: (Status) =>
+                    Status ? (
+                      <div
+                        style={{
+                          backgroundColor: "rgb(36 110 49)",
+                          textAlign: "center",
+                          padding: "5px",
+                          fontSize: "10px",
+                          color: "white",
+                          borderRadius: "5px",
+                          width: "50px",
+                        }}
+                      >
+                        Active
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          backgroundColor: "#dd4b39",
+                          textAlign: "center",
+                          padding: "5px",
+                          fontSize: "10px",
+                          color: "white",
+                          borderRadius: "5px",
+                          width: "50px",
+                        }}
+                      >
+                        Expired
+                      </div>
+                    ),
                 },
 
                 {
-                  title: "Short Code",
-                  dataIndex: "shortCode",
-                },
-                {
-                  title: "View Areas",
-                  dataIndex: "country_id",
-                  render: (country_id) => (
-                    <Link to={"/dashboard/areas" + `?countryId=${country_id}`}>
-           
-                      <MdMenu
-                        size={20}
-                        style={{ cursor: "pointer", color: "blue" }}
-                      />
-                    </Link>
-                  ),
-                },
-
-                {
-                  title: "Edit",
-                  dataIndex: "country_id",
-                  render: (country_id) => (
-                    <Link to={"/ecountry/" + country_id}>
+                  title: "Action",
+                  dataIndex: "id",
+                  render: (id) => (
+                    <Link to={"/editarea" + `?id=${id}`}>
                       <MdOutlineModeEditOutline
                         size={20}
                         className="text-purple-700 "
@@ -207,8 +188,7 @@ const Countries = () => {
                   ),
                 },
               ]}
-              pagination={tableParams.pagination}
-              onChange={handleTableChange}
+              // rowKey={(record) => record.login.uuid}
             />
           </CardBody>
         </Card>
@@ -237,4 +217,4 @@ const Countries = () => {
   );
 };
 
-export default Countries;
+export default Areas;

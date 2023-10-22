@@ -13,7 +13,7 @@ import "react-quill/dist/quill.snow.css";
 import { useGetPagesByNameQuery } from "../Redux/ReduxApi";
 
 const Termsandcondition = () => {
-  const { data: terms, isFetching } = useGetPagesByNameQuery({id:6});
+  const { data: terms, isFetching } = useGetPagesByNameQuery({ id: 6 });
   const termsandcondition = terms?.data[0];
   const [value, setValue] = useState(termsandcondition?.cms_desc);
   const [value1, setValue1] = useState(termsandcondition?.cms_desc_ar);
@@ -48,7 +48,7 @@ const Termsandcondition = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white">
-     Contact Us 
+              Contact Us
             </Typography>
           </CardHeader>
           <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
@@ -71,14 +71,14 @@ const Termsandcondition = () => {
                 disabled
               />
             </Typography>
-            <label class="mx-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mx-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Description EN
             </label>
             <div className="mx-5">
               <ReactQuill theme="snow" value={value} onChange={handleChange} />
             </div>
             <hr className="my-6" />
-            <label class="mx-4 my-5 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mx-4 my-5 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Description AR
             </label>
             <div className="mx-5">

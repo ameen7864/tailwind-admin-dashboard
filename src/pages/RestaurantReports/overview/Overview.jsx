@@ -127,35 +127,35 @@ export function Home() {
     <div className="mt-6">
       <Typography className="mx-2  grid grid-cols-1 gap-4 md:grid-cols-5">
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Date From:
           </label>
           <input
             type="date"
             defaultValue={today}
             onChange={(e) => setSdate(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             To:
           </label>
           <input
             type="date"
             defaultValue={today}
             onChange={(e) => setEdate(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Restaurant:
           </label>
           <select
             id="countries"
             onChange={(e) => setresto(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option value={"-1"}>Choose a Restaurant</option>
             {restaurantdata?.map((item, i) => (
@@ -166,14 +166,14 @@ export function Home() {
           </select>
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Branch
           </label>
 
           <select
             id="countries"
             onChange={(e) => setbranchid(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option value={"-1"}>Choose a Branch</option>
             {restaurantbranchdata?.map((item, i) => (
@@ -685,7 +685,6 @@ export function Home() {
           />
         </Link>
       </div>
-   
     </div>
   );
 }

@@ -189,14 +189,14 @@ const Purchase = () => {
           <div>
             <label
               for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >
               Payment Method
             </label>
             <select
               id="countries"
               onChange={(e) => setpayment(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
               <option value={""}>Choose a Payment</option>
               <option value=" ">All</option>
@@ -208,13 +208,13 @@ const Purchase = () => {
           <div>
             <label
               for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >
               Discount
             </label>
             <select
               onChange={(e) => setdiscounton(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
               <option value=" ">Choose a Discount</option>
               <option value=" ">Any</option>
@@ -223,12 +223,12 @@ const Purchase = () => {
             </select>
           </div>
           <div>
-            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Channel
             </label>
             <select
               onChange={(e) => setchannelon(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
               <option value=" ">Choose a Channel</option>
               <option value=" ">Any</option>
@@ -239,14 +239,14 @@ const Purchase = () => {
           <div>
             <label
               for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >
               Country
             </label>
             <select
               id="countries"
               onChange={(e) => setcountryid(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
               <option value={-1}>Choose a country</option>
               {Countriesdata?.map((item) => (
@@ -263,13 +263,13 @@ const Purchase = () => {
           <div>
             <label
               for="first_name"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
             >
               Restaurant
             </label>
             <select
               onChange={(e) => setrestid(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
               <option value="">Choose a Restaurant</option>
               {Resturantdata?.map((item) => (
@@ -282,13 +282,13 @@ const Purchase = () => {
         </Typography>
         <Typography className="mx-5 my-4 mb-10 grid grid-cols-1 gap-4 md:grid-cols-5">
           <div>
-            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Branch
             </label>
             <select
               id="countries"
               onChange={(e) => setbranchid(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             >
               <option value={-1}>Choose a branch</option>
               {Resturantbranchdata?.map((rest) => (
@@ -299,34 +299,34 @@ const Purchase = () => {
             </select>
           </div>
           <div>
-            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Date From:
             </label>
             <input
               type="date"
               onChange={(e) => setsdate(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             />
           </div>
           <div>
-            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               To
             </label>
             <input
               type="date"
               onChange={(e) => setedate(e.target.value)}
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             />
           </div>
           <div>
-            <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Search
             </label>
             <input
               type="text"
               onChange={(e) => setsearchedon(e.target.value)}
               placeholder="Order #,phone,first name,last name"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
             />
           </div>
           <div className="mx-1 mt-6 flex w-full justify-center gap-3">

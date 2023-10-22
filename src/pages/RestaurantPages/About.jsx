@@ -71,14 +71,14 @@ const Termsandcondition = () => {
                 disabled
               />
             </Typography>
-            <label class="mx-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mx-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Description EN
             </label>
             <div className="mx-5">
               <ReactQuill theme="snow" value={value} onChange={handleChange} />
             </div>
             <hr className="my-6" />
-            <label class="mx-4 my-5 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+            <label className="mx-4 my-5 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
               Description AR
             </label>
             <div className="mx-5">

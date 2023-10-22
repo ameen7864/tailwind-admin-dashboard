@@ -98,7 +98,7 @@ const Groups = () => {
                   title: "View Roulls",
                   dataIndex: "id , gid",
                   render: (id, gid) => (
-                    <Link to={"/rollsdata"}>
+                    <Link to={"/dashboard/rolls"}>
                       <MdMenu  size={20} style={{ cursor: "pointer", color: "blue" }} />
                     </Link>
                   ),

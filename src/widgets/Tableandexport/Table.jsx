@@ -7,7 +7,7 @@
 //         height: "100%",
 //       }}
 //     >
-//    <div class="loader"></div>
+//    <div className="loader"></div>
 //     </div>
 //   );
 
@@ -71,7 +71,7 @@
 // export default ReusableDataGrid;
 import { Empty, Spin, Table } from "antd";
 import { Loader } from "../Button/Button";
-import  nodata  from "./nodata.jpg";
+import nodata from "./nodata.png";
 
 const Tables = ({ data, loading, columns, pagination, onChange }) => {
   const customEmptyText = (
@@ -81,17 +81,26 @@ const Tables = ({ data, loading, columns, pagination, onChange }) => {
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
-        flexDirection:"column"
+        flexDirection: "column",
       }}
+      image={
+        <img
+          src={nodata}
+          alt="Custom Loader"
+          style={{
+            height: "500px",
+            display: "flex",
 
-      image={<img src={nodata} alt="Custom Loader"   style={{height:"500px", display: "flex",
-
-        justifyContent: "center",
-        alignItems: "center",}}   />}
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+      }
       description={
         <div>
           <div>{""}</div>
-        </div>}
+        </div>
+      }
     />
   );
 

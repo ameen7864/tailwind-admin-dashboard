@@ -45,6 +45,10 @@ import RegisteredData from "./pages/RestaurantReports/registered/Registered";
 import TurnOver from "./pages/RestaurantReports/turnover/TurnOver";
 import Voucher from "./pages/Subscriptions/Vocher";
 import Home from "./pages/dashboard/home";
+import Rolls from "./pages/User-details/Rolls";
+import Areas from "./pages/User-details/Areas";
+import Tasks from "./pages/Notification/Tasks";
+import Filter from "./pages/Notification/Filter";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -102,12 +106,20 @@ export const routes = [
       { path: "/callTime", element: <CallTime /> },
       { path: "/notifyTime", element: <NotifyTime /> },
       { path: "/turnOver", element: <TurnOver /> },
+
+      //notification
+      { path: "/tasks", element: <Tasks /> },
+      { path: "/filter", element: <Filter /> },
+
       //add data
 
       { path: "/add", element: <AddRestaurant /> },
       { path: "/adduser", element: <AddUser /> },
       { path: "/addgroup", element: <AddGroups /> },
       { path: "/addcountry", element: <AddCountries /> },
+      { path: "/areas", element: <Areas /> },
+      { path: "/rolls", element: <Rolls /> },
+
       { path: "/addvoucher", element: <Addvoucher /> },
       { path: "/addcuisines", element: <AddCuisines /> },
       { path: "/addqueue", element: <AddQueueTags /> },

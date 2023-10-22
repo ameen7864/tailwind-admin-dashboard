@@ -49,6 +49,7 @@ const TurnOver = () => {
     startDate,
     EndDate,
   });
+
   const { data: outside, refetch: outsidefetch } =
     useGetTurnoverOutsideByNameQuery({
       position: 0,
@@ -85,20 +86,20 @@ const TurnOver = () => {
 
   const tableData = insidedata?.map((item, index) => [
     index + 1,
-    moment(item.crDate).format("L"),
-    `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
-    `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
-    `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
+    // moment(item.crDate).format("L"),
+    // `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
+    // `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
+    // `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
   ]);
 
   const headers1 = ["#", "Date", "Breakfast", "Lunch", "Dinner"];
 
   const tableData1 = outsidedata?.map((item, index) => [
     index + 1,
-    moment(item.crDate).format("L"),
-    `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
-    `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
-    `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
+    // moment(item.crDate).format("L"),
+    // `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
+    // `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
+    // `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
   ]);
 
   const handleExportToPDF = () => {
@@ -113,39 +114,47 @@ const TurnOver = () => {
     doc.save("Requeue-portal.pdf");
   };
 
+  function convertSecondsToMinutes(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+    return formattedMinutes + ":" + formattedSeconds;
+  }
+
   return (
     <div>
       <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-5">
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Date From:
           </label>
           <input
             type="date"
             defaultValue={today}
             onChange={(e) => setSdate(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             To:
           </label>
           <input
             type="date"
             defaultValue={today}
             onChange={(e) => setEdate(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Restaurant:
           </label>
           <select
             id="countries"
             onChange={(e) => setresto(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option value={"-1"}>Choose a Restaurant</option>
             {restaurantdata?.map((item, i) => (
@@ -156,14 +165,14 @@ const TurnOver = () => {
           </select>
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Branch
           </label>
 
           <select
             id="countries"
             onChange={(e) => setbranchid(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option value={"-1"}>Choose a Branch</option>
             {restaurantbranchdata?.map((item, i) => (
@@ -218,57 +227,37 @@ const TurnOver = () => {
               columns={[
                 {
                   title: "Date",
-                  dataIndex: "crDate",
-                  render: (crDate) => moment(crDate).format("L"),
+                  dataIndex: "day",
+                  render: (day) => moment(day).format("L"),
                 },
                 {
                   title: "Breakfast",
-                  dataIndex: "data, roundTime1",
-                  render: (data, roundTime1) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime1.crDate}&edate=${roundTime1.crDate}&restid=${restId}&t=1&E=2&position=0`
-                    //   }
-                    // >
+                  dataIndex: "total1",
+
+                  render: (total1) => (
                     <div>
-                      {roundTime1.roundTime1.hours}:
-                      {roundTime1.roundTime1.minutes}
+                      {convertSecondsToMinutes(total1 ? Math.ceil(total1) : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
-
                 {
                   title: "Lunch",
-                  render: (data, roundTime2) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime2.crDate}&edate=${roundTime2.crDate}&restid=${restId}&t=3&E=4&position=0`
-                    //   }
-                    // >
+                  dataIndex: "total2",
+
+                  render: (total2) => (
                     <div>
-                      {roundTime2.roundTime2.hours}:
-                      {roundTime2.roundTime2.minutes}
+                      {convertSecondsToMinutes(total2 ? Math.ceil(total2) : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
                 {
                   title: "Dinner",
-                  render: (data, roundTime3) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime3.crDate}&edate=${roundTime3.crDate}&restid=${restId}&t=5&E=6&position=0`
-                    //   }
-                    // >
+                  dataIndex: "total3",
+
+                  render: (total3) => (
                     <div>
-                      {roundTime3.roundTime3.hours}:
-                      {roundTime3.roundTime3.minutes}
+                      {convertSecondsToMinutes(total3 ? Math.ceil(total3) : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
               ]}
@@ -340,57 +329,37 @@ const TurnOver = () => {
               columns={[
                 {
                   title: "Date",
-                  dataIndex: "crDate",
-                  render: (crDate) => moment(crDate).format("L"),
+                  dataIndex: "day",
+                  render: (day) => moment(day).format("L"),
                 },
                 {
                   title: "Breakfast",
-                  dataIndex: "data, roundTime1",
-                  render: (data, roundTime1) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime1.crDate}&edate=${roundTime1.crDate}&restid=${restId}&t=1&E=2&position=1`
-                    //   }
-                    // >
+                  dataIndex: "total1",
+
+                  render: (total1) => (
                     <div>
-                      {roundTime1.roundTime1.hours}:
-                      {roundTime1.roundTime1.minutes}
+                      {convertSecondsToMinutes(total1 ? Math.ceil(total1) : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
-
                 {
                   title: "Lunch",
-                  render: (data, roundTime2) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime2.crDate}&edate=${roundTime2.crDate}&restid=${restId}&t=3&E=4&position=1`
-                    //   }
-                    // >
+                  dataIndex: "total2",
+
+                  render: (total2) => (
                     <div>
-                      {roundTime2.roundTime2.hours}:
-                      {roundTime2.roundTime2.minutes}
+                      {convertSecondsToMinutes(total2 ? Math.ceil(total2) : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
                 {
                   title: "Dinner",
-                  render: (data, roundTime3) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime3.crDate}&edate=${roundTime3.crDate}&restid=${restId}&t=5&E=6&position=1`
-                    //   }
-                    // >
+                  dataIndex: "total3",
+
+                  render: (total3) => (
                     <div>
-                      {roundTime3.roundTime3.hours}:
-                      {roundTime3.roundTime3.minutes}
+                      {convertSecondsToMinutes(total3 ? Math.ceil(total3) : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
               ]}

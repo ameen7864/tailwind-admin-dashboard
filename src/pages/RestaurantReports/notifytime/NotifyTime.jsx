@@ -1,13 +1,10 @@
 import {
   useGetAllRestBranchByNameQuery,
-  useGetAllRestByNameQuery,
-  useGetInvoiceByNameQuery,
+  useGetAllRestByNameQuery
 } from "@/pages/Redux/ReduxApi";
 import {
   useGetNotifyAverageByNameQuery,
-  useGetNotifyMaxiumByNameQuery,
-  useGetTurnoverInsideByNameQuery,
-  useGetTurnoverOutsideByNameQuery,
+  useGetNotifyMaxiumByNameQuery
 } from "@/pages/Redux/ReportsApi";
 import Button from "@/widgets/Button/Button";
 import Copy from "@/widgets/Tableandexport/Copy";
@@ -25,7 +22,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { MdPrint } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const TurnOver = () => {
@@ -39,12 +35,22 @@ const TurnOver = () => {
   const [Edate, setEdate] = useState(today);
   const [startDate, setstartdate] = useState(today);
   const [EndDate, setEndDate] = useState(today);
+  const [tableParams, setTableParams] = useState({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      total: 0,
+    },
+  });
+
+  const page = tableParams.pagination.current;
+  const pagelimit = tableParams.pagination.pageSize;
 
   const tableRef = useRef(null);
   const tableRef1 = useRef(null);
 
   const {
-    data: inside,
+    data: averageTime,
     isFetching,
     refetch: insdefetch,
   } = useGetNotifyAverageByNameQuery({
@@ -52,8 +58,13 @@ const TurnOver = () => {
     parentId,
     startDate,
     EndDate,
+    page,
+    pagelimit,
   });
-  const { data: outside, refetch: outsidefetch } =
+
+  const averageTimeData = averageTime?.data;
+
+  const { data: MaximumTime, refetch: outsidefetch } =
     useGetNotifyMaxiumByNameQuery({
       restId,
       parentId,
@@ -66,8 +77,7 @@ const TurnOver = () => {
     id: resto,
   });
 
-  const insidedata = inside?.data;
-  const outsidedata = outside?.data;
+  const MaximumTimeData = MaximumTime?.data;
   const restaurantdata = restaurant?.data;
   const restaurantbranchdata = branch?.data;
 
@@ -86,22 +96,22 @@ const TurnOver = () => {
 
   const headers = ["#", "Date", "Breakfast", "Lunch", "Dinner"];
 
-  const tableData = insidedata?.map((item, index) => [
+  const tableData = averageTimeData?.map((item, index) => [
     index + 1,
-    moment(item.crDate).format("L"),
-    `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
-    `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
-    `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
+    moment(item.Date).format("L"),
+    // `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
+    // `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
+    // `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
   ]);
 
   const headers1 = ["#", "Date", "Breakfast", "Lunch", "Dinner"];
 
-  const tableData1 = outsidedata?.map((item, index) => [
+  const tableData1 = averageTimeData?.map((item, index) => [
     index + 1,
-    moment(item.crDate).format("L"),
-    `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
-    `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
-    `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
+    // moment(item.crDate).format("L"),
+    // `${item.roundTime1.hours}:${item.roundTime1.minutes}`,
+    // `${item.roundTime2.hours}:${item.roundTime2.minutes}`,
+    // `${item.roundTime3.hours}:${item.roundTime3.minutes}`,
   ]);
 
   const handleExportToPDF = () => {
@@ -116,39 +126,47 @@ const TurnOver = () => {
     doc.save("Requeue-portal.pdf");
   };
 
+  function convertSecondsToMinutes(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+    return formattedMinutes + ":" + formattedSeconds;
+  }
+
   return (
     <div>
       <Typography className="mx-5 mt-4 grid grid-cols-1 gap-4 md:grid-cols-5">
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Date From:
           </label>
           <input
             type="date"
             defaultValue={today}
             onChange={(e) => setSdate(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             To:
           </label>
           <input
             type="date"
             defaultValue={today}
             onChange={(e) => setEdate(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Restaurant:
           </label>
           <select
             id="countries"
             onChange={(e) => setresto(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option value={"-1"}>Choose a Restaurant</option>
             {restaurantdata?.map((item, i) => (
@@ -159,14 +177,14 @@ const TurnOver = () => {
           </select>
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
             Branch
           </label>
 
           <select
             id="countries"
             onChange={(e) => setbranchid(e.target.value)}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option value={"-1"}>Choose a Branch</option>
             {restaurantbranchdata?.map((item, i) => (
@@ -216,62 +234,38 @@ const TurnOver = () => {
               </div>{" "}
             </div>
             <Tables
-              data={insidedata}
+              data={averageTimeData}
               loading={isFetching}
               columns={[
                 {
                   title: "Date",
-                  dataIndex: "crDate",
-                  render: (crDate) => moment(crDate).format("L"),
+                  dataIndex: "Date",
+                  render: (Date) => moment(Date).format("L"),
                 },
                 {
                   title: "Breakfast",
-                  dataIndex: "data, roundTime1",
-                  render: (data, roundTime1) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime1.crDate}&edate=${roundTime1.crDate}&restid=${restId}&t=1&E=2&position=0`
-                    //   }
-                    // >
+                  dataIndex: "Breakfast",
+                  render: (Breakfast) => (
                     <div>
-                      {roundTime1.roundTime1.hours}:
-                      {roundTime1.roundTime1.minutes}
+                      {convertSecondsToMinutes(Breakfast ? Breakfast : 0)}
                     </div>
-                    // </Link>
                   ),
                 },
 
                 {
                   title: "Lunch",
-                  render: (data, roundTime2) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime2.crDate}&edate=${roundTime2.crDate}&restid=${restId}&t=3&E=4&position=0`
-                    //   }
-                    // >
-                    <div>
-                      {roundTime2.roundTime2.hours}:
-                      {roundTime2.roundTime2.minutes}
-                    </div>
-                    // </Link>
+                  dataIndex: "Lunch",
+
+                  render: (Lunch) => (
+                    <div>{convertSecondsToMinutes(Lunch ? Lunch : 0)}</div>
                   ),
                 },
                 {
                   title: "Dinner",
-                  render: (data, roundTime3) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime3.crDate}&edate=${roundTime3.crDate}&restid=${restId}&t=5&E=6&position=0`
-                    //   }
-                    // >
-                    <div>
-                      {roundTime3.roundTime3.hours}:
-                      {roundTime3.roundTime3.minutes}
-                    </div>
-                    // </Link>
+                  dataIndex: "Dinner",
+
+                  render: (Dinner) => (
+                    <div>{convertSecondsToMinutes(Dinner ? Dinner : 0)}</div>
                   ),
                 },
               ]}
@@ -338,62 +332,136 @@ const TurnOver = () => {
               </div>{" "}
             </div>
             <Tables
-              data={outsidedata}
+              data={MaximumTimeData}
               loading={isFetching}
               columns={[
                 {
                   title: "Date",
-                  dataIndex: "crDate",
-                  render: (crDate) => moment(crDate).format("L"),
-                },
-                {
-                  title: "Breakfast",
-                  dataIndex: "data, roundTime1",
-                  render: (data, roundTime1) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime1.crDate}&edate=${roundTime1.crDate}&restid=${restId}&t=1&E=2&position=1`
-                    //   }
-                    // >
-                    <div>
-                      {roundTime1.roundTime1.hours}:
-                      {roundTime1.roundTime1.minutes}
-                    </div>
-                    // </Link>
-                  ),
-                },
-
-                {
-                  title: "Lunch",
-                  render: (data, roundTime2) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime2.crDate}&edate=${roundTime2.crDate}&restid=${restId}&t=3&E=4&position=1`
-                    //   }
-                    // >
-                    <div>
-                      {roundTime2.roundTime2.hours}:
-                      {roundTime2.roundTime2.minutes}
-                    </div>
-                    // </Link>
+                  dataIndex: "createdDate",
+                  render: (createdDate) => (
+                    <Link
+                      to={
+                        "/max-data" +
+                        `?&sdate=${createdDate}&edate=${createdDate}&notify=2`
+                      }
+                    >
+                      {moment(createdDate).format("L")}
+                    </Link>
                   ),
                 },
                 {
-                  title: "Dinner",
-                  render: (data, roundTime3) => (
-                    // <Link
-                    //   to={
-                    //     "/turndata" +
-                    //     `?&sdate=${roundTime3.crDate}&edate=${roundTime3.crDate}&restid=${restId}&t=5&E=6&position=1`
-                    //   }
-                    // >
+                  title: "Joined Time",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
                     <div>
-                      {roundTime3.roundTime3.hours}:
-                      {roundTime3.roundTime3.minutes}
+                      {moment(queuedata?.queuedata?.createdDate).format(
+                        "hh:mm"
+                      )}
                     </div>
-                    // </Link>
+                  ),
+                },
+                {
+                  title: "Call Time",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
+                    <div>
+                      {moment(queuedata?.queuedata?.callDate).format("hh:mm")}
+                    </div>
+                  ),
+                },
+                {
+                  title: "Checkin Time",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
+                    <div>
+                      {moment(
+                        queuedata?.queuedata?.checkedInDate
+                          ? queuedata?.queuedata?.checkedInDate
+                          : new Date()
+                      ).format("hh:mm")}
+                    </div>
+                  ),
+                },
+                {
+                  title: "Time Taken",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) =>
+                    convertSecondsToMinutes(queuedata.maxTime),
+                },
+                {
+                  title: "Seat Area",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
+                    <div>
+                      {queuedata?.queuedata?.position === 0
+                        ? "Outside"
+                        : "Inside"}
+                    </div>
+                  ),
+                },
+                {
+                  title: "Number In Queue",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
+                    <div>{queuedata?.queuedata?.queueNumber}</div>
+                  ),
+                },
+                {
+                  title: "Status",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
+                    <>
+                      <div>
+                        {console.log(queuedata)}
+                        {queuedata?.queuedata?.status === 0
+                          ? "Queued"
+                          : queuedata?.queuedata?.status === 1
+                          ? "ReQueued"
+                          : queuedata?.queuedata?.status === 2
+                          ? "Seated"
+                          : queuedata?.queuedata?.status === 3
+                          ? "Closed"
+                          : queuedata?.queuedata?.status === 4
+                          ? "Canceled"
+                          : queuedata?.queuedata?.status === 5
+                          ? "Rest_Canceled"
+                          : queuedata?.queuedata?.status === 6
+                          ? "Rest_ReQueued"
+                          : queuedata?.queuedata?.status === 7
+                          ? "Rest_Queued"
+                          : queuedata?.queuedata?.status === 8
+                          ? "RestHold"
+                          : queuedata?.queuedata?.status === 9
+                          ? "Hold"
+                          : "--"}
+                      </div>
+                    </>
+                  ),
+                },
+                {
+                  title: "Customer",
+                  dataIndex: "data, queuedata",
+                  render: (data, queuedata) => (
+                    <>
+                      <Link
+                        to={
+                          "/editclient" +
+                          `?client=${queuedata?.queuedata?.client_id}&sdate=${
+                            queuedata?.queuedata?.createdDate
+                          }&edate=${""}`
+                        }
+                      >
+                        <div>{queuedata?.queuedata?.client_name}</div>
+                        <div>{queuedata?.queuedata?.client_phone}</div>
+                      </Link>
+                    </>
+                  ),
+                },
+                {
+                  title: "Host",
+                  dataIndex: "data, queuedata ",
+                  render: (data, queuedata) => (
+                    <div>{queuedata?.queuedata?.name_en}</div>
                   ),
                 },
               ]}

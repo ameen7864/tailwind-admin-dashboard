@@ -6,7 +6,7 @@ const Button = ({ name, ...props }) => {
     <div>
       <button
         type="button"
-        className="text-white capitalize bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        className="mr-2 mb-2 rounded-lg bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 px-5 py-2.5 text-center text-sm font-medium capitalize text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800"
         {...props}
       >
         {name}
@@ -22,14 +22,14 @@ export const Select = ({ label, opto, data, ...props }) => {
     <div>
       <label
         htmlFor="selection"
-        className="block mb-2 text-sm font-medium text-black-900 dark:text-white capitalize"
+        className="text-black-900 mb-2 block text-sm font-medium capitalize dark:text-white"
       >
         Select {label}:
       </label>
       <select
         id="selection"
         required
-        className="bg-grey-50 border border-purple-700 text-grey-900 text-sm rounded-md focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-purple-700 dark:border-purple-600 dark:placeholder-purple-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+        className="bg-grey-50 text-grey-900 block w-full rounded-md border border-purple-700 p-2.5 text-sm focus:border-purple-500 focus:ring-purple-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-purple-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
         {...props}
       >
         <option value={1}>Choose a {opto}</option>
@@ -47,7 +47,7 @@ export const Input = ({ lbs, type, ...props }) => {
       <div>
         <label
           htmlFor="small-input"
-          className="block mb-2 text-sm font-medium text-black-900 dark:text-white capitalize"
+          className="text-black-900 mb-2 block text-sm font-medium capitalize dark:text-white"
         >
           {lbs}:
         </label>
@@ -55,7 +55,7 @@ export const Input = ({ lbs, type, ...props }) => {
           {...props}
           type={type ? type : "text"}
           id="small-input"
-          className={`block w-full p-2 font-normal text-xl text-gray-900 capitalize border border-purple-700 rounded-md bg-gray-50 sm:text-sm focus:ring-blue-500 focus:border-purple-500 dark:bg-gray-700 dark:border-purple-600 dark:placeholder-gray-600 placeholder:text-black dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 
+          className={`block w-full rounded-md border border-purple-700 bg-gray-50 p-2 text-xl font-normal capitalize text-gray-900 placeholder:text-black focus:border-purple-500 focus:ring-blue-500 dark:border-purple-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-600 dark:focus:border-purple-500 dark:focus:ring-purple-500 sm:text-sm 
             
           `}
           required
@@ -74,14 +74,14 @@ export const TextFeild = ({ tflbs, ...props }) => {
       <div>
         <label
           for="message"
-          className="block mb-2 text-sm font-medium text-black-900 dark:text-white capitalize"
+          className="text-black-900 mb-2 block text-sm font-medium capitalize dark:text-white"
         >
           {tflbs}
         </label>
         <textarea
           id="message"
           rows="4"
-          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-purple-700 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500"
+          className="block w-full rounded-lg border border-purple-700 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-500 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-500 dark:focus:ring-purple-500"
           placeholder={tflbs}
           {...props}
         ></textarea>
@@ -93,17 +93,17 @@ export const TextFeild = ({ tflbs, ...props }) => {
 export const Checkbox = ({ cbox, ...props }) => {
   return (
     <>
-      <div class="flex items-center capitalize mr-4">
+      <div className="mr-4 flex items-center capitalize">
         <input
           id="purple-checkbox"
           type="checkbox"
           value=""
-          class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-md focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          className="h-4 w-4 rounded-md border-gray-300 bg-gray-100 text-purple-600 focus:ring-2 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-purple-600"
           {...props}
         />
         <label
           for="purple-checkbox"
-          class="ml-2 text-sm font-medium text-black-900 dark:text-white capitalize"
+          className="text-black-900 ml-2 text-sm font-medium capitalize dark:text-white"
         >
           {cbox}
         </label>
@@ -117,12 +117,12 @@ export const InputImage = ({ imlbl }) => {
     <>
       <label
         for="file_input"
-        className="block mb-2 text-sm font-medium text-black-900 dark:text-white capitalize"
+        className="text-black-900 mb-2 block text-sm font-medium capitalize dark:text-white"
       >
         {imlbl}
       </label>
       <input
-        class="block w-full text-sm text-gray-900 border border-purple-700 rounded-r-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        className="block w-full cursor-pointer rounded-r-lg border border-purple-700 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
         id="file_input"
         type="file"
       ></input>
@@ -136,14 +136,14 @@ export const SubmitButton = ({ loading }) => {
       <button
         type="submit"
         disabled={loading}
-        // class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
-        class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+        className="mr-2 mb-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-l focus:outline-none focus:ring-4 focus:ring-purple-200 dark:focus:ring-purple-800"
       >
         {loading ? (
           <svg
             aria-hidden="true"
             role="status"
-            class="inline w-4 h-4 mr-3 text-white animate-spin"
+            className="mr-3 inline h-4 w-4 animate-spin text-white"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +172,7 @@ export const CancelButton = ({}) => {
     <>
       <button
         type="button"
-        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        className="mr-2 mb-2 rounded-lg bg-gradient-to-r from-red-400 via-red-500 to-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800"
         onClick={() => navigate(-1)}
       >
         Cancel
@@ -192,7 +192,7 @@ export const Loader = ({}) => {
           height: "50vh",
         }}
       >
-        <div class="loader"></div>
+        <div className="loader"></div>
       </div>
     </>
   );

@@ -62,7 +62,6 @@ const Cancellation = () => {
   }, [cancel]);
   const canceldata = cancel?.Details;
 
-
   const headers = ["#", "name", "Status", "Created Date", "Duration"];
 
   const tableData = canceldata?.map((item, index) => [
@@ -85,7 +84,7 @@ const Cancellation = () => {
         <div>
           <label
             for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
           >
             Date From:
           </label>
@@ -93,32 +92,32 @@ const Cancellation = () => {
             type="date"
             id="first_name"
             defaultValue={today}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
           <label
             for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
           >
             To:
           </label>
           <input
             type="date"
             defaultValue={today}
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div>
           <label
             for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
           >
             Restaurant:
           </label>
           <select
             id="countries"
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option selected>Choose a country</option>
           </select>
@@ -126,13 +125,13 @@ const Cancellation = () => {
         <div>
           <label
             for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
           >
             Branch
           </label>
           <select
             id="countries"
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-purple-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           >
             <option selected>Choose a country</option>
           </select>
@@ -140,13 +139,13 @@ const Cancellation = () => {
         <div>
           <label
             for="first_name"
-            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
           >
             Search
           </label>
           <input
             placeholder="phone number"
-            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-purple-700 focus:ring-blue-500 dark:border-purple-600 dark:bg-purple-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-purple-700 dark:focus:ring-blue-500"
           />
         </div>
         <div className="mt-7">
@@ -244,13 +243,13 @@ const Cancellation = () => {
                   title: "Date & Time",
                   dataIndex: "createdDate",
                   render: (createdDate) =>
-                    moment(createdDate).format("dddd LL"),
+                    moment(createdDate).format("LLL"),
                 },
                 {
                   title: "Cancelled Time",
-                  dataIndex: "checkedInDate",
-                  render: (checkedInDate) =>
-                    moment(checkedInDate).format("dddd LL"),
+                  dataIndex: "checkoutDate",
+                  render: (checkoutDate) =>
+                    moment(checkoutDate).format("LLL"),
                 },
                 {
                   title: "Cancelled By",

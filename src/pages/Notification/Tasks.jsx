@@ -14,17 +14,9 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  useGetCountryByNameQuery,
-  useGetUsersByNameQuery,
-} from "../Redux/ReduxApi";
-import { MdMenu, MdOutlineModeEditOutline } from "react-icons/md";
-import ReactCountryFlag from "react-country-flag";
+import { useGetTasksByNameQuery } from "../Redux/ReportsApi";
 
-const Countries = () => {
-  const [search, setsearch] = useState("");
-  const [searchText, setsearched] = useState("");
+const Tasks = () => {
   const [searching, setsearcheding] = useState("");
   const [tableParams, setTableParams] = useState({
     pagination: {
@@ -37,12 +29,8 @@ const Countries = () => {
   const tableRef = useRef(null);
   const pages = tableParams.pagination.current;
   const pageSize = tableParams.pagination.pageSize;
-  const {
-    data: Countries,
-    isFetching,
-    refetch,
-  } = useGetCountryByNameQuery({
-    searchText,
+
+  const { data: tasks, isFetching } = useGetTasksByNameQuery({
     pages,
     pageSize,
   });
@@ -53,29 +41,42 @@ const Countries = () => {
     });
   };
   useEffect(() => {
-    if (Countries?.count) {
+    if (tasks?.count) {
       setTableParams((prev) => ({
         ...prev,
         pagination: {
           ...prev.pagination,
-          total: Countries.count,
+          total: tasks.count,
         },
       }));
     }
-  }, [Countries]);
-  const handleSearch = () => {
-    refetch({ searchText, pages, pageSize });
-    setsearched(search);
-  };
-  const restdata = Countries?.data;
+  }, [tasks]);
+  const restdata = tasks?.ListOfData;
 
-  const headers = ["#", "Title", "Access Name", "Status", "Created Date"];
+  const headers = [
+    "#",
+    "ID",
+    "Type",
+    "Message",
+    "Device Type",
+    " Language ",
+    " Created Date  ",
+    " Started Date  ",
+    "Status ",
+    " Total",
+  ];
   const tableData = restdata?.map((item, index) => [
     index + 1,
-    item.user_title,
-    item.userName,
-    item.is_active ? "Active" : "Unactive",
-    moment(item.created_date).format("dddd LL"),
+    item.id,
+    item.type,
+    item.Message,
+    item.deviceType,
+    item.language,
+    moment(item.createdDate).format("dddd LL"),
+    moment(item.startDate).format("dddd LL"),
+    moment(item.completedDate).format("dddd LL"),
+    item.status ? "Completed" : "",
+    item.Total,
   ]);
 
   const handleExportToPDF = () => {
@@ -86,21 +87,6 @@ const Countries = () => {
 
   return (
     <div>
-      <div className="mx-6 mt-5 flex">
-        <input
-          className="font-sm text-md w-64 rounded-lg border-2 border-purple-800  capitalize placeholder:text-black "
-          placeholder=" countries name"
-          onChange={(e) => setsearch(e.target.value)}
-        />
-
-        <button
-          className="font-sm mx-3 rounded-md bg-gradient-to-r from-purple-900 via-purple-800 to-purple-600 py-1.5 px-4 text-white decoration-white "
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-      </div>
-      <hr className="mt-4" />
       <div className="mt-4 mb-6 ml-4 mr-4 flex flex-wrap justify-between">
         <div className="flex flex-wrap">
           <Copy headers={headers} tableData={tableData} />
@@ -108,9 +94,6 @@ const Countries = () => {
           <Button name={"Pdf"} onClick={handleExportToPDF} />
           <Print tableRef={tableRef} />
         </div>
-        <Link to={"/dashboard/addcountry"}>
-          <Button name={"Add country"} />
-        </Link>
       </div>
       <div className="mt-6mb-8 flex flex-col gap-12">
         <Card>
@@ -121,7 +104,7 @@ const Countries = () => {
             style={{ background: " linear-gradient(195deg, #7537be, #31206d)" }}
           >
             <Typography variant="h6" color="white">
-              Country Table
+              Task List
             </Typography>
           </CardHeader>
           <CardBody className="mx-4 h-[calc(100vh_-_120px)] overflow-x-scroll px-0 pt-0 pb-2">
@@ -145,66 +128,104 @@ const Countries = () => {
                     (pages - 1) * pageSize + index + 1,
                 },
                 {
-                  title: "Name",
-                  dataIndex: "country_name",
+                  title: "ID",
+                  dataIndex: "id",
+                  defaultSortOrder: "descend",
+                  sorter: (a, b) => a.id - b.id,
                   filteredValue: [searching],
                   onFilter: (value, record) => {
                     return (
-                      String(record.country_name)
+                      String(record.id)
                         .toLowerCase()
                         .includes(value.toLowerCase()) ||
-                      String(record.country_code)
+                      String(record.type)
                         .toLowerCase()
                         .includes(value.toLowerCase()) ||
-                      String(record.shortCode)
+                      String(record.Message)
                         .toLowerCase()
                         .includes(value.toLowerCase()) ||
-                      String(record.country_curancy)
+                      String(record.Total)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.language)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.createdDate)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.startDate)
+                        .toLowerCase()
+                        .includes(value.toLowerCase()) ||
+                      String(record.completedDate)
                         .toLowerCase()
                         .includes(value.toLowerCase())
                     );
                   },
                 },
-             ,
                 {
-                  title: "Phone Code",
-                  dataIndex: "country_code",
+                  title: "Type",
+                  dataIndex: "type",
+                  sorter: (a, b) => a.type - b.type,
+                },
+                {
+                  title: "Message",
+                  dataIndex: "Message",
+                  sorter: (a, b) => a.Message.localeCompare(b.Message),
+                  render: (Message) =>
+                    Message === " " ? (
+                      <div>No Message</div>
+                    ) : (
+                      <div>{Message}</div>
+                    ),
+                },
+                {
+                  title: "Device Type",
+                  dataIndex: "deviceType",
+                  sorter: (a, b) => a.deviceType - b.deviceType,
+                  render: (deviceType) =>
+                    deviceType === 0 ? <div>I-Phone</div> : <div>Andriod</div>,
+                },
+                {
+                  title: "Language",
+                  dataIndex: "language",
+                  sorter: (a, b) => a.language - b.language,
+                  render: (language) =>
+                    language === 0 ? <div>Arabic</div> : <div>English</div>,
                 },
 
                 {
-                  title: "Currency",
-                  dataIndex: "country_curancy",
+                  title: "Created Date ",
+                  dataIndex: "createdDate",
+                  sorter: (a, b) =>
+                    new Date(a.createdDate) - new Date(b.createdDate),
+                  render: (createdDate) => moment(createdDate).format("L"),
                 },
 
                 {
-                  title: "Short Code",
-                  dataIndex: "shortCode",
-                },
-                {
-                  title: "View Areas",
-                  dataIndex: "country_id",
-                  render: (country_id) => (
-                    <Link to={"/dashboard/areas" + `?countryId=${country_id}`}>
-           
-                      <MdMenu
-                        size={20}
-                        style={{ cursor: "pointer", color: "blue" }}
-                      />
-                    </Link>
-                  ),
+                  title: "Started Date",
+                  dataIndex: "startDate",
+                  sorter: (a, b) =>
+                    new Date(a.startDate) - new Date(b.startDate),
+                  render: (startDate) => moment(startDate).format("L"),
                 },
 
                 {
-                  title: "Edit",
-                  dataIndex: "country_id",
-                  render: (country_id) => (
-                    <Link to={"/ecountry/" + country_id}>
-                      <MdOutlineModeEditOutline
-                        size={20}
-                        className="text-purple-700 "
-                      />
-                    </Link>
-                  ),
+                  title: "Completed Date",
+                  dataIndex: "completedDate",
+                  sorter: (a, b) =>
+                    new Date(a.completedDate) - new Date(b.completedDate),
+                  render: (completedDate) => moment(completedDate).format("L"),
+                },
+                {
+                  title: "Status",
+                  dataIndex: "status",
+                  render: (status) => <div>{status ? "Completed" : ""}</div>,
+                },
+                {
+                  title: "Total",
+                  dataIndex: "Total",
+                  sorter: (a, b) => a.Total - b.Total,
+                  render: (Total) => <div>{Total}Device</div>,
                 },
               ]}
               pagination={tableParams.pagination}
@@ -237,4 +258,4 @@ const Countries = () => {
   );
 };
 
-export default Countries;
+export default Tasks;
